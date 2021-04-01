@@ -7,3 +7,6 @@
 [submodule "manim_community"]
 	path = manim_community
 	url = https://github.com/ManimCommunity/manim.git
+[submodule "manim_ky"]
+	path = manim_ky
+	url = https://github.com/beidongjiedeguang/manim.git
