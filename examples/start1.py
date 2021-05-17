@@ -1,16 +1,30 @@
-from manim_express import EagerModeScene
+from manim_express import EagerModeScene, Size, Config
 from manimlib import *
 from manim_express.utils import m_line, m_scatter
 
-scene = EagerModeScene()
-circle = Circle()
+print(np.random.randint(1, size=(3)))
+
+Config.color = rgb_to_hex([0., 0, 0])
+Config.full_screen = True
+
+
+scene = EagerModeScene(screen_size=Size.bigger, Config=Config)
+
+# scene.window =  Window(scene=scene, **scene.window_config)
+
+circle = Circle(stroke=0.1)
 circle.move_to(LEFT*3)
+# circle.set_stroke(color=BLUE_D, width=0.1)
+
+# scene.camera.background_rgba =[0.3, 0.4, 0.5, 1]
+
 scene.play(ShowCreation(circle))
 scene.play(
     circle.scale, 2,
     circle.shift, RIGHT*5,
     run_time=2
 )
+
 
 theta = np.linspace(0, 2 * PI, 200)
 x = np.cos(theta)
@@ -37,14 +51,14 @@ scene.add(dot)
 scene.play(MoveAlongPath(dot, c))
 
 
-
 # scene.play(WiggleOutThenIn(line))
-# scene.tear_down()
-scene.hold_on()
-image = scene.camera.get_image()
 
-import matplotlib.pyplot as plt
-image.show()
+scene.hold_on()
+
+# image = scene.get_image()
+
+# import matplotlib.pyplot as plt
+# image.show()
 
 # plt.imshow(np.array((image))
 # plt.show()

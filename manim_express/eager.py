@@ -1,25 +1,39 @@
+import time
+import random
+import numpy as np
 from manimlib import Scene, Point, Camera
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
 from manimlib.scene.scene_file_writer import SceneFileWriter
 import manimlib.config
-import time
-import random
-import numpy as np
 
-__all__ = ["EagerModeScene", "JupyterModeScene"]
+from manimlib.config import Size
+from manimlib.utils.color import rgb_to_hex
+
+__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "Config"]
+
+
+class Config:
+    color = rgb_to_hex([0.3, 0.4, 0.5])
+    full_screen = False
+    resolution = '1920x1080'
+    transparent = True,
+    save_pngs = False,  # Save each frame as a png
+    hd = False
+    uhd = False
 
 
 class EagerModeScene(Scene):
-    def __init__(self,
-                 write_file=False,
-                 file_name=None,
-                 full_screen=False,
-                 gif=False,
-                 hd=False,
-                 uhd=False,
-                 scene_name='EagerModeScene',
-                 CONFIG=None):
+    def __init__(
+        self,
+        write_file=False,
+        file_name=None,
+        screen_size=Size.medium,
+        gif=False,
+        scene_name='EagerModeScene',
+        Config=Config,
+        CONFIG=None,
+    ):
 
         if CONFIG:
             self.CONFIG = CONFIG
@@ -27,11 +41,13 @@ class EagerModeScene(Scene):
         args = manimlib.config.parse_cli()
 
         args_dict = vars(args)
-        args_dict['hd'] = hd
-        args_dict['uhd'] = uhd
         args_dict['file'] = None
         args_dict['scene_names'] = scene_name
-        args_dict['full_screen'] = full_screen
+        # args_dict['full_screen'] = full_screen
+        args_dict['screen_size'] = screen_size
+        for key, value in Config.__dict__.items():
+            print(key, value)
+            args_dict[key] = value
         if write_file is True:
             args_dict['write_file'] = True
             args_dict['file_name'] = file_name
