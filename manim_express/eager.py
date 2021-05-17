@@ -1,10 +1,9 @@
-from manimlib import Scene, Point
+from manimlib import Scene, Point, Camera
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
 from manimlib.scene.scene_file_writer import SceneFileWriter
 import manimlib.config
 import time
-import sys
 import random
 import numpy as np
 
@@ -52,7 +51,7 @@ class EagerModeScene(Scene):
         else:
             self.window = None
 
-        self.camera = self.camera_class(**self.camera_config)
+        self.camera: Camera = self.camera_class(**self.camera_config)
         self.file_writer = SceneFileWriter(self, **self.file_writer_config)
         self.mobjects = []
         self.num_plays = 0

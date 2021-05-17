@@ -3,6 +3,14 @@ from manimlib import *
 from manim_express.utils import m_line, m_scatter
 
 scene = EagerModeScene()
+circle = Circle()
+circle.move_to(LEFT*3)
+scene.play(ShowCreation(circle))
+scene.play(
+    circle.scale, 2,
+    circle.shift, RIGHT*5,
+    run_time=2
+)
 
 theta = np.linspace(0, 2 * PI, 200)
 x = np.cos(theta)
@@ -21,7 +29,22 @@ c2 = ParametricCurve(lambda x: [x, np.sin(x), 0], [-2, 5])
 scene.play(*map(ShowCreation, VGroup(c, c2)))
 now = scene.time
 c.add_updater(lambda c: c.set_y(math.sin(3 * (scene.time - now))))
-scene.wait(5)
+scene.wait(1)
+scene.play(Indicate(line))
+dot = Dot()
+dot.move_to(c.get_start())
+scene.add(dot)
+scene.play(MoveAlongPath(dot, c))
 
+
+
+# scene.play(WiggleOutThenIn(line))
 # scene.tear_down()
 scene.hold_on()
+image = scene.camera.get_image()
+
+import matplotlib.pyplot as plt
+image.show()
+
+# plt.imshow(np.array((image))
+# plt.show()
