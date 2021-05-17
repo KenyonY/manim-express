@@ -22,7 +22,7 @@ def m_line(x, y, z=None, axes=None):
                 Line(axes.c2p(x[i], y[i]), axes.c2p(x[i + 1], y[i + 1]))
                 for i in range(len(x) - 1)
             ], last_little_line)
-    else:
+    else:  # ThreeDAxes
         last_little_line = Line(axes.c2p(x[L - 1], y[L - 1], z[0]),
                                 axes.c2p(x[0], y[0], z[0]))
         line = VGroup(
@@ -34,11 +34,13 @@ def m_line(x, y, z=None, axes=None):
     return line
 
 
-def m_scatter(x, y, z=None):
+def m_scatter(x, y, z=None, axes=None):
     """for scatter plot"""
     x, y = np.array(x), np.array(y)
-    if z == None:
+    if z is None:
         z = np.zeros(x.shape)
     dots = VGroup(
         *
         [Dot(radius=.01).move_to([xi, yi, zi]) for xi, yi, zi in zip(x, y, z)])
+
+    return dots
