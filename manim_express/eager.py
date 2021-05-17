@@ -1,8 +1,8 @@
 from manimlib import Scene, Point
-import manimlib.config
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
 from manimlib.scene.scene_file_writer import SceneFileWriter
+import manimlib.config
 import time
 import sys
 import random
