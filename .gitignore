@@ -1,3 +1,12 @@
+.idea/
+
+# For manim
+videos
+#/custom_config.yml
+
+
+
+### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -25,7 +34,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
+MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -50,6 +59,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+pytestdebug.log
 
 # Translations
 *.mo
@@ -70,6 +80,7 @@ instance/
 
 # Sphinx documentation
 docs/_build/
+doc/_build/
 
 # PyBuilder
 target/
@@ -109,6 +120,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+pythonenv*
 
 # Spyder project settings
 .spyderproject
@@ -127,3 +139,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# profiling data
+.prof
+
+# End of https://www.toptal.com/developers/gitignore/api/python
+# Custom exclusions:
+.DS_Store

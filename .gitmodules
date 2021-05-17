@@ -1,0 +1,3 @@
+[submodule "manimlib"]
+	path = manimlib
+	url = https://github.com/beidongjiedeguang/manimlib.git
