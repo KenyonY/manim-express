@@ -1,6 +1,7 @@
 import time
 import random
 import numpy as np
+import shutil
 from manimlib import Scene, Point, Camera
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
@@ -9,6 +10,7 @@ import manimlib.config
 
 from manimlib.config import Size
 from manimlib.utils.color import rgb_to_hex
+from .tools import ppath
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "Config"]
 
@@ -46,7 +48,6 @@ class EagerModeScene(Scene):
         # args_dict['full_screen'] = full_screen
         args_dict['screen_size'] = screen_size
         for key, value in Config.__dict__.items():
-            print(key, value)
             args_dict[key] = value
         if write_file is True:
             args_dict['write_file'] = True
@@ -100,6 +101,10 @@ class EagerModeScene(Scene):
 
     def get_config(self):
         return self.config
+
+    def save_default_config(self):
+        """Save the default config file to current directory."""
+        shutil.copy(ppath("custom_config.yml"), 'custom_config.yml')
 
     def get_scene_config(self):
         return self.scene_config
