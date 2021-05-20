@@ -15,7 +15,7 @@ with open("README.md", "r", encoding='utf-8') as fr:
 setup(name=my_package.__name__,
       version=my_package.__version__,
       package_data={
-          'mainm_express': [
+          'manim_express': [
               '*.yaml', '*.yml',
           ],
       },
