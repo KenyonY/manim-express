@@ -1,50 +1,56 @@
-from manim_express import EagerModeScene, Size, Config
+from manim_express import EagerModeScene, Size, SceneArgs
 from manimlib import *
 from manim_express.utils import m_line, m_scatter
 
-Config.color = rgb_to_hex([0., 0, 0])
-Config.full_screen = True
+# SceneArgs.color = rgb_to_hex([0., 0, 0])
+SceneArgs.color = "#222222"
 
+# SceneArgs.full_screen = True
+# SceneArgs.frame_rate = 30
+# SceneArgs.gif = True
 
-scene = EagerModeScene(screen_size=Size.bigger, Config=Config)
+scene = EagerModeScene(screen_size=Size.big)
 axes = ThreeDAxes()
 tri = Triangle().scale(2)
 scene.play(ShowCreation(tri))
 
-for i in tri.get_all_points():
-    dot = Dot(i)
-    dot.shift([0, 0, np.random.random()])
-    scene.add(dot.set_color(rgb_to_hex(np.random.randint(100, 254, size=(3)))))
-
-print(tri.get_points())
-# matplotlib
-# x = np.linspace(-3, 0, 100)
-# y = np.sin(5*x)
-# scene.play(ShowCreation(m_line(x, y, axes=axes, color=RED_C, width=0.5)))
+# dots = []
+# for i in tri.get_all_points():
+#     dot = Dot(i)
+#     dot.shift([0, 0, np.random.random()])
+#     dot.set_color(rgb_to_hex(np.random.randint(100, 254, size=(3))))
+#     dots.append(dot)
 #
-circle = Circle(stroke=0.1)
-circle.move_to(LEFT*3)
-# circle.set_stroke(color=BLUE_D, width=0.1)
-# scene.camera.background_rgba =[0.3, 0.4, 0.5, 1]
-
-scene.play(ShowCreation(circle))
-scene.play(
-    circle.scale, 2,
-    circle.shift, RIGHT*5,
-    run_time=2
-)
-print(circle.point_at_angle(PI))
+# dots = VGroup(*dots)
+# scene.play(Write(dots))
+# scene.play(dots.move_to, UL*2)
 #
+# scene.play(FadeOut(tri))
+# #
+# circle = Circle(stroke=0.1)
+# circle.move_to(LEFT*3)
+# # circle.set_stroke(color=BLUE_D, width=0.1)
+# # scene.camera.background_rgba =[0.3, 0.4, 0.5, 1]
+#
+# scene.play(ShowCreation(circle))
+# scene.play(
+#     circle.scale, 2,
+#     circle.shift, RIGHT*5,
+#     run_time=2
+# )
+# print(circle.point_at_angle(PI))
+# #
 # square = Square()
 #
 # scene.play(ReplacementTransform(circle, square))
 #
 # scene.play(square.shift, DOWN*2)
+# scene.play(FadeOut(square))
 #
 # theta = np.linspace(0, 2 * PI, 200)
 # x = np.cos(theta)
 # y = np.sin(theta)
-# z = np.sin(theta*3)
+# z = theta * 3
 #
 # line = m_line(x, y, z, axes=axes)
 # scene.add(axes)
@@ -65,20 +71,18 @@ print(circle.point_at_angle(PI))
 # scene.add(dot)
 # scene.play(MoveAlongPath(dot, c))
 #
-#
-# # scene.play(WiggleOutThenIn(line))
-#
-
-#
-# # image = scene.get_image()
-#
-# # import matplotlib.pyplot as plt
-# # image.show()
-#
-# # plt.imshow(np.array((image))
-# # plt.show()
+# scene.play(ShowCreation(Circle()))
 
 
+# scene.play(WiggleOutThenIn(line))
+
+# image = scene.get_image()
+
+# import matplotlib.pyplot as plt
+# image.show()
+
+# plt.imshow(np.array((image))
+# plt.show()
 
 
 scene.hold_on()

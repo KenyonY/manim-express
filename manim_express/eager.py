@@ -12,17 +12,30 @@ from manimlib.config import Size
 from manimlib.utils.color import rgb_to_hex
 from .tools import ppath
 
-__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "Config"]
+__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
 
-class Config:
-    color = rgb_to_hex([0.3, 0.4, 0.5])
+class SceneArgs:
+    # write_file = False
+    # file_name = None
+    # skip_animations = False  # "Save the last frame"
+    color = rgb_to_hex([0.3, 0.4, 0.5])  # Background color"
     full_screen = False
+    gif = False
     resolution = '1920x1080'
-    transparent = True,
-    save_pngs = False,  # Save each frame as a png
+
+    # Render to a movie file with an alpha channel,
+    # if transparent is True, .mov file will be generated.
+    transparent = False
+    save_pngs = False  # Save each frame as a png
     hd = False
     uhd = False
+    quiet = True
+    open = False  # Automatically open the saved file once its done
+    finder = False  # Show the output file in finder
+    frame_rate = None
+    video_dir = None  # directory to write video
+    start_at_animation_number = None
 
 
 class EagerModeScene(Scene):
@@ -31,9 +44,7 @@ class EagerModeScene(Scene):
         write_file=False,
         file_name=None,
         screen_size=Size.medium,
-        gif=False,
         scene_name='EagerModeScene',
-        Config=Config,
         CONFIG=None,
     ):
 
@@ -45,14 +56,15 @@ class EagerModeScene(Scene):
         args_dict = vars(args)
         args_dict['file'] = None
         args_dict['scene_names'] = scene_name
-        # args_dict['full_screen'] = full_screen
         args_dict['screen_size'] = screen_size
-        for key, value in Config.__dict__.items():
+        for key, value in SceneArgs.__dict__.items():
             args_dict[key] = value
-        if write_file is True:
+
+        if write_file is True or SceneArgs.gif is True:
             args_dict['write_file'] = True
             args_dict['file_name'] = file_name
-            args_dict['gif'] = gif
+            if SceneArgs.gif is True:
+                args_dict["transparent"] = False
 
         self.config = manimlib.config.get_configuration(args)
         self.scene_config = get_scene_config(self.config)
