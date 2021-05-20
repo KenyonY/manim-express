@@ -65,9 +65,13 @@ The above steps will automatically install packages `manim_express` and  `maniml
 
 # Resources
 
-* Chinese Wiki  
+* Wiki  
+  
+  https://3b1b.github.io/manim/
+  
   https://manim.wiki/  
   https://manim.wiki/shaders/
+  
 * 3B1B videos:  
   https://github.com/3b1b/videos
 
