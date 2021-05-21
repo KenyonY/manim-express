@@ -2,7 +2,7 @@ import time
 import random
 import numpy as np
 import shutil
-from manimlib import Scene, Point, Camera
+from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
 from manimlib.scene.scene_file_writer import SceneFileWriter
@@ -11,6 +11,8 @@ import manimlib.config
 from manimlib.config import Size
 from manimlib.utils.color import rgb_to_hex
 from .tools import ppath
+from .plot import Plot
+
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
@@ -47,12 +49,8 @@ class EagerModeScene(Scene):
         scene_name='EagerModeScene',
         CONFIG=None,
     ):
-
-        if CONFIG:
-            self.CONFIG = CONFIG
-
+        self.CONFIG = CONFIG
         args = manimlib.config.parse_cli()
-
         args_dict = vars(args)
         args_dict['file'] = None
         args_dict['scene_names'] = scene_name
@@ -69,40 +67,14 @@ class EagerModeScene(Scene):
         self.config = manimlib.config.get_configuration(args)
         self.scene_config = get_scene_config(self.config)
 
-        # super().__init__(**self.scene_config)
-        # -------------------------------------------
-        digest_config(self, self.scene_config)
-
-        if self.preview:
-            from manimlib.window import Window
-            self.window = Window(scene=self, **self.window_config)
-            self.camera_config["ctx"] = self.window.ctx
-        else:
-            self.window = None
-
-        self.camera: Camera = self.camera_class(**self.camera_config)
-        self.file_writer = SceneFileWriter(self, **self.file_writer_config)
-        self.mobjects = []
-        self.num_plays = 0
-        self.time = 0
-        self.skip_time = 0
-        self.original_skipping_status = self.skip_animations
-
-        # Items associated with interaction
-        self.mouse_point = Point()
-        self.mouse_drag_point = Point()
-
-        # Much nicer to work with deterministic scenes
-        if self.random_seed is not None:
-            random.seed(self.random_seed)
-            np.random.seed(self.random_seed)
-        # -------------------------------------------
+        super().__init__(**self.scene_config)
 
         self.virtual_animation_start_time = 0
         self.real_animation_start_time = time.time()
         self.file_writer.begin()
 
         self.setup()
+        self.plt = Plot()
 
     def hold_on(self):
         """ Equal to self.tear_down(). """
@@ -131,6 +103,23 @@ class EagerModeScene(Scene):
 
     def embed(self):
         super().embed()
+
+    def plot(self, x, y, color=None, width=2, axes_ratio=0.62, show_axes=True):
+        self.plt.plot(x, y, color, width, axes_ratio, show_axes)
+
+    def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
+        pass
+
+    def get_plot_mobj(self):
+        self.plt.gen_axes_lines()
+        return VGroup(*self.plt.get_axes_lines())
+
+    def get_plot_axes(self):
+        return self.plt.get_axes()
+
+    def show_plot(self):
+        self.add(self.get_plot_mobj())
+        self.plt = Plot()
 
 
 class JupyterModeScene(EagerModeScene):

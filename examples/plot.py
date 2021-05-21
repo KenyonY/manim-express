@@ -1,20 +1,23 @@
-from manimlib import *
-from manim_express import EagerModeScene, Size, SceneArgs
-import numpy as np
+from example_imports import *
 
-x = np.linspace(0, 2*np.pi, 1000)
-y = np.sin(5*x)
+theta = np.linspace(-10, 2*PI, 1000)
+x = np.cos(theta)
+y = np.sin(theta)
 
 # matplotlib
-import matplotlib.pyplot as plt
 plt.plot(x, y, color='green', linewidth=2)
+plt.plot(theta, x)
+plt.axis('equal')
 plt.show()
 
 # manim_express
-from manim_express.utils import m_line, m_scatter
-SceneArgs.color="#222222"
-scene = EagerModeScene(screen_size=Size.big)
+SceneArgs.color = "#222222"
+scene = EagerModeScene(screen_size=Size.bigger)
 
-line = m_line(x, y, color=GREEN, width=2)
-scene.add(line)
+scene.plot(theta, x, color=BLUE,  width=1)
+scene.plot(x, y, color=GREEN_A, axes_ratio=1, show_axes=False)
+# mob = scene.get_plot_mobj().move_to(UR*3)
+# scene.add(mob)
+scene.show_plot()
+
 scene.hold_on()
