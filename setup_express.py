@@ -15,7 +15,7 @@ with open("README.md", "r", encoding='utf-8') as fr:
 setup(name=my_package.__name__,
       version=my_package.__version__,
       package_data={
-          'mainm_express': [
+          'manim_express': [
               '*.yaml', '*.yml',
           ],
       },
@@ -24,7 +24,7 @@ setup(name=my_package.__name__,
       long_description_content_type="text/markdown",
       author="K.y",
       author_email="beidongjiedeguang@gmail.com",
-      url="https://github.com/beidongjiedeguang/mainm_express",
+      url="https://github.com/beidongjiedeguang/manim-express",
       license="MIT",
       install_requires=install_requires,
       classifiers=[

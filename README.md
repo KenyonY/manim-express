@@ -49,11 +49,11 @@ The above steps will automatically install packages `manim_express` and  `maniml
   plt.show()
   
   # manim_express
-  from manim_express.utils import m_line, m_scatter
   scene = EagerModeScene()
   
-  line = m_line(x, y, color=GREEN, width=2)
-  scene.add(line)
+  scene.plot(x, y, color=GREEN, width=2)
+  scene.show_plot()
+  
   scene.hold_on()
   ```
 
@@ -65,9 +65,13 @@ The above steps will automatically install packages `manim_express` and  `maniml
 
 # Resources
 
-* Chinese Wiki  
+* Wiki  
+  
+  https://3b1b.github.io/manim/
+  
   https://manim.wiki/  
   https://manim.wiki/shaders/
+  
 * 3B1B videos:  
   https://github.com/3b1b/videos
 

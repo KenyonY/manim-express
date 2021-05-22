@@ -2,7 +2,7 @@ import time
 import random
 import numpy as np
 import shutil
-from manimlib import Scene, Point, Camera
+from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
 from manimlib.scene.scene_file_writer import SceneFileWriter
@@ -11,18 +11,32 @@ import manimlib.config
 from manimlib.config import Size
 from manimlib.utils.color import rgb_to_hex
 from .tools import ppath
+from .plot import Plot
 
-__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "Config"]
+__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
 
-class Config:
-    color = rgb_to_hex([0.3, 0.4, 0.5])
+class SceneArgs:
+    # write_file = False
+    # file_name = None
+    # skip_animations = False  # "Save the last frame"
+    color = rgb_to_hex([0.3, 0.4, 0.5])  # Background color"
     full_screen = False
+    gif = False
     resolution = '1920x1080'
-    transparent = True,
-    save_pngs = False,  # Save each frame as a png
+
+    # Render to a movie file with an alpha channel,
+    # if transparent is True, .mov file will be generated.
+    transparent = False
+    save_pngs = False  # Save each frame as a png
     hd = False
     uhd = False
+    quiet = True
+    open = False  # Automatically open the saved file once its done
+    finder = False  # Show the output file in finder
+    frame_rate = None
+    video_dir = None  # directory to write video
+    start_at_animation_number = None
 
 
 class EagerModeScene(Scene):
@@ -31,66 +45,35 @@ class EagerModeScene(Scene):
         write_file=False,
         file_name=None,
         screen_size=Size.medium,
-        gif=False,
         scene_name='EagerModeScene',
-        Config=Config,
         CONFIG=None,
     ):
-
-        if CONFIG:
-            self.CONFIG = CONFIG
-
+        self.CONFIG = CONFIG
         args = manimlib.config.parse_cli()
-
         args_dict = vars(args)
         args_dict['file'] = None
         args_dict['scene_names'] = scene_name
-        # args_dict['full_screen'] = full_screen
         args_dict['screen_size'] = screen_size
-        for key, value in Config.__dict__.items():
+        for key, value in SceneArgs.__dict__.items():
             args_dict[key] = value
-        if write_file is True:
+
+        if write_file is True or SceneArgs.gif is True:
             args_dict['write_file'] = True
             args_dict['file_name'] = file_name
-            args_dict['gif'] = gif
+            if SceneArgs.gif is True:
+                args_dict["transparent"] = False
 
         self.config = manimlib.config.get_configuration(args)
         self.scene_config = get_scene_config(self.config)
 
-        # super().__init__(**self.scene_config)
-        # -------------------------------------------
-        digest_config(self, self.scene_config)
-
-        if self.preview:
-            from manimlib.window import Window
-            self.window = Window(scene=self, **self.window_config)
-            self.camera_config["ctx"] = self.window.ctx
-        else:
-            self.window = None
-
-        self.camera: Camera = self.camera_class(**self.camera_config)
-        self.file_writer = SceneFileWriter(self, **self.file_writer_config)
-        self.mobjects = []
-        self.num_plays = 0
-        self.time = 0
-        self.skip_time = 0
-        self.original_skipping_status = self.skip_animations
-
-        # Items associated with interaction
-        self.mouse_point = Point()
-        self.mouse_drag_point = Point()
-
-        # Much nicer to work with deterministic scenes
-        if self.random_seed is not None:
-            random.seed(self.random_seed)
-            np.random.seed(self.random_seed)
-        # -------------------------------------------
+        super().__init__(**self.scene_config)
 
         self.virtual_animation_start_time = 0
         self.real_animation_start_time = time.time()
         self.file_writer.begin()
 
         self.setup()
+        self.plt = Plot()
 
     def hold_on(self):
         """ Equal to self.tear_down(). """
@@ -119,6 +102,23 @@ class EagerModeScene(Scene):
 
     def embed(self):
         super().embed()
+
+    def plot(self, x, y, color=None, width=2, axes_ratio=0.62, show_axes=True):
+        self.plt.plot(x, y, color, width, axes_ratio, show_axes)
+
+    def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
+        pass
+
+    def get_plot_mobj(self):
+        self.plt.gen_axes_lines()
+        return VGroup(*self.plt.get_axes_lines())
+
+    def get_plot_axes(self):
+        return self.plt.get_axes()
+
+    def show_plot(self):
+        self.add(self.get_plot_mobj())
+        self.plt = Plot()
 
 
 class JupyterModeScene(EagerModeScene):

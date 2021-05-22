@@ -78,7 +78,6 @@ class CustomSurface:
             # v_range=[-EPSILON, PI + EPSILON], u_range=[0, TAU],
             color=color,
             resolution=self.resolution)
-        return sphere
 
 
 if __name__ == "__main__":
