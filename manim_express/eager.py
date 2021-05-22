@@ -13,7 +13,6 @@ from manimlib.utils.color import rgb_to_hex
 from .tools import ppath
 from .plot import Plot
 
-
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
 

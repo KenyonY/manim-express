@@ -1,5 +1,6 @@
 import numpy as np
 from manimlib import *
+from .tools import calc_number_step
 
 
 def m_line(x,
@@ -91,9 +92,8 @@ class Plot:
         xmin, xmax = x_label_min - EPSILON, x_label_max + dx
         ymin, ymax = y_label_min - EPSILON, y_label_max + dy
 
-        n_x, n_y = 10, 5
         if self._axes_ratio == 1:
-            tick_ratio = (ymax-ymin)/(xmax-xmin)
+            tick_ratio = y_length / x_length
         else:
             tick_ratio = self._axes_ratio
 
@@ -102,9 +102,17 @@ class Plot:
         if self._axes_height > 7:
             self._axes_height = 7
             self._axes_width = self._axes_height / tick_ratio
+
+        n_x = 10
+        n_y = n_x * tick_ratio
+        # x_step = x_length / n_x
+        # y_step = y_length / n_y
+        _, x_step = calc_number_step(x_length)
+        _, y_step = calc_number_step(y_length)
+
         axes = Axes(
-            y_range=(y_label_min, ymax, (ymax - ymin) / n_y),
-            x_range=(xmin, xmax, (xmax - xmin) / n_x),
+            x_range=(xmin, xmax, x_step),
+            y_range=(y_label_min, ymax, y_step),
             height=self._axes_height,
             width=self._axes_width,
             # Axes is made of two NumberLine mobjects.  You can specify
@@ -112,18 +120,18 @@ class Plot:
             axis_config={
                 "numbers_to_exclude": [],
                 "stroke_color": GREY_A,
-                "stroke_width": 1,
+                "stroke_width": 0.1,
             },
             # Alternatively, you can specify configuration for just one
             # of them, like this.
             y_axis_config={
                 "include_tip": True,
-            }
-        )
+            })
         axes.add_coordinate_labels(
-            x_values=set(np.linspace(x_label_min - EPSILON, x_label_max, 10)).add(0),
-            y_values=set(np.linspace(y_label_min, y_label_max, 7)).add(0),
-            font_size=20,
+            # x_values=set(np.linspace(x_label_min - EPSILON, x_label_max,
+            #                          10)).add(0),
+            # y_values=set(np.linspace(y_label_min, y_label_max, 17)).add(0),
+            font_size=15,
             num_decimal_places=1,
         )
 
@@ -134,7 +142,7 @@ class Plot:
         axes.y_axis.shift(RIGHT * self._unit_x * x_label_min)
 
         self._axes = axes
-        
+
     def get_axes(self):
         return self._axes
 
@@ -142,19 +150,28 @@ class Plot:
         return self._axes_line_list
 
     def gen_axes_lines(self):
-        self.create_axes(x_label_min=self._xmin, x_label_max=self._xmax,
-                         y_label_min=self._ymin, y_label_max=self._ymax)
+        self.create_axes(x_label_min=self._xmin,
+                         x_label_max=self._xmax,
+                         y_label_min=self._ymin,
+                         y_label_max=self._ymax)
         # midx = (self._xmin + self._xmax) / 2
         # midy = (self._ymin + self._ymax) / 2
         # frame = scene.camera.frame
         # frame.move_to(self._axes.c2p(midx, midy))
-        for x, y, color, width in zip(self._xdata, self._ydata, self._color_list, self._width_list):
+        for x, y, color, width in zip(self._xdata, self._ydata,
+                                      self._color_list, self._width_list):
             line = m_line(x, y, color=color, width=width, axes=self._axes)
             axes_line = VGroup(line, self._axes) if self._show_axes else line
             line.shift(-self._unit_x * self._xmin * RIGHT)
             self._axes_line_list.append(axes_line)
 
-    def plot(self, x, y, color=None, width=None, axes_ratio=0.618, show_axes=True):
+    def plot(self,
+             x,
+             y,
+             color=None,
+             width=None,
+             axes_ratio=0.618,
+             show_axes=True):
         self._show_axes = show_axes
         self._xmin = min(self._xmin, min(x))
         self._xmax = max(self._xmax, max(x))
@@ -169,4 +186,3 @@ class Plot:
         self._axes_width = 10
         self._axes_height = 0.62 * self._axes_width
         self._axes_ratio = axes_ratio
-

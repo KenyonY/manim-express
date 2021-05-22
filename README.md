@@ -49,11 +49,11 @@ The above steps will automatically install packages `manim_express` and  `maniml
   plt.show()
   
   # manim_express
-  from manim_express.plot import m_line, m_scatter
   scene = EagerModeScene()
   
-  line = m_line(x, y, color=GREEN, width=2)
-  scene.add(line)
+  scene.plot(x, y, color=GREEN, width=2)
+  scene.show_plot()
+  
   scene.hold_on()
   ```
 
