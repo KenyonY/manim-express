@@ -12,7 +12,7 @@ The above steps will automatically install packages `manim_express` and  `maniml
 
 # Quick start
 
-* Render an animation: [SquareToCircle](https://3b1b.github.io/manim/getting_started/quickstart.html#add-animations)
+* Render an animation: [3b1b:SquareToCircle](https://3b1b.github.io/manim/getting_started/quickstart.html#add-animations)
 
   ```python
   from manimlib import *
@@ -30,6 +30,13 @@ The above steps will automatically install packages `manim_express` and  `maniml
   scene.hold_on()
   ```
   
+  A window will pop up on the screen. And then you can :
+  * hold down the `d` key on the keyboard and move the mouse to change the three-dimensional perspective.
+  * hold down the `s` key on the keyboard and move the mouse to pan the screen
+  * hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
+  * scroll the middle mouse button to move the screen up and down
+  * reset camera view by pressing `r`
+  * close the window and exit the program by pressing `q`
   
 
 * `manim_express` vs `Matplotlib`:
@@ -55,17 +62,6 @@ The above steps will automatically install packages `manim_express` and  `maniml
   
   scene.hold_on()
   ```
-  
-A window will pop up on the screen. And then you can :
-* hold down the `d` key on the keyboard and move the mouse to change the three-dimensional perspective.
-* hold down the `s` key on the keyboard and move the mouse to pan the screen
-* hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
-* scroll the middle mouse button to move the screen up and down
-
-  
-
-  
-
 
 
 
