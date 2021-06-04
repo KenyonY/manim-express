@@ -1,5 +1,5 @@
 from example_imports import *
-SceneArgs.color ="#222222"
+# SceneArgs.color ="#222222"
 scene = EagerModeScene(screen_size=Size.bigger)
 
 intro_words = Text("""
@@ -9,11 +9,11 @@ intro_words = Text("""
 """)
 intro_words.to_edge(UP)
 
-scene.play(Write(intro_words))
-scene.wait(2)
+scene.add(intro_words)
+scene.wait(1)
 
 # Linear transform
-grid = NumberPlane((-10, 10), (-5, 5))
+grid = NumberPlane((50, 60), (-5, 5))
 matrix = [[1, 1], [0, 1]]
 linear_transform_words = VGroup(
     Text("This is what the matrix"),
@@ -38,6 +38,7 @@ moving_c_grid = c_grid.copy()
 moving_c_grid.prepare_for_nonlinear_transform()
 c_grid.set_stroke(BLUE_E, 1)
 c_grid.add_coordinate_labels(font_size=24)
+
 complex_map_words = TexText("""
     Or thinking of the plane as $\\mathds{C}$,\\\\
     this is the map $z \\rightarrow z^2$

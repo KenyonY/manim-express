@@ -25,8 +25,8 @@ tex:
 
 style:
   font: "Consolas"
-  background_color: "#222222"
-#  background_color: "#ffffff"
+  background_color: "#333333"
+
 # Set the position of preview window, you can use directions, e.g. UL/DR/OL/OO/...
 # also, you can also specify the position(pixel) of the upper left corner of
 # the window on the monitor, e.g. "960,540"

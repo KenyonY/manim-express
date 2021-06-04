@@ -14,5 +14,6 @@ class SquareToCircle(Scene):
         self.play(Transform(square, circle))
         self.wait()
 
+
 if __name__ == "__main__":
-    os.system('manimgl start2.py')
+    os.system('manimgl start2.py ')

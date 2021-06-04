@@ -61,7 +61,7 @@ c = ParametricCurve(
 
 c2 = ParametricCurve(lambda x: [x, np.sin(x), 0], [-2, 5])
 
-scene.play(*map(ShowCreation, VGroup(c, c2)))
+scene.play(*map(ShowCreation, (c, c2)))
 now = scene.time
 c.add_updater(lambda c: c.set_y(math.sin(3 * (scene.time - now))))
 scene.wait(1)
