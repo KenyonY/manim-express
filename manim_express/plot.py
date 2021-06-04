@@ -1,4 +1,3 @@
-import numpy as np
 from manimlib import *
 from .tools import calc_number_step
 
@@ -66,6 +65,7 @@ def m_scatter(x, y, z=None, axes=None):
 
 class Plot:
     def __init__(self):
+        self.num = 0
         self._axes = None
         self._xmin = np.Inf
         self._xmax = -np.inf
@@ -76,12 +76,16 @@ class Plot:
         self._xdata = []
         self._ydata = []
         self._color_list = []
+        self._color_choice_list = [
+            GREEN_C, BLUE_C, RED_C, YELLOW_C, ORANGE, GOLD_C, MAROON_C, TEAL_C
+        ]
         self._width_list = []
         self._axes_line_list = []
         self._axes_width = 10
         self._axes_height = 6.2
         self._axes_ratio = 0.62
         self._show_axes = True
+        self._include_tip = True
 
     def create_axes(self, x_label_min, x_label_max, y_label_min, y_label_max):
         x_length = x_label_max - x_label_min
@@ -103,12 +107,15 @@ class Plot:
             self._axes_height = 7
             self._axes_width = self._axes_height / tick_ratio
 
-        n_x = 10
-        n_y = n_x * tick_ratio
+        # n_x = 10
+        # n_y = n_x * tick_ratio
         # x_step = x_length / n_x
         # y_step = y_length / n_y
-        _, x_step = calc_number_step(x_length)
-        _, y_step = calc_number_step(y_length)
+        n_step_x, x_step = calc_number_step(x_length)
+        n_step_y, y_step = calc_number_step(y_length)
+
+        if n_step_y / n_step_x > tick_ratio + 0.3:
+            y_step *= 2
 
         axes = Axes(
             x_range=(xmin, xmax, x_step),
@@ -120,12 +127,12 @@ class Plot:
             axis_config={
                 "numbers_to_exclude": [],
                 "stroke_color": GREY_A,
-                "stroke_width": 0.1,
+                "stroke_width": 0.3,
             },
             # Alternatively, you can specify configuration for just one
             # of them, like this.
             y_axis_config={
-                "include_tip": True,
+                "include_tip": self._include_tip,
             })
         axes.add_coordinate_labels(
             # x_values=set(np.linspace(x_label_min - EPSILON, x_label_max,
@@ -171,7 +178,9 @@ class Plot:
              color=None,
              width=None,
              axes_ratio=0.618,
-             show_axes=True):
+             show_axes=True,
+             include_tip=True):
+        self.num += 1
         self._show_axes = show_axes
         self._xmin = min(self._xmin, min(x))
         self._xmax = max(self._xmax, max(x))
@@ -180,9 +189,13 @@ class Plot:
 
         self._xdata.append(x)
         self._ydata.append(y)
+        if color is None:
+            color = self._color_choice_list[self.num %
+                                            len(self._color_choice_list) - 1]
         self._color_list.append(color)
         self._width_list.append(width)
 
         self._axes_width = 10
         self._axes_height = 0.62 * self._axes_width
         self._axes_ratio = axes_ratio
+        self._include_tip = include_tip

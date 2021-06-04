@@ -1,6 +1,4 @@
 import time
-import random
-import numpy as np
 import shutil
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
 from manimlib.utils.config_ops import digest_config
@@ -9,7 +7,6 @@ from manimlib.scene.scene_file_writer import SceneFileWriter
 import manimlib.config
 
 from manimlib.config import Size
-from manimlib.utils.color import rgb_to_hex
 from .tools import ppath
 from .plot import Plot
 
@@ -20,7 +17,7 @@ class SceneArgs:
     # write_file = False
     # file_name = None
     # skip_animations = False  # "Save the last frame"
-    color = rgb_to_hex([0.3, 0.4, 0.5])  # Background color"
+    color = None  # Background color"
     full_screen = False
     gif = False
     resolution = '1920x1080'
@@ -75,6 +72,17 @@ class EagerModeScene(Scene):
         self.setup()
         self.plt = Plot()
 
+        self.episodes = []
+        self.current_episode = 1
+        self.current_animation = 0
+        self.loop_start_animation = None
+        self.pause_start_animation = 0
+
+    def play(self, *args, run_time=1, **kwargs):
+        """TODO:"""
+        super().play(*args, run_time=run_time, **kwargs)
+        self.current_animation += 1
+
     def hold_on(self):
         """ Equal to self.tear_down(). """
         self.stop_skipping()
@@ -103,10 +111,18 @@ class EagerModeScene(Scene):
     def embed(self):
         super().embed()
 
-    def plot(self, x, y, color=None, width=2, axes_ratio=0.62, show_axes=True):
-        self.plt.plot(x, y, color, width, axes_ratio, show_axes)
+    def plot(self,
+             x,
+             y,
+             color=None,
+             width=2,
+             axes_ratio=0.62,
+             show_axes=True,
+             include_tip=True):
+        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip)
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
+        """TODO"""
         pass
 
     def get_plot_mobj(self):
