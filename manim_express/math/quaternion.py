@@ -73,7 +73,6 @@ class Quaternion:
         self._w = value
         self._set_q()
 
-
     def set_from_euler(self):
         """TODO"""
         pass
@@ -130,5 +129,3 @@ class Quaternion:
 
 if __name__ == "__main__":
     q = Quaternion()
-
-    

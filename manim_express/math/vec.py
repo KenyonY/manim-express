@@ -40,12 +40,12 @@ class Vec3:
         ix = q.w * x + q.y * z - q.z * y
         iy = q.w * y + q.z * x - q.x * z
         iz = q.w * z + q.x * y - q.y * x
-        iw = - q.x * x - q.y * y - q.z * z
+        iw = -q.x * x - q.y * y - q.z * z
 
         # calculate result * inverse quat
-        self._x = ix * q.w + iw * - q.x + iy * - q.z - iz * - q.y
-        self._y = iy * q.w + iw * - q.y + iz * - q.x - ix * - q.z
-        self._z = iz * q.w + iw * - q.z + ix * - q.y - iy * - q.x
+        self._x = ix * q.w + iw * -q.x + iy * -q.z - iz * -q.y
+        self._y = iy * q.w + iw * -q.y + iz * -q.x - ix * -q.z
+        self._z = iz * q.w + iw * -q.z + ix * -q.y - iy * -q.x
         self._set_vec()
         return self
 
@@ -71,18 +71,13 @@ if __name__ == "__main__":
     m_vec = Arrow(ORIGIN, vec_list, buff=0)
 
     axis = [1, 2, 1]
-    angle = 45*DEGREES
+    angle = 45 * DEGREES
 
     m_vec.rotate(angle, axis)
 
     # print(quat_conjugate(np.array(Q), style=1))
     # print(quaternion_conjugate(Q))
-    q = Quaternion().set_from_axis_angle([1, 1, 1], 45*DEGREES)
+    q = Quaternion().set_from_axis_angle([1, 1, 1], 45 * DEGREES)
     print(q, 'q')
     print(vec3.apply_quaternion(q))
     print(m_vec.get_end())
-
-
-
-
-
