@@ -1,4 +1,4 @@
-from example_imports import *
+from examples.example_imports import *
 
 # SceneArgs.color = "#222222"
 scene = EagerModeScene(screen_size=Size.biggest)

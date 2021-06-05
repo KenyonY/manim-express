@@ -1,7 +1,4 @@
-import numpy as np
-
-from manim_express import EagerModeScene, SceneArgs, Size
-from manim_express.math import Quaternion, Vec3
+from examples.example_imports import *
 
 from manimlib import *
 

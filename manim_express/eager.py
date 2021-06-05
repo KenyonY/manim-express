@@ -1,5 +1,8 @@
+import random
 import time
 import shutil
+
+import mpmath
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
 from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
@@ -118,8 +121,11 @@ class EagerModeScene(Scene):
              width=2,
              axes_ratio=0.62,
              show_axes=True,
-             include_tip=True):
-        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip)
+             include_tip=True,
+             x_label='x',
+             y_label='y'
+             ):
+        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip, x_label, y_label)
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
@@ -127,13 +133,27 @@ class EagerModeScene(Scene):
 
     def get_plot_mobj(self):
         self.plt.gen_axes_lines()
-        return VGroup(*self.plt.get_axes_lines())
+        return self.plt.get_axes_lines()
 
     def get_plot_axes(self):
         return self.plt.get_axes()
 
-    def show_plot(self):
-        self.add(self.get_plot_mobj())
+    def show_plot(self, play=True):
+        axes_lines_dict = self.get_plot_mobj()
+
+        random.seed(time.time())
+        if play:
+            def play_func(Func):
+                if axes_lines_dict['axes']:
+                    self.play(ShowCreation(VGroup(*axes_lines_dict["axes"])), run_time=1)
+                self.play(Func(VGroup(*axes_lines_dict["line"])), run_time=1)
+            if random.random() > 0.5:
+                play_func(Write)
+            else:
+                play_func(ShowCreation)
+        else:
+            self.add(VGroup(*axes_lines_dict["line"], *axes_lines_dict["axes"]))
+
         self.plt = Plot()
 
 
