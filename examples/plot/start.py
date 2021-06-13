@@ -7,7 +7,7 @@ y = np.sin(theta)
 
 scene.plot(theta, 2*y)
 
-scene.plot(x, y, x_label='t', y_label='f(t)')
+scene.plot(x, y, x_label='t', y_label='f(t)', axes_ratio=1)
 
 scene.show_plot()
 

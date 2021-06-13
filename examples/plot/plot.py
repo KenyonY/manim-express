@@ -7,24 +7,24 @@ theta = np.linspace(-10, 2*PI, 500)
 x = np.cos(theta)
 y = np.sin(theta)
 
-test1 = 0
+test1 = 1
 if test1:
     # scene.plot(theta, x, width=1)
     scene.plot(theta, x)
     scene.plot(theta, x+0.25)
     scene.plot(theta, x+0.5)
     scene.plot(theta, x+0.75)
-    # scene.plot(theta, x+1)
-    # scene.plot(theta, x+1.25)
-    # scene.plot(theta, x+1.5)
-    # scene.plot(theta, x+1.75)
+    scene.plot(theta, x+1)
+    scene.plot(theta, x+1.25)
+    scene.plot(theta, x+1.5)
+    scene.plot(theta, x+1.75)
 
     # scene.plot(theta, y)
     # mob = scene.get_plot_mobj().move_to(UR*3)
     # scene.add(mob)
     scene.show_plot()
 
-test2 = 1
+test2 = 0
 if test2:
     COL_COLORS = [MAROON_B, MAROON_C]
     EIGEN_COLORS = [TEAL_A, TEAL_D]
