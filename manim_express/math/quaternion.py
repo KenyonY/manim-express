@@ -64,14 +64,12 @@ class Quaternion:
         v2 = q2._vec
         w1 = q1._w
         w2 = q2._w
-        vec = w1*v2 + w2*v1 + np.cross(v1, v2)
+        vec = w1 * v2 + w2 * v1 + np.cross(v1, v2)
         w = w1 * w2 - v1.dot(v2)
 
         new_q = object.__new__(Quaternion)
         new_q.__init__([*vec, w])
         return new_q
-
-
 
     def __new__(cls, *args, **kwargs):
         return object.__new__(cls)
@@ -152,4 +150,8 @@ class Quaternion:
 
 
 if __name__ == "__main__":
-    q = Quaternion()
+    axis = np.array([1, 1, 1])
+    q1 = Quaternion().set_from_axis_angle(axis, 20 * DEGREES)
+    q2 = Quaternion().set_from_axis_angle(axis, 30 * DEGREES)
+    print(Quaternion.multiply_quat(q1, q2))
+    print(Quaternion.multiply_quat_2(q1, q2))

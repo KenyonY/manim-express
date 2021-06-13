@@ -66,7 +66,7 @@ def m_scatter(x, y, z=None, axes=None):
 class Plot:
     def __init__(self):
         self.num = 0
-        self._axes:Axes = None
+        self._axes: Axes = None
         self._axes_labels = []
         self._xmin = np.Inf
         self._xmax = -np.inf
@@ -159,8 +159,7 @@ class Plot:
         return self._axes
 
     def get_axes_lines(self):
-        return {"line": self._axes_line_list,
-                "axes": self._axes_labels}
+        return {"line": self._axes_line_list, "axes": self._axes_labels}
 
     def gen_axes_lines(self):
         self.create_axes(x_label_min=self._xmin,
@@ -176,27 +175,34 @@ class Plot:
             line = m_line(x, y, color=color, width=width, axes=self._axes)
 
             labels = VGroup(
-                self._axes.get_axis_label(self._x_label, self._axes.get_x_axis(), edge=RIGHT, direction=DR),
-                self._axes.get_axis_label(self._y_label, self._axes.get_y_axis(), edge=UP, direction=UR),
+                self._axes.get_axis_label(self._x_label,
+                                          self._axes.get_x_axis(),
+                                          edge=RIGHT,
+                                          direction=DR),
+                self._axes.get_axis_label(self._y_label,
+                                          self._axes.get_y_axis(),
+                                          edge=UP,
+                                          direction=UR),
             )
-            self._axes_labels = VGroup(self._axes, labels) if self._show_axes else []
+            self._axes_labels = VGroup(self._axes,
+                                       labels) if self._show_axes else []
             self._axes_line_list.append(line)
 
             line.shift(-self._unit_x * self._xmin * RIGHT)
             # self._axes_line_list.append(line)
 
-
-    def plot(self,
-             x,
-             y,
-             color=None,
-             width=None,
-             axes_ratio=0.618,
-             show_axes=True,
-             include_tip=True,
-             x_label='x',
-             y_label='y',
-             ):
+    def plot(
+        self,
+        x,
+        y,
+        color=None,
+        width=None,
+        axes_ratio=0.618,
+        show_axes=True,
+        include_tip=True,
+        x_label='x',
+        y_label='y',
+    ):
         self.num += 1
         self._show_axes = show_axes
         self._xmin = min(self._xmin, min(x))

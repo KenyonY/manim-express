@@ -1,14 +1,11 @@
 import random
 import time
 import shutil
-
-import mpmath
+# from manimlib.utils.config_ops import digest_config
+# from manimlib.scene.scene_file_writer import SceneFileWriter
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
-from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
-from manimlib.scene.scene_file_writer import SceneFileWriter
 import manimlib.config
-
 from manimlib.config import Size
 from .tools import ppath
 from .plot import Plot
@@ -44,7 +41,7 @@ class EagerModeScene(Scene):
         self,
         write_file=False,
         file_name=None,
-        screen_size=Size.medium,
+        screen_size=Size.big,
         scene_name='EagerModeScene',
         CONFIG=None,
     ):
@@ -123,9 +120,9 @@ class EagerModeScene(Scene):
              show_axes=True,
              include_tip=True,
              x_label='x',
-             y_label='y'
-             ):
-        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip, x_label, y_label)
+             y_label='y'):
+        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip,
+                      x_label, y_label)
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
@@ -145,14 +142,17 @@ class EagerModeScene(Scene):
         if play:
             def play_func(Func):
                 if axes_lines_dict['axes']:
-                    self.play(ShowCreation(VGroup(*axes_lines_dict["axes"])), run_time=1)
+                    self.play(ShowCreation(VGroup(*axes_lines_dict["axes"])),
+                              run_time=1)
                 self.play(Func(VGroup(*axes_lines_dict["line"])), run_time=1)
+
             if random.random() > 0.5:
                 play_func(Write)
             else:
                 play_func(ShowCreation)
         else:
-            self.add(VGroup(*axes_lines_dict["line"], *axes_lines_dict["axes"]))
+            self.add(VGroup(*axes_lines_dict["line"],
+                            *axes_lines_dict["axes"]))
 
         self.plt = Plot()
 

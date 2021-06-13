@@ -19,20 +19,20 @@ class CustomSurface:
         """https://www2.math.uconn.edu/~stein/math210/Slides/math210-09notes.pdf"""
         return ParametricSurface(lambda u, v: self.axes.c2p(*np.array(
             [r * np.cos(v), r * np.sin(v), u])),
-                                 u_range=[0, h],
+                                 u_range=[-EPSILON, EPSILON + h],
                                  v_range=[0, TAU],
                                  resolution=self.resolution)
 
     def paraboloid(self):
         return ParametricSurface(lambda u, v: self.axes.c2p(*np.array(
-            [np.cos(v) * u, np.sin(v) * u, u**2])),
-                                 u_range=[-2, 2],
+            [np.cos(v) * u, np.sin(v) * u, u ** 2])),
+                                 u_range=[-EPSILON - 2, EPSILON + 2],
                                  v_range=[-2, 2],
                                  resolution=self.resolution)
 
     def para_hyp(self):
         return ParametricSurface(
-            lambda u, v: self.axes.c2p(*np.array([u, v, u**2 - v**2])),
+            lambda u, v: self.axes.c2p(*np.array([u, v, u ** 2 - v ** 2])),
             v_range=[-2, 2],
             u_range=[-2, 2],
             resolution=self.resolution)
@@ -41,7 +41,7 @@ class CustomSurface:
         return ParametricSurface(lambda u, v: self.axes.c2p(*np.array(
             [u * np.cos(v), u * np.sin(v), u])),
                                  v_range=[0, TAU],
-                                 u_range=[-2, 2],
+                                 u_range=[-EPSILON - 2, EPSILON + 2],
                                  resolution=self.resolution)
 
     def hip_one_side(self):
@@ -50,7 +50,7 @@ class CustomSurface:
              np.cosh(u) * np.sin(v),
              np.sinh(u)])),
                                  v_range=[0, TAU],
-                                 u_range=[-2, 2],
+                                 u_range=[-EPSILON - 2, EPSILON + 2],
                                  resolution=self.resolution)
 
     def ellipsoid(self, a, b, c):
@@ -59,7 +59,7 @@ class CustomSurface:
             a * np.cos(u) * np.cos(v), b * np.cos(u) * np.sin(v), c * np.sin(u)
         ])),
                                  v_range=[0, TAU],
-                                 u_range=[-PI / 2, PI / 2],
+                                 u_range=[-EPSILON - PI / 2, EPSILON + PI / 2],
                                  resolution=self.resolution)
 
     def sphere(self, r, origin=(0, 0, 0), color=BLUE_E):
@@ -75,6 +75,33 @@ class CustomSurface:
             ])),
             u_range=[-EPSILON, PI + EPSILON],
             v_range=[0, TAU],
+            # v_range=[-EPSILON, PI + EPSILON], u_range=[0, TAU],
+            color=color,
+            resolution=self.resolution)
+
+    def circle(self, r, origin=(0, 0, 0), color=BLUE_E):
+        return ParametricSurface(
+            lambda u, v: self.axes.c2p(*np.array([
+                r * np.sin(u) * np.cos(v) + origin[0], r * np.sin(u) * np.sin(
+                    v) + origin[1], origin[2]
+
+            ])),
+            u_range=[-EPSILON, PI + EPSILON],
+            v_range=[0, TAU],
+            # v_range=[-EPSILON, PI + EPSILON], u_range=[0, TAU],
+            color=color,
+            resolution=self.resolution)
+
+    def square(self, w, h, vertex1=(0, 0, 0), color=BLUE_E):
+        return ParametricSurface(
+            lambda u, v: self.axes.c2p(*np.array([
+                u + vertex1[0],
+                v + vertex1[1],
+                vertex1[2]
+
+            ])),
+            u_range=[0, w],
+            v_range=[0, h],
             # v_range=[-EPSILON, PI + EPSILON], u_range=[0, TAU],
             color=color,
             resolution=self.resolution)
