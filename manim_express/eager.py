@@ -9,6 +9,8 @@ import manimlib.config
 from manimlib.config import Size
 from .tools import ppath
 from .plot import Plot
+from .onlinetex import tex_to_svg_file_online
+import manimlib.mobject.svg.tex_mobject
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
@@ -34,6 +36,7 @@ class SceneArgs:
     frame_rate = None
     video_dir = None  # directory to write video
     start_at_animation_number = None
+    use_online_tex = False
 
 
 class EagerModeScene(Scene):
@@ -59,6 +62,10 @@ class EagerModeScene(Scene):
             args_dict['file_name'] = file_name
             if SceneArgs.gif is True:
                 args_dict["transparent"] = False
+
+        if SceneArgs.use_online_tex:
+            print("Use online latex compiler")
+            manimlib.mobject.svg.tex_mobject.tex_to_svg_file = tex_to_svg_file_online
 
         self.config = manimlib.config.get_configuration(args)
         self.scene_config = get_scene_config(self.config)
