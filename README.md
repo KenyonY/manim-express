@@ -31,7 +31,7 @@ Fortunately, online latex compilation option is available. Just set `SceneArgs.u
   scene.hold_on()
   ```
   
-  A window will pop up on the screen. And then you can :
+  Operating graphics:
   * hold down the `d` key on the keyboard and move the mouse to change the three-dimensional perspective.
   * hold down the `s` key on the keyboard and move the mouse to pan the screen
   * hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
