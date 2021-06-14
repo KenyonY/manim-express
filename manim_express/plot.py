@@ -1,7 +1,6 @@
 from manimlib import *
 from .tools import calc_number_step
 
-
 def m_line(x,
            y,
            z=None,
