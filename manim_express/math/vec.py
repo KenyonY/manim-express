@@ -46,13 +46,14 @@ class Vec3:
         self._x = ix * q.w + iw * -q.x + iy * -q.z - iz * -q.y
         self._y = iy * q.w + iw * -q.y + iz * -q.x - ix * -q.z
         self._z = iz * q.w + iw * -q.z + ix * -q.y - iy * -q.x
+
         self._set_vec()
         return self
 
     def dot(self, vec):
         self._vector.dot(vec)
 
-    def get_array(self):
+    def to_array(self):
         return self._vector
 
     def copy(self):

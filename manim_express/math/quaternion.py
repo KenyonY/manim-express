@@ -4,6 +4,7 @@ from manimlib import *
 
 class Quaternion:
     def __init__(self, x=None, y=0, z=0, w=1):
+        """Quaternion style [x, y, z, w]"""
         if issubclass(type(x), (np.ndarray, list, tuple)):
             self._x = x[0]
             self._y = x[1]
@@ -24,7 +25,7 @@ class Quaternion:
         self._vec = np.array([self._x, self._y, self._z])
         self._q = np.array([*self._vec, self._w])
 
-    def get_array(self):
+    def to_array(self):
         return self._q
 
     def normalise(self):
@@ -43,7 +44,10 @@ class Quaternion:
     def multi(self, *quats):
         q = self
         for qi in quats:
-            q = self.multiply_quat_2(q, qi)
+            q = Quaternion.multiply_quat_2(q, qi)
+        self._vec = q._vec
+        self._q = q._q
+        # self._set_q()
         return q
 
     @staticmethod
