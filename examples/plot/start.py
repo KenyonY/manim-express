@@ -1,4 +1,5 @@
 from examples.example_imports import *
+SceneArgs.use_online_tex = True
 
 scene = EagerModeScene(screen_size=Size.big)
 theta = np.linspace(0, TAU, 100)
