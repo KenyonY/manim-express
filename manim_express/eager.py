@@ -1,14 +1,16 @@
+import random
 import time
 import shutil
+# from manimlib.utils.config_ops import digest_config
+# from manimlib.scene.scene_file_writer import SceneFileWriter
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
-from manimlib.utils.config_ops import digest_config
 from manimlib.extract_scene import get_scene_config
-from manimlib.scene.scene_file_writer import SceneFileWriter
 import manimlib.config
-
 from manimlib.config import Size
 from .tools import ppath
 from .plot import Plot
+from .onlinetex import tex_to_svg_file_online
+import manimlib.mobject.svg.tex_mobject
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
@@ -34,6 +36,7 @@ class SceneArgs:
     frame_rate = None
     video_dir = None  # directory to write video
     start_at_animation_number = None
+    use_online_tex = False
 
 
 class EagerModeScene(Scene):
@@ -41,7 +44,7 @@ class EagerModeScene(Scene):
         self,
         write_file=False,
         file_name=None,
-        screen_size=Size.medium,
+        screen_size=Size.big,
         scene_name='EagerModeScene',
         CONFIG=None,
     ):
@@ -59,6 +62,10 @@ class EagerModeScene(Scene):
             args_dict['file_name'] = file_name
             if SceneArgs.gif is True:
                 args_dict["transparent"] = False
+
+        if SceneArgs.use_online_tex:
+            print("Use online latex compiler")
+            manimlib.mobject.svg.tex_mobject.tex_to_svg_file = tex_to_svg_file_online
 
         self.config = manimlib.config.get_configuration(args)
         self.scene_config = get_scene_config(self.config)
@@ -118,8 +125,11 @@ class EagerModeScene(Scene):
              width=2,
              axes_ratio=0.62,
              show_axes=True,
-             include_tip=True):
-        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip)
+             include_tip=True,
+             x_label='x',
+             y_label='y'):
+        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip,
+                      x_label, y_label)
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
@@ -127,13 +137,30 @@ class EagerModeScene(Scene):
 
     def get_plot_mobj(self):
         self.plt.gen_axes_lines()
-        return VGroup(*self.plt.get_axes_lines())
+        return self.plt.get_axes_lines()
 
     def get_plot_axes(self):
         return self.plt.get_axes()
 
-    def show_plot(self):
-        self.add(self.get_plot_mobj())
+    def show_plot(self, play=True):
+        axes_lines_dict = self.get_plot_mobj()
+
+        random.seed(time.time())
+        if play:
+            def play_func(Func):
+                if axes_lines_dict['axes']:
+                    self.play(ShowCreation(VGroup(*axes_lines_dict["axes"])),
+                              run_time=1)
+                self.play(Func(VGroup(*axes_lines_dict["line"])), run_time=1)
+
+            if random.random() > 0.5:
+                play_func(Write)
+            else:
+                play_func(ShowCreation)
+        else:
+            self.add(VGroup(*axes_lines_dict["line"],
+                            *axes_lines_dict["axes"]))
+
         self.plt = Plot()
 
 

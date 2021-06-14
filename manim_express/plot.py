@@ -1,7 +1,6 @@
 from manimlib import *
 from .tools import calc_number_step
 
-
 def m_line(x,
            y,
            z=None,
@@ -66,7 +65,8 @@ def m_scatter(x, y, z=None, axes=None):
 class Plot:
     def __init__(self):
         self.num = 0
-        self._axes = None
+        self._axes: Axes = None
+        self._axes_labels = []
         self._xmin = np.Inf
         self._xmax = -np.inf
         self._ymin = np.Inf
@@ -86,6 +86,8 @@ class Plot:
         self._axes_ratio = 0.62
         self._show_axes = True
         self._include_tip = True
+        self._x_label = 'x'
+        self._y_label = 'y'
 
     def create_axes(self, x_label_min, x_label_max, y_label_min, y_label_max):
         x_length = x_label_max - x_label_min
@@ -133,7 +135,9 @@ class Plot:
             # of them, like this.
             y_axis_config={
                 "include_tip": self._include_tip,
-            })
+            },
+        )
+
         axes.add_coordinate_labels(
             # x_values=set(np.linspace(x_label_min - EPSILON, x_label_max,
             #                          10)).add(0),
@@ -154,7 +158,7 @@ class Plot:
         return self._axes
 
     def get_axes_lines(self):
-        return self._axes_line_list
+        return {"line": self._axes_line_list, "axes": self._axes_labels}
 
     def gen_axes_lines(self):
         self.create_axes(x_label_min=self._xmin,
@@ -168,18 +172,36 @@ class Plot:
         for x, y, color, width in zip(self._xdata, self._ydata,
                                       self._color_list, self._width_list):
             line = m_line(x, y, color=color, width=width, axes=self._axes)
-            axes_line = VGroup(line, self._axes) if self._show_axes else line
-            line.shift(-self._unit_x * self._xmin * RIGHT)
-            self._axes_line_list.append(axes_line)
 
-    def plot(self,
-             x,
-             y,
-             color=None,
-             width=None,
-             axes_ratio=0.618,
-             show_axes=True,
-             include_tip=True):
+            labels = VGroup(
+                self._axes.get_axis_label(self._x_label,
+                                          self._axes.get_x_axis(),
+                                          edge=RIGHT,
+                                          direction=DR),
+                self._axes.get_axis_label(self._y_label,
+                                          self._axes.get_y_axis(),
+                                          edge=UP,
+                                          direction=UR),
+            )
+            self._axes_labels = VGroup(self._axes,
+                                       labels) if self._show_axes else []
+            self._axes_line_list.append(line)
+
+            line.shift(-self._unit_x * self._xmin * RIGHT)
+            # self._axes_line_list.append(line)
+
+    def plot(
+        self,
+        x,
+        y,
+        color=None,
+        width=None,
+        axes_ratio=0.618,
+        show_axes=True,
+        include_tip=True,
+        x_label='x',
+        y_label='y',
+    ):
         self.num += 1
         self._show_axes = show_axes
         self._xmin = min(self._xmin, min(x))
@@ -199,3 +221,5 @@ class Plot:
         self._axes_height = 0.62 * self._axes_width
         self._axes_ratio = axes_ratio
         self._include_tip = include_tip
+        self._x_label = x_label
+        self._y_label = y_label

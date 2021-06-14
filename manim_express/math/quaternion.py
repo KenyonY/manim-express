@@ -4,6 +4,7 @@ from manimlib import *
 
 class Quaternion:
     def __init__(self, x=None, y=0, z=0, w=1):
+        """Quaternion style [x, y, z, w]"""
         if issubclass(type(x), (np.ndarray, list, tuple)):
             self._x = x[0]
             self._y = x[1]
@@ -16,16 +17,25 @@ class Quaternion:
             self._y = y
             self._z = z
             self._w = w
-        self._q = None
-        self._vec = None
-        self._set_q()
+
+        self._vec = np.array([self._x, self._y, self._z])
+        self._q = np.array([*self._vec, self._w])
 
     def _set_q(self):
         self._vec = np.array([self._x, self._y, self._z])
         self._q = np.array([*self._vec, self._w])
 
-    def get_array(self):
+    def to_array(self):
         return self._q
+
+    def normalise(self):
+        L = np.linalg.norm(self._vec)
+        # self._q /= L
+        self._x /= L
+        self._y /= L
+        self._z /= L
+        self._w /= L
+        self._set_q()
 
     def slerp(self):
         """TODO"""
@@ -34,8 +44,10 @@ class Quaternion:
     def multi(self, *quats):
         q = self
         for qi in quats:
-            print(q)
-            q = self.multiply_quat(q, qi)
+            q = Quaternion.multiply_quat_2(q, qi)
+        self._vec = q._vec
+        self._q = q._q
+        # self._set_q()
         return q
 
     @staticmethod
@@ -47,6 +59,20 @@ class Quaternion:
         w = -q1.x * q2.x - q1.y * q2.y - q1.z * q2.z + q1.w * q2.w
         new_q = object.__new__(Quaternion)
         new_q.__init__(x, y, z, w)
+        return new_q
+
+    @staticmethod
+    def multiply_quat_2(q1, q2):
+        """Graßmann Product"""
+        v1 = q1._vec
+        v2 = q2._vec
+        w1 = q1._w
+        w2 = q2._w
+        vec = w1 * v2 + w2 * v1 + np.cross(v1, v2)
+        w = w1 * w2 - v1.dot(v2)
+
+        new_q = object.__new__(Quaternion)
+        new_q.__init__([*vec, w])
         return new_q
 
     def __new__(cls, *args, **kwargs):
@@ -112,15 +138,15 @@ class Quaternion:
 
     @property
     def x(self):
-        return self._x
+        return self._vec[0]
 
     @property
     def y(self):
-        return self._y
+        return self._vec[1]
 
     @property
     def z(self):
-        return self._z
+        return self._vec[2]
 
     @property
     def w(self):
@@ -128,4 +154,8 @@ class Quaternion:
 
 
 if __name__ == "__main__":
-    q = Quaternion()
+    axis = np.array([1, 1, 1])
+    q1 = Quaternion().set_from_axis_angle(axis, 20 * DEGREES)
+    q2 = Quaternion().set_from_axis_angle(axis, 30 * DEGREES)
+    print(Quaternion.multiply_quat(q1, q2))
+    print(Quaternion.multiply_quat_2(q1, q2))

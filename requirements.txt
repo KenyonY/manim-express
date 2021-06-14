@@ -1,1 +1,1 @@
-manim_kunyuan >= 0.18
+manim_kunyuan >= 0.19

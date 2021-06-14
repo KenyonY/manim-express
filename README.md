@@ -7,7 +7,8 @@ pip install manim_express
 ```
 
 The above steps will automatically install packages `manim_express` and  `manimlib`(my fork version) for you. Then you can code with them anywhere.  
-
+In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) in your system.
+Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
 
 
 # Quick start
@@ -43,8 +44,10 @@ The above steps will automatically install packages `manim_express` and  `maniml
 
   ```python
   from manimlib import *
-  from manim_express import EagerModeScene
+  from manim_express import *
   import numpy as np
+  SceneArgs.use_online_tex = True # Use online latex compiler
+  
   theta = np.linspace(0, 2*np.pi, 200)
   x = np.cos(theta)
   y = np.sin(theta)
@@ -62,7 +65,8 @@ The above steps will automatically install packages `manim_express` and  `maniml
   
   scene.hold_on()
   ```
-
+  
+  
 
 
 
