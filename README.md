@@ -7,8 +7,6 @@ pip install manim_express
 ```
 
 The above steps will automatically install packages `manim_express` and  `manimlib`(my fork version) for you. Then you can code with them anywhere.  
-In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) in your system.
-Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
 
 
 # Quick start
@@ -40,7 +38,9 @@ Fortunately, online latex compilation option is available. Just set `SceneArgs.u
   * close the window and exit the program by pressing `q`
   
 
-* `manim_express` vs `Matplotlib`:
+* `manim_express` vs `Matplotlib`:  
+  In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) to render `tex` fonts.  
+  Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
 
   ```python
   from manimlib import *
