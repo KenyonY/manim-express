@@ -60,7 +60,7 @@ The above steps will automatically install packages `manim_express` and  `maniml
   
   # manim_express
   scene = EagerModeScene()
-  scene.plot(x, y, color=GREEN, width=2, axes_ratio=1)
+  scene.plot(x, y, color=GREEN, width=2, scale_ratio=1)
   scene.show_plot()
   
   scene.hold_on()

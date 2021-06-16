@@ -84,6 +84,7 @@ class Plot:
         self._axes_width = 10
         self._axes_height = 6.2
         self._axes_ratio = 0.62
+        self._scale_ratio = None
         self._show_axes = True
         self._include_tip = True
         self._x_label = 'x'
@@ -98,8 +99,8 @@ class Plot:
         xmin, xmax = x_label_min - EPSILON, x_label_max + dx
         ymin, ymax = y_label_min - EPSILON, y_label_max + dy
 
-        if self._axes_ratio == 1:
-            tick_ratio = y_length / x_length
+        if self._scale_ratio is not None:
+            tick_ratio = self._scale_ratio * y_length/ x_length
         else:
             tick_ratio = self._axes_ratio
 
@@ -130,11 +131,15 @@ class Plot:
                 "numbers_to_exclude": [],
                 "stroke_color": GREY_A,
                 "stroke_width": 0.3,
+                "include_tip": self._include_tip,
             },
             # Alternatively, you can specify configuration for just one
             # of them, like this.
             y_axis_config={
-                "include_tip": self._include_tip,
+                "tip_config": {"width": 0.15, "length": 0.3},
+            },
+            x_axis_config={
+                "tip_config": {"width": 0.1, "length": 0.25},
             },
         )
 
@@ -143,7 +148,7 @@ class Plot:
             #                          10)).add(0),
             # y_values=set(np.linspace(y_label_min, y_label_max, 17)).add(0),
             font_size=15,
-            num_decimal_places=1,
+            num_decimal_places=2,
         )
 
         self._unit_y = axes.c2p(0, 1)[1] - axes.c2p(0, 0)[1]
@@ -177,11 +182,11 @@ class Plot:
                 self._axes.get_axis_label(self._x_label,
                                           self._axes.get_x_axis(),
                                           edge=RIGHT,
-                                          direction=DR),
+                                          direction=RIGHT).scale(0.8),
                 self._axes.get_axis_label(self._y_label,
                                           self._axes.get_y_axis(),
                                           edge=UP,
-                                          direction=UR),
+                                          direction=UP).scale(0.8),
             )
             self._axes_labels = VGroup(self._axes,
                                        labels) if self._show_axes else []
@@ -197,6 +202,7 @@ class Plot:
         color=None,
         width=None,
         axes_ratio=0.618,
+        scale_ratio=None,
         show_axes=True,
         include_tip=True,
         x_label='x',
@@ -217,9 +223,8 @@ class Plot:
         self._color_list.append(color)
         self._width_list.append(width)
 
-        self._axes_width = 10
-        self._axes_height = 0.62 * self._axes_width
         self._axes_ratio = axes_ratio
+        self._scale_ratio = scale_ratio
         self._include_tip = include_tip
         self._x_label = x_label
         self._y_label = y_label

@@ -124,11 +124,12 @@ class EagerModeScene(Scene):
              color=None,
              width=2,
              axes_ratio=0.62,
+             scale_ratio=None,
              show_axes=True,
              include_tip=True,
              x_label='x',
              y_label='y'):
-        self.plt.plot(x, y, color, width, axes_ratio, show_axes, include_tip,
+        self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip,
                       x_label, y_label)
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
