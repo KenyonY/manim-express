@@ -85,6 +85,7 @@ class Plot:
         self._axes_height = 6.2
         self._axes_ratio = 0.62
         self._scale_ratio = None
+        self._num_decimal_places = (1, 1)
         self._show_axes = True
         self._include_tip = True
         self._x_label = 'x'
@@ -135,21 +136,24 @@ class Plot:
             },
             # Alternatively, you can specify configuration for just one
             # of them, like this.
-            y_axis_config={
-                "tip_config": {"width": 0.15, "length": 0.3},
-            },
             x_axis_config={
                 "tip_config": {"width": 0.1, "length": 0.25},
+                "decimal_number_config": {
+                    "num_decimal_places": self._num_decimal_places[0],
+                    "font_size": 15,
+                },
             },
+            y_axis_config={
+                "tip_config": {"width": 0.15, "length": 0.3},
+                "decimal_number_config": {
+                    "num_decimal_places": self._num_decimal_places[1],
+                    "font_size": 15,
+                },
+            },
+
         )
 
-        axes.add_coordinate_labels(
-            # x_values=set(np.linspace(x_label_min - EPSILON, x_label_max,
-            #                          10)).add(0),
-            # y_values=set(np.linspace(y_label_min, y_label_max, 17)).add(0),
-            font_size=15,
-            num_decimal_places=2,
-        )
+        axes.add_coordinate_labels()
 
         self._unit_y = axes.c2p(0, 1)[1] - axes.c2p(0, 0)[1]
         self._unit_x = axes.c2p(1, 0)[0] - axes.c2p(0, 0)[0]
@@ -205,6 +209,7 @@ class Plot:
         scale_ratio=None,
         show_axes=True,
         include_tip=True,
+        num_decimal_places=(1, 1),
         x_label='x',
         y_label='y',
     ):
@@ -223,6 +228,7 @@ class Plot:
         self._color_list.append(color)
         self._width_list.append(width)
 
+        self._num_decimal_places = num_decimal_places
         self._axes_ratio = axes_ratio
         self._scale_ratio = scale_ratio
         self._include_tip = include_tip

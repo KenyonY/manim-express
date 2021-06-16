@@ -125,11 +125,20 @@ class EagerModeScene(Scene):
              width=2,
              axes_ratio=0.62,
              scale_ratio=None,
+             num_decimal_places=(1, 1),
              show_axes=True,
              include_tip=True,
              x_label='x',
              y_label='y'):
-        self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip,
+
+        """
+        params
+        ------
+
+        scale_ratio: Scale ratio of coordinate axis. i.e. y / x .
+        num_decimal_places: Number of significant digits of coordinate_labels.
+        """
+        self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip, num_decimal_places,
                       x_label, y_label)
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
