@@ -21,6 +21,12 @@ def update_requirements(version=None):
                 if find_flag < 1:
                     break
 
-
     with open('requirements.txt', 'w', encoding='utf8') as fo:
-        fo.write(f"{pkg_name} >= {version_str}")
+        content = f"""
+{pkg_name} >= {version_str}
+fake-headers
+requests
+# helium
+# pyperclip
+"""
+        fo.write(content)

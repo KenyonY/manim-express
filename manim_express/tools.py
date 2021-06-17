@@ -35,14 +35,14 @@ def calc_number_digit(number):
 
 def calc_number_step(number):
     digit = calc_number_digit(number)
-    N = number / digit
+    n = number / digit
     while True:
-        if N < 5:
+        if n < 5:
             digit /= 5
-            N = round(number / digit)
-        elif N > 10:
+            n = round(number / digit)
+        elif n > 10:
             digit *= 2
-            N = round(number / digit)
+            n = round(number / digit)
         else:
             break
-    return N, digit
+    return n, digit
