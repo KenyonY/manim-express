@@ -1,5 +1,5 @@
 
-manim_kunyuan >= 0.22
+manim_kunyuan >= 0.23
 fake-headers
 requests
 # helium

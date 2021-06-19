@@ -73,7 +73,7 @@ The above steps will automatically install packages `manim_express` and  `maniml
 # Resources
 
 * Wiki  
-  
+  https://flyingframes.readthedocs.io/en/latest/index.html 
   https://3b1b.github.io/manim/
   
   https://manim.wiki/  
