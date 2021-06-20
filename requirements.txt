@@ -1,5 +1,6 @@
 
 manim_kunyuan >= 0.23
+sparraw-tool
 fake-headers
 requests
 # helium

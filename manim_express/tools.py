@@ -1,16 +1,6 @@
 import os
 import sys
-
-
-def path(string: str) -> str:
-    """Adaptive to different platforms """
-    platform = sys.platform.lower()
-    if 'linux' in platform:
-        return string.replace('\\', '/')
-    elif 'win' in platform:
-        return string.replace('/', '\\')
-    else:
-        return string
+from sparrow.file_ops import path
 
 
 def ppath(string, file=__file__) -> str:

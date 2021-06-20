@@ -6,7 +6,7 @@ intro_words = Text("""
     The original motivation for manim was to
     better illustrate mathematical functions
     as transformations.
-""")
+""", font="KaiTi")
 intro_words.to_edge(UP)
 
 scene.play(Write(intro_words))
