@@ -1,11 +1,3 @@
-import os
-import sys
-from sparrow.file_ops import path
-
-
-def ppath(string, file=__file__) -> str:
-    """Path in package"""
-    return path(os.path.join(os.path.dirname(file), string))
 
 
 def calc_number_digit(number):

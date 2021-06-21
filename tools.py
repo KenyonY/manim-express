@@ -24,7 +24,7 @@ def update_requirements(version=None):
     with open('requirements.txt', 'w', encoding='utf8') as fo:
         content = f"""
 {pkg_name} >= {version_str}
-sparraw-tool
+sparrow-tool
 fake-headers
 requests
 # helium
@@ -32,9 +32,7 @@ requests
 """
         fo.write(content)
 
-def update_version(version=None):
-    if version is None:
-        import manim_express
+
 
 if __name__ == "__main__":
     update_requirements()
