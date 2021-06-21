@@ -7,8 +7,6 @@ pip install manim_express
 ```
 
 The above steps will automatically install packages `manim_express` and  `manimlib`(my fork version) for you. Then you can code with them anywhere.  
-In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) in your system.
-Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
 
 
 # Quick start
@@ -31,7 +29,7 @@ Fortunately, online latex compilation option is available. Just set `SceneArgs.u
   scene.hold_on()
   ```
   
-  A window will pop up on the screen. And then you can :
+  Operating graphics:
   * hold down the `d` key on the keyboard and move the mouse to change the three-dimensional perspective.
   * hold down the `s` key on the keyboard and move the mouse to pan the screen
   * hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
@@ -40,7 +38,9 @@ Fortunately, online latex compilation option is available. Just set `SceneArgs.u
   * close the window and exit the program by pressing `q`
   
 
-* `manim_express` vs `Matplotlib`:
+* `manim_express` vs `Matplotlib`:  
+  In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) to render `tex` fonts.  
+  Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
 
   ```python
   from manimlib import *
@@ -60,7 +60,7 @@ Fortunately, online latex compilation option is available. Just set `SceneArgs.u
   
   # manim_express
   scene = EagerModeScene()
-  scene.plot(x, y, color=GREEN, width=2, axes_ratio=1)
+  scene.plot(x, y, color=GREEN, width=2, scale_ratio=1)
   scene.show_plot()
   
   scene.hold_on()
@@ -73,7 +73,7 @@ Fortunately, online latex compilation option is available. Just set `SceneArgs.u
 # Resources
 
 * Wiki  
-  
+  https://flyingframes.readthedocs.io/en/latest/index.html 
   https://3b1b.github.io/manim/
   
   https://manim.wiki/  

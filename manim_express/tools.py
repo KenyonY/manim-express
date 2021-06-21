@@ -1,21 +1,3 @@
-import os
-import sys
-
-
-def path(string: str) -> str:
-    """Adaptive to different platforms """
-    platform = sys.platform.lower()
-    if 'linux' in platform:
-        return string.replace('\\', '/')
-    elif 'win' in platform:
-        return string.replace('/', '\\')
-    else:
-        return string
-
-
-def ppath(string, file=__file__) -> str:
-    """Path in package"""
-    return path(os.path.join(os.path.dirname(file), string))
 
 
 def calc_number_digit(number):
@@ -35,14 +17,14 @@ def calc_number_digit(number):
 
 def calc_number_step(number):
     digit = calc_number_digit(number)
-    N = number / digit
+    n = number / digit
     while True:
-        if N < 5:
+        if n < 5:
             digit /= 5
-            N = round(number / digit)
-        elif N > 10:
+            n = round(number / digit)
+        elif n > 10:
             digit *= 2
-            N = round(number / digit)
+            n = round(number / digit)
         else:
             break
-    return N, digit
+    return n, digit
