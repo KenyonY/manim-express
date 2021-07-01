@@ -1,3 +1,4 @@
+import numpy as np
 from manimlib import *
 
 
@@ -9,6 +10,7 @@ class Test(Scene):
         image.move_to(LEFT*2)
         # self.add(image)
         self.add(image2)
+
 
 
 import os

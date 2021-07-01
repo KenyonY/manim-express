@@ -162,5 +162,6 @@ class OpeningManimExample(Scene):
         )
         self.wait(2)
 
+
 if __name__ == "__main__":
-    os.system('manimgl start2.py ')
+    os.system('manimgl start2.py SquareToCircle')

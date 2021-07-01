@@ -2,7 +2,7 @@ from examples.example_imports import *
 import scipy.integrate as integrate
 
 
-class DouPandulumSim(object):
+class DouPandulumSim:
     def __init__(self, th1, th2):
         self.x1, self.x2, self.y1, self.y2 = DouPandulumSim.getSimulationResult(th1, th2)
 
@@ -112,6 +112,7 @@ def update_pandulum(obj):
     ts = int(np.floor((1.0 + xPos) / 0.002))
     line1, line2 = getLinesFromTick(ts)
     obj.resetLines(line1, line2)
+
 
 doupandulumLine.add_updater(update_pandulum)
 scene.add(doupandulumLine)

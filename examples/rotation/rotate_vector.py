@@ -36,6 +36,7 @@ vec = Vec3([3, 0, 0])
 angle = 55 * DEGREES
 angle2 = 30*DEGREES
 axis = [2, 1, 1]
+axis = [0, 0, 1]
 
 # quaternion = quaternion_from_angle_axis(angle, axis)
 

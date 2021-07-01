@@ -16,7 +16,7 @@ scene.play(ShowCreation(axes))
 
 labels = VGroup(axes.get_axis_label('x', axes.get_x_axis(), edge=RIGHT, direction=DR),
                 axes.get_axis_label('y', axes.get_y_axis(), edge=UP, direction=DR),
-                axes.get_axis_label('z', axes.get_z_axis(), edge=[0, 0, 1], direction=DR)
+                axes.get_axis_label('z', axes.get_z_axis(), edge=[0, 0, 1], direction=DR).rotate(PI/4, [1, 0, 0])
                 )
 scene.add(labels)
 
