@@ -7,7 +7,7 @@ from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
 from manimlib.config import Size
-from .tools import ppath
+from sparrow import ppath
 from .plot import Plot
 from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
