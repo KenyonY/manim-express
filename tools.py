@@ -1,8 +1,4 @@
 
-def update_readme():
-    pass
-
-
 def update_requirements(version=None):
     if version is None:
         with open('./manimlib/manimlib/__init__.py', 'r', encoding='utf8') as fi:
@@ -36,4 +32,3 @@ requests
 
 if __name__ == "__main__":
     update_requirements()
-    update_readme()
