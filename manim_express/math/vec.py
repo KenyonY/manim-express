@@ -1,4 +1,3 @@
-import numpy as np
 from manimlib import *
 from .quaternion import Quaternion
 from abc import ABCMeta, abstractmethod
@@ -21,13 +20,24 @@ class Vec(metaclass=ABCMeta):
     def normalise(self):
         pass
 
+    @abstractmethod
+    def _new(self, *args, **kwargs):
+        pass
+
 
 class Vec2(Vec):
     _x, _y = None, None
     _vector = None
 
-    def __init__(self, sub_class):
-        self._subclass = sub_class
+    def __init__(self, x=None, y=0, sub_class=None):
+        if sub_class is None:
+            self._subclass = Vec2
+        else:
+            self._subclass = sub_class
+        if x is None:
+            x = 1
+        self._x = x
+        self._y = y
 
     @property
     def x(self):
@@ -38,7 +48,7 @@ class Vec2(Vec):
         return self._y
 
     def _set_vec(self):
-        self._vector = np.array([self._x, self._y])
+        self._vector = np.array([self._x, self._y], dtype=np.float64)
 
     def to_array(self):
         return self._vector
@@ -53,13 +63,20 @@ class Vec2(Vec):
     def norm(self):
         return np.linalg.norm(self._vector)
 
+    def angle(self):
+        return np.angle(complex(*self._vector[:2]))
+
+    def angle_between(self, v2):
+        return np.arccos(np.dot(
+            self.to_array() / get_norm(self.to_array()),
+            v2 / get_norm(v2)
+        ))
+
     def __str__(self):
         return self._vector.__str__()
 
-    def _new(self, *args, **kwargs):
-        return self._subclass(*args, **kwargs)
-    # def _new(self, *args, **kwargs):
-    #     pass
+    def _new(self, x, y):
+        return Vec2(x, y)
 
     def normalise(self):
         L = self.norm()
@@ -129,8 +146,8 @@ class Vec2(Vec):
 
 class Vec3(Vec2):
 
-    def __init__(self, x=None, y=1, z=1):
-        super().__init__(Vec3)
+    def __init__(self, x=None, y=1., z=1.):
+        super().__init__(sub_class=Vec3)
         if issubclass(type(x), (np.ndarray, list, tuple)):
             self._x = x[0]
             self._y = x[1]
@@ -150,7 +167,7 @@ class Vec3(Vec2):
         return self._z
 
     def _set_vec(self):
-        self._vector = np.array([self._x, self._y, self._z])
+        self._vector = np.array([self._x, self._y, self._z], dtype=np.float64)
 
     def _set_xy_and_more(self, *args, **kwargs):
         self._x = self._vector[0]
@@ -167,6 +184,9 @@ class Vec3(Vec2):
         self._z /= L
         self._set_vec()
         return self
+
+    def angle_between(self, v2):
+        return angle_between_vectors(self._vector, v2)
 
     def apply_quaternion(self, q: Quaternion):
         x, y, z = self._x, self._y, self._z
@@ -191,11 +211,15 @@ class Vec3(Vec2):
         self.apply_quaternion(q)
         return self
 
-    @classmethod
-    def _new(cls, x, y, z):
-        obj = object.__new__(Vec3)
-        obj.__init__(x, y, z)
-        return obj
+    # @classmethod
+    # def _new(cls, x, y, z):
+    #     obj = object.__new__(Vec3)
+    #     obj.__init__(x, y, z)
+    #     return obj
+
+    def _new(self, x, y, z):
+        return Vec3(x, y, z)
+
 
     def copy(self):
         obj = object.__new__(Vec3)
