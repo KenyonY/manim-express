@@ -12,7 +12,7 @@ class Quaternion:
             self._w = x[3]
         else:
             if x is None:
-                x = 1
+                x = 0
             self._x = x
             self._y = y
             self._z = z
