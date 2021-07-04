@@ -20,8 +20,8 @@ def update_requirements(version=None):
     with open('requirements.txt', 'w', encoding='utf8') as fo:
         content = f"""
 {pkg_name} >= {version_str}
-sparrow-tool
-fake-headers
+sparrow_tool
+fake_headers
 requests
 # helium
 # pyperclip
