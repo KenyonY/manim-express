@@ -2,8 +2,12 @@ import numpy as np
 
 from examples.example_imports import *
 
-SceneArgs.color = "#ffffff"
+# SceneArgs.color = "#ffffff"
 scene = EagerModeScene()
+text = Text("hello, world", t2g={"world": (RED, BLUE),
+                                 "hel": (BLACK, GREEN, YELLOW)}).move_to(UP*3)
+scene.add(text)
+
 rod_start = np.array([0, 0, 0])
 rod_end = np.array([-1, -0, 0])
 fixed_point = Sphere(radius=0.1).set_color(GREEN).move_to(rod_start)
