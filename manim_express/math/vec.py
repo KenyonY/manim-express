@@ -47,6 +47,9 @@ class Vec(metaclass=ABCMeta):
         res = self._vector.dot(vec)
         return res
 
+    def copy(self):
+        return self._new(*self._vector)
+
     def __str__(self):
         return self._vector.__str__()
 
@@ -176,6 +179,14 @@ class Vec3(Vec):
         self._subclass = Vec3
 
     @property
+    def x(self):
+        return self._x
+
+    @property
+    def y(self):
+        return self._y
+
+    @property
     def z(self):
         return self._z
 
@@ -217,8 +228,6 @@ class Vec3(Vec):
         self._set_vec()
         return self
 
-
-
     def rotate(self, angle, axis=(0, 0, 1)):
         q = Quaternion().set_from_axis_angle(axis, angle)
         self.apply_quaternion(q)
@@ -233,11 +242,10 @@ class Vec3(Vec):
     def _new(self, x, y, z):
         return Vec3(x, y, z)
 
-
-    def copy(self):
-        obj = object.__new__(Vec3)
-        obj.__init__(*self._vector)
-        return obj
+    # def copy(self):
+    #     obj = object.__new__(Vec3)
+    #     obj.__init__(*self._vector)
+    #     return obj
 
 
 
