@@ -4,6 +4,7 @@ import shutil
 # from manimlib.utils.config_ops import digest_config
 # from manimlib.scene.scene_file_writer import SceneFileWriter
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
+from manimlib.utils.rate_functions import linear
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
 from manimlib.config import Size
@@ -41,12 +42,12 @@ class SceneArgs:
 
 class EagerModeScene(Scene):
     def __init__(
-        self,
-        write_file=False,
-        file_name=None,
-        screen_size=Size.big,
-        scene_name='EagerModeScene',
-        CONFIG=None,
+            self,
+            write_file=False,
+            file_name=None,
+            screen_size=Size.big,
+            scene_name='EagerModeScene',
+            CONFIG=None,
     ):
         self.CONFIG = CONFIG
         args = manimlib.config.parse_cli()
@@ -85,9 +86,9 @@ class EagerModeScene(Scene):
         self.loop_start_animation = None
         self.pause_start_animation = 0
 
-    def play(self, *args, run_time=1, **kwargs):
+    def play(self, *args, run_time=1, rate_func=linear, **kwargs):
         """TODO:"""
-        super().play(*args, run_time=run_time, **kwargs)
+        super().play(*args, run_time=run_time, rate_func=rate_func, **kwargs)
         self.current_animation += 1
 
     def hold_on(self):

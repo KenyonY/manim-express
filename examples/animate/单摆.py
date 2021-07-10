@@ -35,8 +35,9 @@ def update_func(obj, dt):
     tension = tension_scalar * (-1*rob_vec.normalise())
     f = tension + m*G
     a = f * (1/m)
-    v += a*dt
+    v += a * dt
     end_rod += v*dt
+
 
     obj.move_to(end_rod.to_array())
 
