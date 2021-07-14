@@ -4,7 +4,7 @@ import shutil
 # from manimlib.utils.config_ops import digest_config
 # from manimlib.scene.scene_file_writer import SceneFileWriter
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
-from manimlib.utils.rate_functions import linear
+from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
 from manimlib.config import Size
@@ -86,7 +86,7 @@ class EagerModeScene(Scene):
         self.loop_start_animation = None
         self.pause_start_animation = 0
 
-    def play(self, *args, run_time=1, rate_func=linear, **kwargs):
+    def play(self, *args, run_time=1, rate_func=smooth, **kwargs):
         """TODO:"""
         super().play(*args, run_time=run_time, rate_func=rate_func, **kwargs)
         self.current_animation += 1
