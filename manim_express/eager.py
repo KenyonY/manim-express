@@ -14,6 +14,8 @@ from sparrow import ppath
 from .plot import Plot
 from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
+from pyglet.window import key
+
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
@@ -131,8 +133,26 @@ class EagerModeScene(Scene):
     def next_animate(self):
         self.current_clip += 1
 
-    def pre_animate(self):
-        pass
+    def _clip_control(self, symbol):
+        # play preview clip
+        if symbol in (key.LEFT, key.COMMA, key.NUM_1, key._1):
+            self.current_clip -= 1
+            try:
+                self.replay(self.current_clip)
+            except IndexError:
+                self.current_clip += 1
+
+        # play next clip
+        elif symbol in (key.RIGHT, key.PERIOD, key._3, key.NUM_3):
+            self.current_clip += 1
+            try:
+                self.replay(self.current_clip)
+            except IndexError:
+                self.current_clip -= 1
+
+        # play current clip
+        elif symbol in (key.NUM_DIVIDE, key.DOWN, key._2, key.NUM_2):
+            self.replay(self.current_clip)
 
     def hold_on(self):
         """ Equal to self.tear_down(). """
