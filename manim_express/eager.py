@@ -1,5 +1,7 @@
 import random
 import time
+import sys
+from functools import wraps
 import shutil
 # from manimlib.utils.config_ops import digest_config
 # from manimlib.scene.scene_file_writer import SceneFileWriter
@@ -80,16 +82,57 @@ class EagerModeScene(Scene):
         self.setup()
         self.plt = Plot()
 
-        self.episodes = []
-        self.current_episode = 1
-        self.current_animation = 0
+        self.clips = []
+        self.current_clip = 1
+        self.current_clip = 0
+        self.saved_states = []
+        self.animation_list = []
+        self.animation_func_dict = {}
         self.loop_start_animation = None
         self.pause_start_animation = 0
 
     def play(self, *args, run_time=1, rate_func=smooth, **kwargs):
         """TODO:"""
         super().play(*args, run_time=run_time, rate_func=rate_func, **kwargs)
-        self.current_animation += 1
+    
+    def get_animate_name_func(self, n=10):
+        animation_func_dict = {}
+        for i in range(n):
+            try:
+                func_name = f"clip{i}"
+                func = getattr(self, func_name)
+                animation_func_dict.setdefault(func_name, func)
+            except:
+                continue
+        self.animation_func_dict = animation_func_dict
+            
+    def render(self):
+        self.get_animate_name_func()
+        for name, func in self.animation_func_dict.items():
+            self.save_state()
+            self.saved_states.append(self.saved_state)
+            self.current_clip += 1
+            func()
+            self.animation_list.append(func)
+            self.hold_on()
+
+    def replay(self, animation_index=None):
+        if animation_index is None:
+            animation_index = self.current_clip
+        self.saved_state = self.saved_states[animation_index-1]
+        self.restore()
+        self.animation_list[animation_index-1]()
+
+    def loop_animate(self, animation_index=None, num=10):
+        while num:
+            num -= 1
+            self.replay(animation_index)
+
+    def next_animate(self):
+        self.current_clip += 1
+
+    def pre_animate(self):
+        pass
 
     def hold_on(self):
         """ Equal to self.tear_down(). """
@@ -103,7 +146,7 @@ class EagerModeScene(Scene):
 
     def save_default_config(self):
         """Save the default config file to current directory."""
-        shutil.copy(ppath("custom_config.yml"), 'custom_config.yml')
+        shutil.copy(ppath("custom_config.yml", __file__), 'custom_config.yml')
 
     def get_scene_config(self):
         return self.scene_config
@@ -153,7 +196,10 @@ class EagerModeScene(Scene):
     def get_plot_axes(self):
         return self.plt.get_axes()
 
-    def show_plot(self, play=True):
+    def reset_plot(self):
+        self.plt = Plot
+
+    def show_plot(self, play=True, reset=True):
         axes_lines_dict = self.get_plot_mobj()
 
         random.seed(time.time())
@@ -172,7 +218,8 @@ class EagerModeScene(Scene):
             self.add(VGroup(*axes_lines_dict["line"],
                             *axes_lines_dict["axes"]))
 
-        self.plt = Plot()
+        if reset:
+            self.plt = Plot()
 
 
 class JupyterModeScene(EagerModeScene):
@@ -189,3 +236,4 @@ class JupyterModeScene(EagerModeScene):
     def quit(self):
         """Please use exit() or quit() in jupyter cell."""
         pass
+

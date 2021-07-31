@@ -107,10 +107,11 @@ class SurfaceExample(Scene):
 class OpeningManimExample(Scene):
     def construct(self):
         intro_words = Text("""
-            The original motivation for manim was to
-            better illustrate mathematical functions
-            as transformations.
-        """)
+The original motivation for manim was to
+better illustrate mathematical functions
+as transformations.
+            """)
+
         intro_words.to_edge(UP)
 
         self.play(Write(intro_words))
@@ -164,4 +165,4 @@ class OpeningManimExample(Scene):
 
 
 if __name__ == "__main__":
-    os.system('manimgl start2.py SquareToCircle')
+    os.system('manimgl start2.py OpeningManimExample')
