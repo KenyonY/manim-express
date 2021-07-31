@@ -21,7 +21,7 @@ requests
 pip install manim_express
 ```
 
-The above steps will automatically install packages `manim_express` and  `manimlib`(my fork version) for you. Then you can code with them anywhere.  
+The above steps will automatically install packages `manim_express` and  [`manimlib`](https://github.com/beidongjiedeguang/manimlib) for you. Then you can code with them anywhere.  
 
 
 # Quick start
