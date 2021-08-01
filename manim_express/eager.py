@@ -9,13 +9,13 @@ from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
 from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
+from manimlib.utils.color import rgb_to_hex
 from manimlib.config import Size
 from sparrow import ppath
 from .plot import Plot
 from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
 from pyglet.window import key
-
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
 
@@ -46,12 +46,12 @@ class SceneArgs:
 
 class EagerModeScene(Scene):
     def __init__(
-        self,
-        write_file=False,
-        file_name=None,
-        screen_size=Size.big,
-        scene_name='EagerModeScene',
-        CONFIG=None,
+            self,
+            write_file=False,
+            file_name=None,
+            screen_size=Size.big,
+            scene_name='EagerModeScene',
+            CONFIG=None,
     ):
         self.CONFIG = CONFIG
         args = manimlib.config.parse_cli()
@@ -93,10 +93,13 @@ class EagerModeScene(Scene):
         self.loop_start_animation = None
         self.pause_start_animation = 0
 
-    def play(self, *args, run_time=1, rate_func=smooth, **kwargs):
+    def play(self, *args, run_time=1, rate_func=linear, **kwargs):
         """TODO:"""
         super().play(*args, run_time=run_time, rate_func=rate_func, **kwargs)
-    
+
+    # def clip1(self):
+    #     pass
+
     def get_animate_name_func(self, n=10):
         animation_func_dict = {}
         for i in range(n):
@@ -107,7 +110,7 @@ class EagerModeScene(Scene):
             except:
                 continue
         self.animation_func_dict = animation_func_dict
-            
+
     def render(self):
         self.get_animate_name_func()
         for name, func in self.animation_func_dict.items():
@@ -121,9 +124,9 @@ class EagerModeScene(Scene):
     def replay(self, animation_index=None):
         if animation_index is None:
             animation_index = self.current_clip
-        self.saved_state = self.saved_states[animation_index-1]
+        self.saved_state = self.saved_states[animation_index - 1]
         self.restore()
-        self.animation_list[animation_index-1]()
+        self.animation_list[animation_index - 1]()
 
     def loop_animate(self, animation_index=None, num=10):
         while num:
@@ -227,8 +230,8 @@ class EagerModeScene(Scene):
             def play_func(Func):
                 if axes_lines_dict['axes']:
                     self.play(ShowCreation(VGroup(*axes_lines_dict["axes"])),
-                              run_time=1)
-                self.play(Func(VGroup(*axes_lines_dict["line"])), run_time=1)
+                              run_time=1, rate_func=smooth)
+                self.play(Func(VGroup(*axes_lines_dict["line"])), run_time=1, rate_func=smooth)
 
             if random.random() > 0.5:
                 play_func(Write)
@@ -256,4 +259,3 @@ class JupyterModeScene(EagerModeScene):
     def quit(self):
         """Please use exit() or quit() in jupyter cell."""
         pass
-
