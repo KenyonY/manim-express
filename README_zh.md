@@ -59,7 +59,7 @@ pip install manim_express
 
 * `manim_express` vs `Matplotlib`:  
   在某些情况你需要安装[LaTeX](https://www.latex-project.org/get/#tex-distributions) 以渲染 `tex` 字体.  
-  幸运的是, 本仓库中提供了在线的latex 编译选项. 通过设置 `SceneArgs.use_online_tex=True` 进行激活.
+  幸运的是`manim_express`中提供了在线的latex 编译选项. 通过设置 `SceneArgs.use_online_tex=True` 进行激活.
 
   ```python
   from manimlib import *
