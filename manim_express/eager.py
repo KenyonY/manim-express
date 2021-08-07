@@ -3,21 +3,22 @@ import time
 import sys
 from functools import wraps
 import shutil
-# from manimlib.utils.config_ops import digest_config
+import numpy as np
+from manimlib.utils.config_ops import digest_config
 # from manimlib.scene.scene_file_writer import SceneFileWriter
-from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup
+from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup, VMobject
 from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
 from manimlib.utils.color import rgb_to_hex
 from manimlib.config import Size
 from sparrow import ppath
-from .plot import Plot
+from .plot import Plot, PlotObj, xyz_to_points
 from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
 from pyglet.window import key
 
-__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs"]
+__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs", "PlotObj", "xyz_to_points"]
 
 
 class SceneArgs:
