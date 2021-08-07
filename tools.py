@@ -1,7 +1,7 @@
 
 def update_requirements(version=None):
     if version is None:
-        with open('./manimlib/manimlib/__init__.py', 'r', encoding='utf8') as fi:
+        with open('./manimlib/__init__.py', 'r', encoding='utf8') as fi:
             find_flag = 2
             for line in  fi.readlines():
                 idx_version = line.find('__version__')

@@ -1,12 +1,12 @@
 # manim_express
-[![image](https://img.shields.io/badge/Pypi-0.3.8-green.svg)](https://pypi.org/project/manim_express)
+[![image](https://img.shields.io/badge/Pypi-0.4.0-green.svg)](https://pypi.org/project/manim_express)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-kunyuan-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
 
 ## Requirements
 ```python
-manim_kunyuan >= 0.23
+manim_kunyuan >= 0.27
 sparrow_tool
 fake_headers
 requests
@@ -50,7 +50,11 @@ The above steps will automatically install packages `manim_express` and  [`manim
   * hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
   * scroll the middle mouse button to move the screen up and down
   * reset camera view by pressing `r`
-  * close the window and exit the program by pressing `q`
+  * close the window and exit the program by pressing `q` or `tab`
+  * pause the animation by pressing `space` or `ctrl`
+  * previews animation clip by pressing `LEFT`
+  * next animation clip: `RIGHT`
+  * replay current animation clip: `DOWN`
   
 
 * `manim_express` vs `Matplotlib`:  
@@ -88,11 +92,10 @@ The above steps will automatically install packages `manim_express` and  [`manim
 # Resources
 
 * Wiki  
-  https://flyingframes.readthedocs.io/en/latest/index.html 
-  https://3b1b.github.io/manim/
-  
-  https://manim.wiki/  
-  https://manim.wiki/shaders/
+  https://flyingframes.readthedocs.io/en/latest/index.html
+  https://3b1b.github.io/manim/  
+  https://docs.manim.org.cn/  
+  https://docs.manim.org.cn/shaders/
   
 * 3B1B videos:  
   https://github.com/3b1b/videos
