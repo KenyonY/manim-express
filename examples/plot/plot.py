@@ -3,7 +3,6 @@ from examples.example_imports import *
 # SceneArgs.color = "#222222"
 
 scene = EagerModeScene(screen_size=Size.biggest)
-
 theta = np.linspace(-10, 2*PI, 500)
 x = np.cos(theta)
 y = np.sin(theta)
@@ -25,7 +24,7 @@ if test1:
     # scene.add(mob)
     scene.show_plot()
 
-test2 = 0
+test2 = 1
 if test2:
     COL_COLORS = [MAROON_B, MAROON_C]
     EIGEN_COLORS = [TEAL_A, TEAL_D]
