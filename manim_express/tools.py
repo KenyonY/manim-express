@@ -1,3 +1,4 @@
+import numpy as np
 
 
 def calc_number_digit(number):
@@ -12,7 +13,7 @@ def calc_number_digit(number):
         while res < 1:
             digit -= 1
             res *= 10
-    return 10**digit
+    return 10 ** digit
 
 
 def calc_number_step(number):

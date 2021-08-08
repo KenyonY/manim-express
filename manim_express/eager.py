@@ -193,7 +193,7 @@ class EagerModeScene(Scene):
              width=2,
              axes_ratio=0.62,
              scale_ratio=None,
-             num_decimal_places=(1, 1),
+             num_decimal_places=None,
              show_axes=True,
              include_tip=True,
              x_label='x',

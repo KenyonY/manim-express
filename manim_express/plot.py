@@ -56,31 +56,24 @@ class Plot:
         self._axes_height = 6.2
         self._axes_ratio = 0.62
         self._scale_ratio = None
-        self._num_decimal_places = (1, 1)
+        self._num_decimal_places = None
         self._show_axes = True
         self._include_tip = True
         self._x_label = 'x'
         self._y_label = 'y'
 
     def create_axes(self, x_label_min, x_label_max, y_label_min, y_label_max):
+
         x_length = x_label_max - x_label_min
         y_length = y_label_max - y_label_min
-        dx = x_length / 20
-        dy = y_length / 15
 
-        xmin, xmax = x_label_min - EPSILON, x_label_max + dx
-        ymin, ymax = y_label_min - EPSILON, y_label_max + dy
-
-        if self._scale_ratio is not None:
-            tick_ratio = self._scale_ratio * y_length / x_length
-        else:
-            tick_ratio = self._axes_ratio
-
-        self._axes_height = self._axes_width * tick_ratio
-
-        if self._axes_height > 7:
-            self._axes_height = 7
-            self._axes_width = self._axes_height / tick_ratio
+        """
+         * 确定x, y轴比例
+         * 当前轴在屏幕中的长度是多少: L
+         * 这个长度适合显示多少个刻度标签: N
+         * 如何分配这N个标签, 即N个具体数值
+         * 每个数值应显示的有效位数 可通过小数点末位的零来判断 
+        """
 
         # n_x = 10
         # n_y = n_x * tick_ratio
@@ -89,8 +82,43 @@ class Plot:
         n_step_x, x_step = calc_number_step(x_length)
         n_step_y, y_step = calc_number_step(y_length)
 
+        def adjust_axes_ratio(x_length, y_length):
+            if self._scale_ratio is not None:
+                tick_ratio = self._scale_ratio * y_length / x_length
+            else:
+                tick_ratio = self._axes_ratio
+
+            self._axes_height = self._axes_width * tick_ratio
+
+            if self._axes_height > 7:
+                self._axes_height = 7
+                self._axes_width = self._axes_height / tick_ratio
+            return tick_ratio
+
+        tick_ratio = adjust_axes_ratio(x_length, y_length)
+        # FIXME: stupid here
         if n_step_y / n_step_x > tick_ratio + 0.3:
-            y_step *= 2
+            y_step *= 5
+        xmin, xmax = x_label_min - EPSILON, x_label_max + x_step / 2
+        ymin, ymax = y_label_min - EPSILON, y_label_max + y_step / 2
+        adjust_axes_ratio(xmax - xmin, ymax - ymin)
+
+        def get_exponent_num(number):
+            int_num = round(number)
+            eps = abs(int_num - number)
+            if eps < 1e-3:
+                return 0
+            res = str(number).split(".")
+            if len(res) == 1:
+                return 0
+            else:
+                return len(res[1])
+        if self._num_decimal_places is not None:
+            x_num_decimal_place = self._num_decimal_places[0]
+            y_num_decimal_place = self._num_decimal_places[1]
+        else:
+            x_num_decimal_place = min(max(get_exponent_num(x_label_min), get_exponent_num(x_step)), 2)
+            y_num_decimal_place = min(max(get_exponent_num(y_label_min), get_exponent_num(y_step)), 2)
 
         axes = Axes(
             x_range=(xmin, xmax, x_step),
@@ -110,14 +138,14 @@ class Plot:
             x_axis_config={
                 "tip_config": {"width": 0.1, "length": 0.25},
                 "decimal_number_config": {
-                    "num_decimal_places": self._num_decimal_places[0],
+                    "num_decimal_places": x_num_decimal_place,
                     "font_size": 15,
                 },
             },
             y_axis_config={
                 "tip_config": {"width": 0.15, "length": 0.3},
                 "decimal_number_config": {
-                    "num_decimal_places": self._num_decimal_places[1],
+                    "num_decimal_places": y_num_decimal_place,
                     "font_size": 15,
                 },
             },
@@ -168,7 +196,6 @@ class Plot:
             self._axes_line_list.append(line)
 
             line.shift(-self._unit_x * self._xmin * RIGHT)
-            # self._axes_line_list.append(line)
 
     def plot(
             self,
@@ -180,7 +207,7 @@ class Plot:
             scale_ratio=None,
             show_axes=True,
             include_tip=True,
-            num_decimal_places=(1, 1),
+            num_decimal_places=None,
             x_label='x',
             y_label='y',
     ):
@@ -208,6 +235,7 @@ class Plot:
 
 
 class PlotObj(VMobject):
+    InstantCount = 0
     CONFIG = {
         "epsilon": 1e-8,
         "discontinuities": [],
@@ -215,6 +243,7 @@ class PlotObj(VMobject):
     }
 
     def __init__(self, x, y, z=None, axes=None, **kwargs):
+        PlotObj.InstantCount += 1
         digest_config(self, kwargs)
         self.points = xyz_to_points(x, y, z, axes)
         VMobject.__init__(self, **kwargs)
