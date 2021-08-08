@@ -104,15 +104,17 @@ class Plot:
         adjust_axes_ratio(xmax - xmin, ymax - ymin)
 
         def get_exponent_num(number):
-            int_num = round(number)
-            eps = abs(int_num - number)
-            if eps < 1e-3:
+            def get_error_remain(num, n):
+                approx_num = round(num, n)
+                return abs(approx_num - num)
+
+            if get_error_remain(number, 0) < 1e-2:
                 return 0
-            res = str(number).split(".")
-            if len(res) == 1:
-                return 0
+            if get_error_remain(number, 1) < 1e-2:
+                return 1
             else:
-                return len(res[1])
+                return 2
+
         if self._num_decimal_places is not None:
             x_num_decimal_place = self._num_decimal_places[0]
             y_num_decimal_place = self._num_decimal_places[1]

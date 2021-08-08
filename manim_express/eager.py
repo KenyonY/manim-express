@@ -84,6 +84,7 @@ class EagerModeScene(Scene):
 
         self.setup()
         self.plt = Plot()
+        self.is_axes_line_gen_ed = False
 
         self.clips = []
         self.current_clip = 1
@@ -186,6 +187,7 @@ class EagerModeScene(Scene):
     def embed(self):
         super().embed()
 
+    # FIXME: Remove method `plot` from EagerModeScene.
     def plot(self,
              x,
              y,
@@ -214,33 +216,38 @@ class EagerModeScene(Scene):
         pass
 
     def get_plot_mobj(self):
-        self.plt.gen_axes_lines()
-        return self.plt.get_axes_lines()
+        if self.is_axes_line_gen_ed is False:
+            self.plt.gen_axes_lines()
+        self.is_axes_line_gen_ed = True
+        axes_lines_dict = self.plt.get_axes_lines()
+        axes_mobj = VGroup(*axes_lines_dict["axes"])
+        lines_mobj = VGroup(*axes_lines_dict["line"])
+        return axes_mobj, lines_mobj
 
     def get_plot_axes(self):
         return self.plt.get_axes()
 
     def reset_plot(self):
         self.plt = Plot
+        self.is_axes_line_gen_ed = False
 
     def show_plot(self, play=True, reset=True):
-        axes_lines_dict = self.get_plot_mobj()
-
+        axes_mobj, lines_mobj = self.get_plot_mobj()
         random.seed(time.time())
         if play:
             def play_func(Func):
-                if axes_lines_dict['axes']:
-                    self.play(ShowCreation(VGroup(*axes_lines_dict["axes"])),
+                if len(axes_mobj):
+                    self.play(ShowCreation(axes_mobj),
                               run_time=1, rate_func=smooth)
-                self.play(Func(VGroup(*axes_lines_dict["line"])), run_time=1, rate_func=smooth)
+                self.play(Func(lines_mobj), run_time=1, rate_func=smooth)
 
             if random.random() > 0.5:
                 play_func(Write)
             else:
                 play_func(ShowCreation)
         else:
-            self.add(VGroup(*axes_lines_dict["line"],
-                            *axes_lines_dict["axes"]))
+            self.add(VGroup(axes_mobj,
+                            lines_mobj))
 
         if reset:
             self.plt = Plot()
