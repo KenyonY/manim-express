@@ -1,5 +1,5 @@
 # manim_express
-[![image](https://img.shields.io/badge/Pypi-0.4.0-green.svg)](https://pypi.org/project/manim_express)
+[![image](https://img.shields.io/badge/Pypi-0.4.1-green.svg)](https://pypi.org/project/manim_express)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-kunyuan-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -15,19 +15,21 @@ requests
 ```
 
 ------------------------
-[**中文说明**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README_zh.md) | [**English**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README.md)
+[**English**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README.md) |
+[**中文说明**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README_zh.md) 
+
 ## Install
 
 ```bash
 pip install manim_express
 ```
 
-The above steps will automatically install packages `manim_express` and  [`manimlib`](https://github.com/beidongjiedeguang/manimlib) for you. Then you can code with them anywhere.  
+以上步骤将安装 `manim_express` 和  [`manimlib`](https://github.com/beidongjiedeguang/manimlib). 然后就可以在任何代码位置导入使用这个动画库了.  
 
 
-# Quick start
+## 快速开始
 
-* Render an animation: [3b1b:SquareToCircle](https://3b1b.github.io/manim/getting_started/quickstart.html#add-animations)
+* 渲染一个动画: [3b1b:SquareToCircle](https://3b1b.github.io/manim/getting_started/quickstart.html#add-animations)
 
   ```python
   from manimlib import *
@@ -45,22 +47,21 @@ The above steps will automatically install packages `manim_express` and  [`manim
   scene.hold_on()
   ```
   
-  Operating graphics:
-  * hold down the `d` key on the keyboard and move the mouse to change the three-dimensional perspective.
-  * hold down the `s` key on the keyboard and move the mouse to pan the screen
-  * hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
-  * scroll the middle mouse button to move the screen up and down
-  * reset camera view by pressing `r`
-  * close the window and exit the program by pressing `q` or `tab`
-  * pause the animation by pressing `space` or `ctrl`
-  * previews animation clip by pressing `LEFT`
-  * next animation clip: `RIGHT`
-  * replay current animation clip: `DOWN`
+  与渲染画面交互:
+  * 按住 `d` 键 然后移动鼠标可以改变三维空间中相机的旋转视角.
+  * 按住 `s` 键 然后移动鼠标可以平移相机. 
+  * 按住 `z` 键 同时滚动鼠标滚轮以缩放画面. 
+  * 通过 `r` 重制相机视角.
+  * 离开/退出当前动画: `q` or `tab`
+  * 暂停动画:  `space` or `ctrl`
+  * 前一段动画: `LEFT`
+  * 后一段动画: `RIGHT`
+  * 重新播放当前动画: `DOWN`
   
 
 * `manim_express` vs `Matplotlib`:  
-  In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) to render `tex` fonts.  
-  Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
+  在某些情况你需要安装[LaTeX](https://www.latex-project.org/get/#tex-distributions) 以渲染 `tex` 字体.  
+  幸运的是`manim_express`中提供了在线的latex 编译选项. 通过设置 `SceneArgs.use_online_tex=True` 进行激活.
 
   ```python
   from manimlib import *
@@ -90,7 +91,7 @@ The above steps will automatically install packages `manim_express` and  [`manim
 
 
 
-# Resources
+# 资源
 
 * Wiki  
   https://flyingframes.readthedocs.io/en/latest/index.html
@@ -100,7 +101,6 @@ The above steps will automatically install packages `manim_express` and  [`manim
   
 * 3B1B videos:  
   https://github.com/3b1b/videos
-
 
 
 

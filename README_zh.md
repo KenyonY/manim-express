@@ -1,5 +1,5 @@
 # manim_express
-[![image](https://img.shields.io/badge/Pypi-0.4.0-green.svg)](https://pypi.org/project/manim_express)
+[![image](https://img.shields.io/badge/Pypi-0.4.1-green.svg)](https://pypi.org/project/manim_express)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-kunyuan-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
@@ -15,7 +15,9 @@ requests
 ```
 
 ------------------------
-[**中文说明**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README_zh.md) | [**English**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README.md)
+[**English**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README.md) |
+[**中文说明**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README_zh.md) 
+
 ## Install
 
 ```bash
