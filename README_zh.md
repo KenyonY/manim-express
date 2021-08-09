@@ -94,7 +94,7 @@ pip install manim_express
 # 资源
 
 * Wiki  
-  https://flyingframes.readthedocs.io/en/latest/index.html
+  https://flyingframes.readthedocs.io/en/latest/index.html  
   https://3b1b.github.io/manim/  
   https://docs.manim.org.cn/  
   https://docs.manim.org.cn/shaders/
