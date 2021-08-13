@@ -18,12 +18,10 @@ from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
 from pyglet.window import key
 
-__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "SceneArgs", "PlotObj", "xyz_to_points"]
+__all__ = ["EagerModeScene", "JupyterModeScene", "Size", "CONFIG", "PlotObj", "xyz_to_points"]
 
 
-class SceneArgs:
-    # write_file = False
-    # file_name = None
+class CONFIG:
     # skip_animations = False  # "Save the last frame"
     color = None  # Background color"
     full_screen = False
@@ -40,6 +38,8 @@ class SceneArgs:
     open = False  # Automatically open the saved file once its done
     finder = False  # Show the output file in finder
     frame_rate = None
+    write_file = False
+    file_name = None
     video_dir = None  # directory to write video
     start_at_animation_number = None
     use_online_tex = False
@@ -48,28 +48,25 @@ class SceneArgs:
 class EagerModeScene(Scene):
     def __init__(
             self,
-            write_file=False,
-            file_name=None,
             screen_size=Size.big,
             scene_name='EagerModeScene',
-            CONFIG=None,
+            # CONFIG=None,
     ):
-        self.CONFIG = CONFIG
+        # self.CONFIG = CONFIG
         args = manimlib.config.parse_cli()
         args_dict = vars(args)
         args_dict['file'] = None
         args_dict['scene_names'] = scene_name
         args_dict['screen_size'] = screen_size
-        for key, value in SceneArgs.__dict__.items():
+        for key, value in CONFIG.__dict__.items():
             args_dict[key] = value
 
-        if write_file is True or SceneArgs.gif is True:
+        if CONFIG.gif is True:
             args_dict['write_file'] = True
-            args_dict['file_name'] = file_name
-            if SceneArgs.gif is True:
-                args_dict["transparent"] = False
+            # if CONFIG.gif is True:
+            #     args_dict["transparent"] = False
 
-        if SceneArgs.use_online_tex:
+        if CONFIG.use_online_tex:
             print("Use online latex compiler")
             manimlib.mobject.svg.tex_mobject.tex_to_svg_file = tex_to_svg_file_online
 
@@ -166,6 +163,9 @@ class EagerModeScene(Scene):
         if self.window and self.linger_after_completion:
             self.interact()
 
+    def tear_down(self):
+        super().tear_down()
+
     def get_config(self):
         return self.config
 
@@ -258,6 +258,9 @@ class JupyterModeScene(EagerModeScene):
         super().__init__(**kwargs)
 
     def hold_on(self):
+        self.file_writer.finish()
+        
+    def finish(self):
         self.file_writer.finish()
 
     def embed(self):
