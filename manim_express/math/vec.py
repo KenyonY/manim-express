@@ -106,7 +106,6 @@ class Vec(metaclass=ABCMeta):
 
 class Vec2(Vec):
     def __init__(self, x=None, y=0):
-
         self._set_subclass()
 
         if x is None:
@@ -246,24 +245,3 @@ class Vec3(Vec):
     #     obj = object.__new__(Vec3)
     #     obj.__init__(*self._vector)
     #     return obj
-
-
-
-
-if __name__ == "__main__":
-    vec_list = [2, 1, 1]
-
-    vec3 = Vec3(*vec_list)
-    m_vec = Arrow(ORIGIN, vec_list, buff=0)
-
-    axis = [1, 2, 1]
-    angle = 45 * DEGREES
-
-    m_vec.rotate(angle, axis)
-
-    # print(quat_conjugate(np.array(Q), style=1))
-    # print(quaternion_conjugate(Q))
-    q = Quaternion().set_from_axis_angle([1, 1, 1], 45 * DEGREES)
-    print(q, 'q')
-    print(vec3.apply_quaternion(q))
-    print(m_vec.get_end())

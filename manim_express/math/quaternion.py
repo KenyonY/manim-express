@@ -1,4 +1,3 @@
-import numpy as np
 from manimlib import *
 
 
@@ -28,6 +27,9 @@ class Quaternion:
     def to_array(self):
         return self._q
 
+    def get_axis_vec(self):
+        return self._vec
+
     def normalise(self):
         L = np.linalg.norm(self._vec)
         # self._q /= L
@@ -52,7 +54,8 @@ class Quaternion:
 
     @staticmethod
     def multiply_quat(q1, q2):
-        """reference http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm"""
+        """reference 
+        https://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm"""
         x = q1.x * q2.w + q1.y * q2.z - q1.z * q2.y + q1.w * q2.x
         y = -q1.x * q2.z + q1.y * q2.w + q1.z * q2.x + q1.w * q2.y
         z = q1.x * q2.y - q1.y * q2.x + q1.z * q2.w + q1.w * q2.z
@@ -64,10 +67,10 @@ class Quaternion:
     @staticmethod
     def multiply_quat_2(q1, q2):
         """Graßmann Product"""
-        v1 = q1._vec
-        v2 = q2._vec
-        w1 = q1._w
-        w2 = q2._w
+        v1 = q1.get_axis_vec()
+        v2 = q2.get_axis_vec()
+        w1 = q1.w
+        w2 = q2.w
         vec = w1 * v2 + w2 * v1 + np.cross(v1, v2)
         w = w1 * w2 - v1.dot(v2)
 
@@ -103,7 +106,7 @@ class Quaternion:
         """TODO"""
         pass
 
-    def set_from_axis_angle(self, axis: np.ndarray, angle):
+    def set_from_axis_angle(self, axis, angle):
         axis = normalize(np.array(axis))
         half_angle = angle / 2
         s = np.sin(half_angle)
@@ -151,11 +154,3 @@ class Quaternion:
     @property
     def w(self):
         return self._w
-
-
-if __name__ == "__main__":
-    axis = np.array([1, 1, 1])
-    q1 = Quaternion().set_from_axis_angle(axis, 20 * DEGREES)
-    q2 = Quaternion().set_from_axis_angle(axis, 30 * DEGREES)
-    print(Quaternion.multiply_quat(q1, q2))
-    print(Quaternion.multiply_quat_2(q1, q2))
