@@ -6,7 +6,10 @@ class Animations(EagerModeScene):
     def __init__(self):
         super(Animations, self).__init__(screen_size=Size.big)
 
-    def clip0(self):
+    # def clip7(self):
+    #     pass
+
+    def clip8(self):
         theta = np.linspace(0, 2 * PI, 50)
         x = np.cos(theta)
         y = np.sin(theta)
@@ -45,6 +48,7 @@ class Animations(EagerModeScene):
         tri = Triangle()
 
         self.add(tri)
+        self.hold_on()
 
 
-Animations().render()
+Animations().clip9()
