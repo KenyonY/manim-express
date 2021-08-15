@@ -17,27 +17,50 @@ class Quaternion:
             self._z = z
             self._w = w
 
-        self._vec = np.array([self._x, self._y, self._z])
-        self._q = np.array([*self._vec, self._w])
+        self._q = np.array([self._x, self._y, self._z, self._w], dtype=float)
+        self._vec = self._q[:3]
 
-    def _set_q(self):
-        self._vec = np.array([self._x, self._y, self._z])
-        self._q = np.array([*self._vec, self._w])
+    def set_q(self, x, y, z, w):
+        self._q[0] = x
+        self._q[0] = y
+        self._q[0] = z
+        self._q[0] = w
+
+    def _xyzw_to_q(self):
+        self._q[0] = self._x
+        self._q[1] = self._y
+        self._q[2] = self._z
+        self._q[3] = self._w
+
+    def _xyz_to_vec(self):
+        self._vec[0] = self._x
+        self._vec[1] = self._y
+        self._vec[2] = self._z
+
+    def _q_to_xyzw(self):
+        self._x, self._y, self._z, self._w = self._q[0], self._q[1], self._q[2], self._q[3]
+
+    def _vec_to_xyz(self):
+        self._x, self._y, self._z = self._vec[0], self._vec[1], self._vec[2]
 
     def to_array(self):
         return self._q
 
     def get_axis_vec(self):
-        return self._vec
+        return self._q[:3]
+
+    def norm(self):
+        return np.linalg.norm(self._q)
 
     def normalise(self):
-        L = np.linalg.norm(self._vec)
+        L = self.norm()
         # self._q /= L
         self._x /= L
         self._y /= L
         self._z /= L
         self._w /= L
-        self._set_q()
+        self._xyzw_to_q()
+        return self
 
     def slerp(self):
         """TODO"""
@@ -46,10 +69,8 @@ class Quaternion:
     def multi(self, *quats):
         q = self
         for qi in quats:
-            q = Quaternion.multiply_quat_2(q, qi)
-        self._vec = q._vec
-        self._q = q._q
-        # self._set_q()
+            q = self.multiply_quat_2(q, qi)
+        self.set_q(*q._q)
         return q
 
     @staticmethod
@@ -88,19 +109,19 @@ class Quaternion:
 
     def set_x(self, value):
         self._x = value
-        self._set_q()
+        self._xyzw_to_q()
 
     def set_y(self, value):
         self._y = value
-        self._set_q()
+        self._xyzw_to_q()
 
     def set_z(self, value):
         self._z = value
-        self._set_q()
+        self._xyzw_to_q()
 
     def set_w(self, value):
         self._w = value
-        self._set_q()
+        self._xyzw_to_q()
 
     def set_from_euler(self):
         """TODO"""
@@ -115,19 +136,51 @@ class Quaternion:
         self._y = axis[1] * s
         self._z = axis[2] * s
         self._w = np.cos(half_angle)
-        self._set_q()
+        self._xyzw_to_q()
 
         return self
+
+    def set_from_unit_vectors(self, v_from, v_to):
+        """Assumes direction vectors vec1 and vec2 are normalized."""
+        r = 1 + v_from.dot(v_to)
+        if r < EPSILON:
+            r = 0
+            if abs(v_from.x) > abs(v_from.z):
+                self._x = -v_from.y
+                self._y = v_from.x
+                self._z = 0
+                self._w = r
+            else:
+                self._x = 0
+                self._y = -v_from.z
+                self._z = v_from.y
+                self._w = r
+            self._xyzw_to_q()
+        else:
+            self._x = v_from.y * v_to.z - v_from.z * v_to.y
+            self._y = v_from.z * v_to.x - v_from.x * v_to.z
+            self._z = v_from.x * v_to.y - v_from.y * v_to.x
+            self._w = r
+            self._xyzw_to_q()
+            # vec = np.cross(v_from.to_array(), v_to.to_array())
+            # self._q[0], self._q[1], self._q[2] = vec[0], vec[1], vec[2]
+            # self._q[3] = r
+            # self._q_to_xyzw()
+
+        return self.normalise()
+
+    def to_axis_angle(self):
+        angle = 2 * math.acos(self.w)
+        axis = self._vec / math.sqrt(1 - self.w ** 2)
+        return axis, angle
 
     def conjugate(self, in_place=True):
         if in_place:
             self._vec *= -1
-            self._set_q()
             return self
         else:
             q = self.copy()
             q._vec *= -1
-            q._set_q()
             return q
 
     def invert(self):
@@ -139,18 +192,27 @@ class Quaternion:
     def __str__(self):
         return self._q.__str__()
 
+    def __len__(self):
+        return 4
+
+    def __getitem__(self, item: int):
+        return self._q[item]
+
+    def __setitem__(self, item: int, value):
+        self._q[item] = value
+
     @property
     def x(self):
-        return self._vec[0]
+        return self._q[0]
 
     @property
     def y(self):
-        return self._vec[1]
+        return self._q[1]
 
     @property
     def z(self):
-        return self._vec[2]
+        return self._q[2]
 
     @property
     def w(self):
-        return self._w
+        return self._q[3]
