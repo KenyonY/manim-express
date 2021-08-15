@@ -53,6 +53,15 @@ class Vec(metaclass=ABCMeta):
     def __str__(self):
         return self._vector.__str__()
 
+    def __len__(self):
+        return len(self._vector)
+
+    def __getitem__(self, item: int):
+        return self._vector[item]
+
+    def __setitem__(self, item: int, value):
+        self._vector[item] = value
+
     def __add__(self, other):
         if isinstance(other, self._subclass):
             other = other.to_array()
