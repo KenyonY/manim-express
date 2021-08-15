@@ -62,6 +62,10 @@ class Vec(metaclass=ABCMeta):
     def __setitem__(self, item: int, value):
         self._vector[item] = value
 
+    def __iter__(self):
+        for value in self._vector:
+            yield value
+
     def __add__(self, other):
         if isinstance(other, self._subclass):
             other = other.to_array()

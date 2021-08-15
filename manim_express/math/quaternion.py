@@ -201,6 +201,10 @@ class Quaternion:
     def __setitem__(self, item: int, value):
         self._q[item] = value
 
+    def __iter__(self):
+        for value in self._q:
+            yield value
+
     @property
     def x(self):
         return self._q[0]
