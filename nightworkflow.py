@@ -1,11 +1,6 @@
-import os
-from guang import rm
-import time
-from tools import update_requirements
-
-update_requirements()
-
-rm(['build', 'dist', 'eggs','manim_express.egg-info'])
-os.system("pip uninstall manim_express -y && python setup_express.py install")
-time.sleep(0.1)
-rm(['build', 'dist', 'eggs','manim_express.egg-info'])
+from sparrow.version_ops import VersionControl
+pkgname = "manim_express"
+pkgdir = pkgname
+vc = VersionControl(pkgname, pkgdir)
+# os.system("yapf -i -r ./manim_express")
+vc.install(pkgname)

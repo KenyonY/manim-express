@@ -17,6 +17,9 @@ from .plot import Plot, PlotObj, xyz_to_points
 from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
 from pyglet.window import key
+from .jupyter import JupyterDisplay
+from pathlib import Path
+from .jupyter import video
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "Size", "CONFIG", "PlotObj", "xyz_to_points"]
 
@@ -37,7 +40,7 @@ class CONFIG:
     quiet = True
     open = False  # Automatically open the saved file once its done
     finder = False  # Show the output file in finder
-    frame_rate = None
+    frame_rate = 30
     write_file = False
     file_name = None
     video_dir = None  # directory to write video
@@ -257,15 +260,21 @@ class JupyterModeScene(EagerModeScene):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def hold_on(self):
-        self.file_writer.finish()
-        
     def finish(self):
         self.file_writer.finish()
 
     def embed(self):
         """We don't need it in jupyter lab/notebook."""
         pass
+
+    @property
+    def video_path(self):
+        self.file_writer.finish()
+        path = Path(self.file_writer.get_movie_file_path())
+        relative_path = path.relative_to(Path.cwd())
+        # video(relative_path)
+        return relative_path
+
 
     def quit(self):
         """Please use exit() or quit() in jupyter cell."""
