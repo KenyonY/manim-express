@@ -3,6 +3,7 @@ manimlib
 .idea/
 LOGO/
 #workflow.py
+test.ipynb
 
 # For manim
 videos
