@@ -1,21 +1,9 @@
+from sparrow import yaml_load
 
-def update_requirements(version=None):
-    if version is None:
-        with open('./manimlib/__init__.py', 'r', encoding='utf8') as fi:
-            find_flag = 2
-            for line in  fi.readlines():
-                idx_version = line.find('__version__')
-                idx_name = line.find('__name__')
-                if idx_version != -1:
-                    version_str = line.strip('\n').split('=')[1].strip()
-                    # version = float(version_str)
-                    find_flag -= 1
-                if idx_name != -1:
-                    pkg_name = line.strip('\n').split('=')[1].strip().strip("'").strip('"')
-                    find_flag -= 1
-
-                if find_flag < 1:
-                    break
+def update_requirements():
+    verson_config = yaml_load('./manimlib/version-config.yaml')
+    pkg_name = verson_config.get('name')
+    version_str = verson_config.get('version')
 
     with open('requirements.txt', 'w', encoding='utf8') as fo:
         content = f"""
