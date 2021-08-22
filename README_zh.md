@@ -58,7 +58,6 @@ pip install manim_express
   * 后一段动画: `RIGHT`
   * 重新播放当前动画: `DOWN`
   
-
 * `manim_express` vs `Matplotlib`:  
   在某些情况你需要安装[LaTeX](https://www.latex-project.org/get/#tex-distributions) 以渲染 `tex` 字体.  
   幸运的是`manim_express`中提供了在线的latex 编译选项. 通过设置 `SceneArgs.use_online_tex=True` 进行激活.
@@ -107,4 +106,18 @@ pip install manim_express
 
 # Examples
 * GOA model
+  <img src="data/pic/GOA.gif" width = "600"/>
+  
+  
+  
   <img src="data/pic/GOA.PNG" width = "900"/>
+
+
+
+* Apply function
+  <img src="data/pic/apply_function.gif" width = "900"/>
+
+
+
+* Double pendulum
+  <img src="data/pic/pendulum.gif" width = "900"/>

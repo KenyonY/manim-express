@@ -57,7 +57,6 @@ The above steps will automatically install packages `manim_express` and  [`manim
   * next animation clip: `RIGHT`
   * replay current animation clip: `DOWN`
   
-
 * `manim_express` vs `Matplotlib`:  
   In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) to render `tex` fonts.  
   Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
@@ -107,4 +106,19 @@ The above steps will automatically install packages `manim_express` and  [`manim
 
 # Examples
 * GOA model
+  <img src="data/pic/GOA.gif" width = "600"/>
+  
+  
+  
   <img src="data/pic/GOA.PNG" width = "900"/>
+
+
+
+* Apply function
+  <img src="data/pic/apply_function.gif" width = "900"/>
+
+
+
+* Double pendulum
+  <img src="data/pic/pendulum.gif" width = "900"/>
+
