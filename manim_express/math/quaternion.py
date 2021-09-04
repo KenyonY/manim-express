@@ -181,11 +181,11 @@ class Quaternion:
 
     def conjugate(self, in_place=True):
         if in_place:
-            self._vec = self._vec - 1
+            self._vec = -1 * self._vec
             return self
         else:
             q = self.copy()
-            q._vec = q._vec - 1
+            q._vec = -1 * q._vec
             return q
 
     def invert(self):
@@ -195,6 +195,9 @@ class Quaternion:
         return self._q.dot(v)
 
     def __str__(self):
+        return self._q.__str__()
+
+    def __repr__(self):
         return self._q.__str__()
 
     def __len__(self):
