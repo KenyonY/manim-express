@@ -192,15 +192,15 @@ class Vec3(Vec):
 
     @property
     def x(self):
-        return self._x
+        return self._vector[0]
 
     @property
     def y(self):
-        return self._y
+        return self._vector[1]
 
     @property
     def z(self):
-        return self._z
+        return self._vector[2]
 
     def _set_vec(self):
         self._vector = np.array([self._x, self._y, self._z], dtype=np.float64)

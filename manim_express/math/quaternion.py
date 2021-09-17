@@ -115,10 +115,8 @@ class Quaternion:
         """Graßmann Product"""
         q1: cls
         q2: cls
-        v1 = q1.vec
-        v2 = q2.vec
-        w1 = q1.w
-        w2 = q2.w
+        v1, v2 = q1.vec, q2.vec
+        w1, w2 = q1.w, q2.w
         vec = w1 * v2 + w2 * v1 + np.cross(v1, v2)
         w = w1 * w2 - v1.dot(v2)
 
@@ -136,16 +134,16 @@ class Quaternion:
 
     def set_from_euler(self):
         """TODO"""
-        pass
+
+    def to_euler(self):
+        """TODO"""
 
     def set_from_axis_angle(self, axis, angle):
         axis = normalize(np.array(axis))
         half_angle = angle / 2
         s = np.sin(half_angle)
 
-        self._x = axis[0] * s
-        self._y = axis[1] * s
-        self._z = axis[2] * s
+        self._vec = axis * s
         self._w = np.cos(half_angle)
         return self
 
@@ -191,8 +189,8 @@ class Quaternion:
     def invert(self):
         return self.conjugate()
 
-    def dot(self, v):
-        return self._q.dot(v)
+    def dot(self, q):
+        return self._q.dot(q)
 
     def __str__(self):
         return self._q.__str__()
