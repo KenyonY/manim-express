@@ -257,7 +257,8 @@ class EagerModeScene(Scene):
 
 
 class JupyterModeScene(EagerModeScene):
-    def __init__(self, **kwargs):
+    def __init__(self, write_file=True, **kwargs):
+        CONFIG.write_file = write_file
         super().__init__(**kwargs)
 
     def finish(self):
@@ -272,9 +273,15 @@ class JupyterModeScene(EagerModeScene):
         self.file_writer.finish()
         path = Path(self.file_writer.get_movie_file_path())
         relative_path = path.relative_to(Path.cwd())
-        # video(relative_path)
         return relative_path
 
+    def display(self,
+                width=854,
+                height=480,
+                controls=True,
+                autoplay=True,
+                loop=True):
+        return video(self.video_path, width, height, controls, autoplay, loop)
 
     def quit(self):
         """Please use exit() or quit() in jupyter cell."""
