@@ -30,11 +30,11 @@ def update_setup_cfg():
                 break_flag -= 1
                 if break_flag == 0:
                     break
-            elif line[:7] == 'version':
-                lines[idx] = f"version = {version_str}\n"
-                break_flag -= 1
-                if break_flag == 0:
-                    break
+            # elif line[:7] == 'version':
+            #     lines[idx] = f"version = {version_str}\n"
+            #     break_flag -= 1
+            #     if break_flag == 0:
+            #         break
     with open('setup.cfg', 'w', encoding='utf8') as fio:
         fio.writelines(lines)
 

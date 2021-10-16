@@ -270,10 +270,10 @@ class JupyterModeScene(EagerModeScene):
 
     @property
     def video_path(self):
-        self.file_writer.finish()
         path = Path(self.file_writer.get_movie_file_path())
+        self.file_writer.finish()
         relative_path = path.relative_to(Path.cwd())
-        return relative_path
+        return str(relative_path)
 
     def display(self,
                 width=854,
