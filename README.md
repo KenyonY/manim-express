@@ -46,9 +46,9 @@ The above steps will automatically install packages `manim_express` and  [`manim
   ```
   
   Operating graphics:
-  * hold down the `d` key on the keyboard and move the mouse to change the three-dimensional perspective.
-  * hold down the `s` key on the keyboard and move the mouse to pan the screen
-  * hold down the `z` on the keyboard while scrolling the middle mouse button to zoom the screen
+  * hold down the `d` key or `mouse left` on the keyboard and move the mouse to change the three-dimensional perspective.
+  * hold down the `s` key or `mouse right` on the keyboard and move the mouse to pan the screen
+  * hold down the `z` or `ctrl` on the keyboard while scrolling the middle mouse button to zoom the screen
   * scroll the middle mouse button to move the screen up and down
   * reset camera view by pressing `r`
   * close the window and exit the program by pressing `q` or `tab`
