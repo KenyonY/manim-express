@@ -15,7 +15,7 @@ def setup(self):
 
 scene = EagerModeScene()
 setup(scene)
-text = Text("text", size=2)
+text = Text("text")
 
 def text_updater(old_text):
     assert (isinstance(old_text, Text))
@@ -31,8 +31,9 @@ def text_updater(old_text):
         new_text.set_opacity(0)
     old_text.become(new_text)
 
-text.add_updater(text_updater)
+# text.add_updater(text_updater)
 scene.add(MotionMobject(text))
+scene.add(MotionMobject(Square3D()))
 scene.textbox.set_value("Manim")
 
 

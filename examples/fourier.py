@@ -65,9 +65,9 @@ title.scale(1.2)
 title.to_edge(UP, buff = MED_SMALL_BUFF)
 
 func = lambda t : np.cos(2*TAU*t) + np.cos(3*TAU*t)
-graph0 = ParametricCurve(func, (0, 5))
+# graph = ParametricCurve(func, t_range=(0, 5))
 
-graph = FunctionGraph(func, x_min = 0, x_max = 5)
+graph = FunctionGraph(func, x_range=(0, 5))
 graph.stretch(0.25, 1)
 graph.next_to(title, DOWN)
 graph.to_edge(LEFT)
@@ -75,7 +75,7 @@ graph.set_color(BLUE)
 
 fourier_graph = FunctionGraph(
     get_fourier_transform(func, 0, 5),
-    x_min = 0, x_max = 5
+    (0, 5)
 )
 
 fourier_graph.move_to(graph)

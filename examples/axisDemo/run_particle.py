@@ -1,5 +1,5 @@
 from manim_imports_ext import *
-from .scatter import ParticleSystem, SimgleRay
+from scatter import ParticleSystem, SimgleRay
 
 
 class ScatteringModel(Scene):

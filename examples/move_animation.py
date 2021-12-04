@@ -65,9 +65,9 @@ def episode3():
 
     circ = Circle()
     plane = NumberPlane((10, 10), (6, 6))
-    scene.play(ShowCreation(plane))
+    scene.play(Write(plane))
     scene.play(Write(circ))
-    scene.play(circ.animate.apply_matrix(matrix1))
+    scene.play(circ.animate.apply_matrix(matrix1), run_time=1)
     # scene.play(Transform(circ, circ.copy().shift(UP*3)))
 
     theta = 60 * DEGREES
@@ -75,10 +75,11 @@ def episode3():
 
     rotate_matrix = [[np.cos(theta), -np.sin(theta)],
                      [np.sin(theta),  np.cos(theta)]]
-    scene.play(circ.animate.apply_matrix(rotate_matrix), run_time=0.5)
+    scene.play(Rotate(circ, theta), run_time=1)
+    # scene.play(circ.animate.apply_matrix(rotate_matrix), run_time=0.5)
 
     dot = Dot().move_to(circ.get_end())
-    scene.play(MoveAlongPath(dot, circ), run_time=3)
+    scene.play(MoveAlongPath(dot, circ), run_time=1)
 
 # episode3()
 
@@ -141,13 +142,13 @@ def episode6():
     scene.play(Transform(square, square.copy().rotate(-PI/4)))
     scene.play(Transform(square, square.copy().rotate(PI/4)))
 
-episode6()
+# episode6()
 
 
-
+#
 # episode1()
 # episode2()
-# episode3()
+episode3()
 # episode4()
 #
 scene.hold_on()

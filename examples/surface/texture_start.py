@@ -25,10 +25,10 @@ for mob in surfaces:
     mob.mesh = SurfaceMesh(mob)
     mob.mesh.set_stroke(BLUE, 1, opacity=0.5)
 
-# scene.play(
-#     FadeIn(surfaces[0]),
-#     # ShowCreation(surface.mesh, lag_ratio=0.01, run_time=3),
-# )
+scene.play(
+    FadeIn(surfaces[0]),
+    # ShowCreation(surface.mesh, lag_ratio=0.01, run_time=3),
+)
 
 torus1 = Torus(r1=3, r2=1)
 torus2 = surface.torus(3, 1).move_to(RIGHT*3)

@@ -1,7 +1,11 @@
 my_manim_projects/
 test/
 tutorials/
-
+ai_draw/
+jupyter/
+load_video/
+physics/
+videos/
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

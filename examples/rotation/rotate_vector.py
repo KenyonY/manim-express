@@ -2,6 +2,7 @@ from examples.example_imports import *
 
 from manimlib import *
 
+CONFIG.use_online_tex = True
 
 scene = EagerModeScene(screen_size=Size.bigger)
 
