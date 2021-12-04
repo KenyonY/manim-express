@@ -1,9 +1,11 @@
-from manim_imports_ext import *
+from manimlib import *
 from geometry.utils import *
+from examples.example_imports import *
 
-class ParticleMultiRay(Scene):
+CONFIG.use_online_tex=1
+class ParticleMultiRay(EagerModeScene):
 
-    def construct(self):
+    def clip1(self):
         origin, R = ORIGIN, 1.2
         particle = circ(origin, R)
 
@@ -51,7 +53,7 @@ class ParticleMultiRay(Scene):
         ray1 = Arrow(point0, point1,buff=0, thickness=0.001)
         # ray1.set_opacity(0.1)
         ray1.set_color(WHITE)
-        self.play(GrowArrow(ray1, run_time=0.3))
+        self.play(GrowArrow(ray1), run_time=0.3)
 
         theta_i = PI - theta1
         theta_r = calc_theta_r(theta_i, 1, rm)
@@ -83,10 +85,9 @@ def add_in_out_rays(obj, point1, theta_i, theta_r, theta0, particle, pn,
     obj.play(*[GrowArrow(i) for i in rays], run_time=0.2)
 
 
-class ParticleSimgleRay(Scene):
+class ParticleSimgleRay(EagerModeScene):
 
-    def construct(self):
-
+    def clip1(self):
         origin, R = np.array([0, 0, 0]), 1.2
         particle = circ(origin, R)
         self.play(ShowCreation(particle))
@@ -154,6 +155,4 @@ def add_ray(obj, point1, theta_i, theta_r, theta0, particle, pn,
 
 
 if __name__ == "__main__":
-    os.system("manim-render particle.py ParticleMultiRay -f") # -ow 保存
-
-    # os.system("manim-render particle.py ParticleSimgleRay -f")
+    ParticleMultiRay().render()

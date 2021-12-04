@@ -1,5 +1,6 @@
-from manim_imports_ext import *
-from utils import *
+# from manim_imports_ext import *
+from manimlib import *
+# from utils import *
 
 class Demo1(Scene):
     def construct(self):
