@@ -97,7 +97,9 @@ class EagerModeScene(Scene):
 
     def play(self, *args, run_time=1, rate_func=linear, **kwargs):
         """TODO:"""
-        super().play(*args, run_time=run_time, rate_func=rate_func, **kwargs)
+        super().play(*args, run_time=run_time,
+                     rate_func=rate_func,
+                     **kwargs)
 
     # def clip1(self):
     #     pass
@@ -107,8 +109,7 @@ class EagerModeScene(Scene):
         for i in range(n):
             try:
                 func_name = f"clip{i}"
-                func = getattr(self, func_name)
-                animation_func_dict.setdefault(func_name, func)
+                animation_func_dict.setdefault(func_name, getattr(self, func_name))
             except:
                 continue
         self.animation_func_dict = animation_func_dict

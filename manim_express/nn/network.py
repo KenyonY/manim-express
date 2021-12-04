@@ -18,7 +18,7 @@ class NeuralNetwork:
         Args:
             each_layer_cell_num: Points the number of cell in each layer.
             interval: (x, y) interval of each cell.
-            top_pos: The top layer's position if `include`_top is True.
+            top_pos: The top layer's position if `include_top` is True.
             include_top: Is or Not include top layer.
             top_layer_pos_list: Points each cell's position in top layer. (Valid only
             if parameter `include_top` is false.)
@@ -114,7 +114,7 @@ class NeuralNetwork:
         layer_line_cell = VGroup()
         for upper_pos in upper_layer_pos_list:
             for last_pos in last_pos_list:
-                line = Line(upper_pos, last_pos, buff=0.5*0.1*self._cell_size).set_stroke(width=0.6, opacity=0.66)
+                line = Line(upper_pos, last_pos, buff=1*0.1*self._cell_size).set_stroke(width=1, opacity=0.66)
                 lines.add(line)
 
         self._layer_lines.add(lines)
