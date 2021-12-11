@@ -1,7 +1,10 @@
+import time
+
 from manimlib import *
 
 
 def gen_points(n_points=1, x_range=(-1, 1), y_range=(-1, 1), z_range=(0, 0), color_list=None, size=1):
+    np.random.seed(int(time.time()))
     dx = x_range[1] - x_range[0]
     dy = y_range[1] - y_range[0]
     dz = z_range[1] - z_range[0]

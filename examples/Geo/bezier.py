@@ -21,22 +21,16 @@ class Bazier(EagerModeScene):
             dot_start.get_center() + (dot_end.get_center() - dot_start.get_center()) * rate_func(
                 self._value_tracker.get_value()))
 
-
     def clip1(self):
         # self.play(Write(gen_points(500, x_range=[-2, 2], y_range=[-2, 2])), run_time=3)
-        self.play(ShowCreation(gen_sphere_points(100, r_range=(0, 5))), run_time=3)
-        scale = 2
-        x_shift = -1
-        y_shift = -0.2
-        dot1 = Dot(scale * np.array([0 + x_shift, 0 + y_shift, 0])).set_stroke(color=GREEN_A, width=5)
-        dot2 = Dot(scale * np.array([1 + x_shift, 1.8 + y_shift, 0])).set_stroke(color=GREEN_A, width=5)
-        dot3 = Dot(scale * np.array([2 + x_shift, 1 + y_shift, 0])).set_stroke(color=GREEN_A, width=5)
-        dot4 = Dot(scale * np.array([1.5 + x_shift, -1 + y_shift, 0])).set_stroke(color=GREEN_A, width=5)
-        dot_group = VGroup(dot1, dot2, dot3, dot4)
+        # self.play(ShowCreation(gen_sphere_points(100, r_range=(0, 5))), run_time=3)
+        dot_group = gen_points(4, x_range=(-5, 5), y_range=(-4, 4))
+        dot1, dot2, dot3, dot4 = dot_group
 
-        line_12 = Line(dot1, dot2).set_stroke(color=GREY, width=5)
-        line_23 = Line(dot2, dot3).set_stroke(color=GREY, width=5)
-        line_34 = Line(dot3, dot4).set_stroke(color=GREY, width=5)
+        self._value_tracker = ValueTracker()
+        line_12 = Line(dot1.get_center(), dot2.get_center()).set_stroke(color=GREY, width=5)
+        line_23 = Line(dot2.get_center(), dot3.get_center()).set_stroke(color=GREY, width=5)
+        line_34 = Line(dot3.get_center(), dot4.get_center()).set_stroke(color=GREY, width=5)
 
         d1 = Dot([0, 0, 0]).set_color(RED)
         d2 = Dot().set_color(GREEN).next_to(d1, UP)
@@ -46,20 +40,17 @@ class Bazier(EagerModeScene):
         self.play(Write(d_groups))
         self.wait(0.5)
 
-        self.play(d1.move_to, dot1.get_center(),
-                  d2.move_to, dot2.get_center(),
-                  d3.move_to, dot3.get_center(),
-                  d4.move_to, dot4.get_center(),
-                  )
+        self.play(*it.chain.from_iterable([[i.move_to, j.get_center()] for i, j in zip(d_groups, dot_group)]))
+
         self.wait(0.3)
-        self.play(*[Write(i) for i in [dot_group, line_12, line_23, line_34]], run_time=0.5)
+        [self.play(ShowCreation(i), run_time=0.2) for i in [dot_group, line_12, line_23, line_34]]
 
         d1.add_updater(self.updater_with_line(line_12))
         d2.add_updater(self.updater_with_line(line_23))
         d3.add_updater(self.updater_with_line(line_34))
-        line_d12 = Line(d1, d2).set_color(RED)
+        line_d12 = Line(d1, d2).set_color(BLUE)
         line_d23 = Line(d2, d3).set_color(GREEN)
-        self.play(*[FadeIn(i) for i in [line_d12, line_d23]], run_time=0.3)
+        self.play(*[Write(i) for i in [line_d12, line_d23]], run_time=0.3)
 
         line_d12.add_updater(self.line_updater_with_dots(d1, d2))
         line_d23.add_updater(self.line_updater_with_dots(d2, d3))
@@ -75,13 +66,13 @@ class Bazier(EagerModeScene):
         path = TracedPath(target_dot.get_center).set_stroke(RED, 3)
         self.add(target_dot, path)
 
-        self.play(self._value_tracker.increment_value, 1, run_time=5)
+        self.play(self._value_tracker.increment_value, 1, run_time=5, rate_func=smooth)
         self.wait(0.5)
 
 
 # CONFIG.write_file = True
 # CONFIG.gif = True
-CONFIG.color = WHITE
+# CONFIG.color = WHITE
 
 bezier = Bazier()
 bezier.render()
