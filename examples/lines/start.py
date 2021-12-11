@@ -45,8 +45,8 @@ class A1(EagerModeScene):
 
 # scene.hold_on()
 d1 = A1()
-# d1.clip1()
-# d1.clip3()
-d1.render()
+d1.clip1()
+d1.clip3()
+# d1.render()
 # d1.replay(1)
 # d1.loop_clip(1)
