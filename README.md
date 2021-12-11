@@ -105,6 +105,9 @@ The above steps will automatically install packages `manim_express` and  [`manim
 
 
 # Examples
+- Bezier curve  
+  <img src="data/pic/Bazier.gif">
+- 
 * GOA model
   <img src="data/pic/GOA.gif" width = "600"/>
   

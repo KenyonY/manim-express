@@ -1,5 +1,6 @@
 from .eager import *
 from .surface import CustomSurface
+from .points import *
 from sparrow.file_ops import yaml_load, ppath
 from sparrow.color_str import rgb_string
 
