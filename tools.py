@@ -20,7 +20,6 @@ requests
 def update_setup_cfg():
     verson_config = yaml_load('./manim_express/version-config.yaml')
     pkg_name = verson_config.get('name')
-    version_str = verson_config.get('version')
     with open('setup.cfg', 'r', encoding='utf8') as fio:
         lines = fio.readlines()
         break_flag = 2

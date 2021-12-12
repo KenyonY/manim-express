@@ -1,3 +1,5 @@
+import numpy as np
+
 from examples.example_imports import *
 from manim_express import *
 from sparrow import clamp
@@ -69,10 +71,23 @@ class Bazier(EagerModeScene):
         self.play(self._value_tracker.increment_value, 1, run_time=5, rate_func=smooth)
         self.wait(0.5)
 
+    def clip2(self):
+        x = np.linspace(0, 1, 100)
+        # self.plot(x, [smooth(i) for i in x])
+        # self.plot(x, [double_smooth(i) for i in x])
+        # self.plot(x, [lingering(i) for i in x])
+        self.plot(x, [exponential_decay(i) for i in x])
+        self.plot(x, [wiggle(i) for i in x])
+        self.show_plot()
+        self.hold_on()
+
+
+
 
 # CONFIG.write_file = True
 # CONFIG.gif = True
 # CONFIG.color = WHITE
 
 bezier = Bazier()
-bezier.render()
+# bezier.render()
+bezier.clip2()

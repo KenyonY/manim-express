@@ -1,3 +1,5 @@
+import os
+
 from sparrow.version_ops import VersionControl
 from tools import update_requirements, update_setup_cfg
 
@@ -7,6 +9,7 @@ vc = VersionControl(pkgname, pkgdir)
 vc.update_version()
 
 update_setup_cfg()
+os.system(f"git tag {vc.config['version']}")
 # To keep manimlib latest.
 update_requirements()
 vc.update_readme(readme_path="./README.md", license="MIT")
