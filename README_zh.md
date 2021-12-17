@@ -1,12 +1,12 @@
 # manim_express
-[![image](https://img.shields.io/badge/Pypi-0.5.0-green.svg)](https://pypi.org/project/manim_express)
+[![image](https://img.shields.io/badge/Pypi-0.5.2-green.svg)](https://pypi.org/project/manim_express)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-kunyuan-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
 
 ## Requirements
 ```python
-manim_kunyuan >= 0.31
+manim_kunyuan >= 0.33
 sparrow_tool
 fake_headers
 requests
