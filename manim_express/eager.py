@@ -1,9 +1,7 @@
 import random
 import time
-import sys
 from functools import wraps
 import shutil
-import numpy as np
 from manimlib.utils.config_ops import digest_config
 # from manimlib.scene.scene_file_writer import SceneFileWriter
 from manimlib import Scene, Point, Camera, ShowCreation, Write, Color, VGroup, VMobject
@@ -16,7 +14,6 @@ from sparrow import ppath
 from .plot import Plot, PlotObj, xyz_to_points
 from .onlinetex import tex_to_svg_file_online
 import manimlib.mobject.svg.tex_mobject
-from pyglet.window import key
 from .jupyter import JupyterDisplay
 from pathlib import Path
 from .jupyter import video
@@ -30,7 +27,7 @@ class CONFIG:
     full_screen = False
     gif = False
     resolution = '1920x1080'
-
+    preview = False
     # Render to a movie file with an alpha channel,
     # if transparent is True, .mov file will be generated.
     transparent = False
@@ -41,7 +38,6 @@ class CONFIG:
     open = False  # Automatically open the saved file once its done
     finder = False  # Show the output file in finder
     frame_rate = 30
-    write_file = False
     file_name = None
     video_dir = None  # directory to write video
     start_at_animation_number = None
@@ -61,6 +57,12 @@ class EagerModeScene(Scene):
         args_dict['file'] = None
         args_dict['scene_names'] = scene_name
         args_dict['screen_size'] = screen_size
+        if CONFIG.preview:
+            from pyglet.window import key
+            self.key = key
+        else:
+            args_dict['write_file'] = True
+
         for key, value in CONFIG.__dict__.items():
             args_dict[key] = value
 
@@ -141,7 +143,7 @@ class EagerModeScene(Scene):
 
     def _clip_control(self, symbol):
         # play preview clip
-        if symbol in (key.LEFT, key.COMMA, key.NUM_1, key._1):
+        if symbol in (self.key.LEFT, self.key.COMMA, self.key.NUM_1, self.key._1):
             self.current_clip -= 1
             try:
                 self.replay(self.current_clip)
@@ -149,7 +151,7 @@ class EagerModeScene(Scene):
                 self.current_clip += 1
 
         # play next clip
-        elif symbol in (key.RIGHT, key.PERIOD, key._3, key.NUM_3):
+        elif symbol in (self.key.RIGHT, self.key.PERIOD, self.key._3, self.key.NUM_3):
             self.current_clip += 1
             try:
                 self.replay(self.current_clip)
@@ -157,7 +159,7 @@ class EagerModeScene(Scene):
                 self.current_clip -= 1
 
         # play current clip
-        elif symbol in (key.NUM_DIVIDE, key.DOWN, key._2, key.NUM_2):
+        elif symbol in (self.key.NUM_DIVIDE, self.key.DOWN, self.key._2, self.key.NUM_2):
             self.replay(self.current_clip)
 
     def hold_on(self):
