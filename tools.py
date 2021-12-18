@@ -22,18 +22,11 @@ def update_setup_cfg():
     pkg_name = verson_config.get('name')
     with open('setup.cfg', 'r', encoding='utf8') as fio:
         lines = fio.readlines()
-        break_flag = 2
         for idx, line in enumerate(lines.copy()):
             if line[:4] == 'name':
                 lines[idx] = f"name = {pkg_name}\n"
-                break_flag -= 1
-                if break_flag == 0:
-                    break
-            # elif line[:7] == 'version':
-            #     lines[idx] = f"version = {version_str}\n"
-            #     break_flag -= 1
-            #     if break_flag == 0:
-            #         break
+                break
+
     with open('setup.cfg', 'w', encoding='utf8') as fio:
         fio.writelines(lines)
 
