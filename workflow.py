@@ -1,5 +1,4 @@
 import os
-
 from sparrow.version_ops import VersionControl
 from tools import update_requirements, update_setup_cfg
 

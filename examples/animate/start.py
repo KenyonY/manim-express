@@ -1,7 +1,8 @@
 from examples.example_imports import *
 CONFIG.preview=True
 
-scene = EagerModeScene()
+scene = EagerModeScene(screen_size=Size.biggest
+                       )
 sq1 = Square()
 scene.play(ShowCreation(sq1))
 scene.play(sq1.animate.shift(RIGHT*3))
