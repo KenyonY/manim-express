@@ -106,21 +106,17 @@ pip install manim_express
 
 # Examples
 - Bezier curve  
-  <img src="data/pic/bezier.gif">
-
-* GOA model
+  <img src="data/pic/bezier.gif">  
+ 
+- GOA model  
   <img src="data/pic/GOA.gif" width = "600"/>
-  
-  
-  
-  <img src="data/pic/GOA.PNG" width = "900"/>
+
+- GOA  
+  <img src="data/pic/GOA.PNG" width = "600"/>
+
+- Apply function  
+  <img src="data/pic/apply_function.gif" width = "600"/>
 
 
-
-* Apply function
-  <img src="data/pic/apply_function.gif" width = "900"/>
-
-
-
-* Double pendulum
-  <img src="data/pic/pendulum.gif" width = "900"/>
+- Double pendulum  
+  <img src="data/pic/pendulum.gif" width = "600"/>
