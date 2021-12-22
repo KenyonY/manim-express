@@ -95,24 +95,29 @@ The above steps will automatically install packages `manim_express` and  [`manim
 
 * Wiki  
   https://flyingframes.readthedocs.io/en/latest/index.html  
-	@@ -103,11 +104,7 @@ The above steps will automatically install packages `manim_express` and  [`manim
+  https://3b1b.github.io/manim/  
+  https://docs.manim.org.cn/  
+  https://docs.manim.org.cn/shaders/
+  
+* 3B1B videos:  
+  https://github.com/3b1b/videos
 
 
 
 
 # Examples
 - Bezier curve  
-  <img src="data/pic/bezier.gif">
-- 
-* GOA model
+  <img src="data/pic/bezier.gif">  
+ 
+- GOA model  
   <img src="data/pic/GOA.gif" width = "600"/>
 
-  
-  
+- GOA  
   <img src="data/pic/GOA.PNG" width = "900"/>
-* Apply function
+
+- Apply function  
   <img src="data/pic/apply_function.gif" width = "900"/>
 
 
-* Double pendulum
+- Double pendulum  
   <img src="data/pic/pendulum.gif" width = "900"/>
