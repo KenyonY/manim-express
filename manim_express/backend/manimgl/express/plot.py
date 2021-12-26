@@ -1,5 +1,5 @@
 from manimlib import *
-from .tools import calc_number_step
+from ....tools import calc_number_step
 
 
 def m_line(x,
@@ -268,6 +268,7 @@ class PlotObj(VMobject):
 
 
 def xyz_to_points(x, y, z=None, axes=None):
+    """Generalized c2p"""
     assert len(x) == len(y)
     if z is None:
         z = np.zeros(len(x))

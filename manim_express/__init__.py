@@ -1,8 +1,10 @@
-from .eager import *
-from .surface import CustomSurface
+from .eager import EagerModeScene as GlEagerScene
+
+
+from .backend.manimgl.express.surface import CustomSurface
 from .points import *
 from sparrow.file_ops import yaml_load, ppath
-from sparrow.color_str import rgb_string
+from sparrow.color.color_str import rgb_string
 import pkg_resources
 
 plan_root_path = __file__

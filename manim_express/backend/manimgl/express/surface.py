@@ -1,6 +1,5 @@
-from manim_express import EagerModeScene
+from manim_express.backend.manimgl.express.eager import EagerModeScene
 from manimlib import *
-# from manimlib.utils.config_ops import digest_config
 
 
 class CustomSurface:
@@ -133,9 +132,9 @@ class CustomSurface:
         self.set_default_kwargs(kwargs)
         return ParametricSurface(
             lambda u, v: self.axes.c2p(*np.array([
-                (R+r*np.cos(v))*np.cos(u),
-                (R+r*np.cos(v))*np.sin(u),
-                r*np.sin(v)
+                (R + r * np.cos(v)) * np.cos(u),
+                (R + r * np.cos(v)) * np.sin(u),
+                r * np.sin(v)
             ])),
             u_range=[0, TAU],
             v_range=[0, TAU],
@@ -144,10 +143,9 @@ class CustomSurface:
         )
 
 
-
-
-
 if __name__ == "__main__":
+    from manim_express.backend.manimgl.express.eager import CONFIG
+    CONFIG.preview=True
     s = EagerModeScene()
     # axes = ThreeDAxes()
     surface = CustomSurface()

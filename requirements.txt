@@ -1,5 +1,5 @@
-
-manim_kunyuan >= 0.33
+manimgl>=1.3.0
+manim>=0.13.1
 sparrow_tool
 fake_headers
 requests
