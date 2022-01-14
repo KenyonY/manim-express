@@ -18,7 +18,7 @@ vc.update_readme(readme_path="./README_zh.md", license="MIT")
 # os.system("yapf -i -r ./manim_express")
 
 repo = Repo('.')
-repo.index.add([f"{pkgdir}/", "README*.md", "requirements.txt", "workflow.py"])
+repo.index.add(["README*.md", "requirements.txt", "workflow.py"])
 repo.index.commit(f"[Upgrade] Version bump to [{vc.config['version']}]")
 repo.create_tag(f"{vc.config['version']}")
 remote = repo.remote()

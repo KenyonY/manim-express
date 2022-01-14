@@ -59,7 +59,7 @@ pip install manim_express
 
 * `manim_express` vs `Matplotlib`:  
   In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) to render `tex` fonts.  
-  Fortunately, online latex compilation option is available. Just set `SceneArgs.use_online_tex=True`
+  Fortunately, online latex compilation option is available. Just set `CONFIG.use_online_tex=True`
 
   ```python
   from manimlib import *

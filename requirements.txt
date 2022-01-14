@@ -1,6 +1,6 @@
 manimgl>=1.3.0
 manim>=0.13.1
-sparrow_tool>=0.3.0
+sparrow_tool>=0.3.13
 fake_headers
 requests
 # helium
