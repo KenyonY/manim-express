@@ -1,5 +1,4 @@
-from manimlib import *
-from geometry.utils import *
+from examples.geometry.utils import *
 from examples.example_imports import *
 
 CONFIG.use_online_tex=1

@@ -1,7 +1,7 @@
 from examples.example_imports import *
 import scipy.integrate as integrate
 
-
+CONFIG.preview = True
 class DouPandulumSim:
     def __init__(self, th1, th2):
         self.x1, self.x2, self.y1, self.y2 = DouPandulumSim.getSimulationResult(th1, th2)

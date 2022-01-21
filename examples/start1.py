@@ -1,11 +1,12 @@
-from manim_express import EagerModeScene, Size, SceneArgs
+from manim_express import EagerModeScene, Size, CONFIG
 from manimlib import *
 from manim_express.plot import m_line, m_scatter
 
 # SceneArgs.color = rgb_to_hex([0., 0, 0])
-SceneArgs.color = "#222222"
+CONFIG.color = "#222222"
 
-SceneArgs.full_screen = True
+CONFIG.full_screen = True
+CONFIG.preview = True
 # SceneArgs.frame_rate = 30
 # SceneArgs.gif = True
 

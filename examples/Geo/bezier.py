@@ -1,8 +1,5 @@
-import numpy as np
-
 from examples.example_imports import *
 from manim_express import *
-from sparrow import clamp
 
 
 class Bezier(EagerModeScene):
@@ -99,10 +96,12 @@ class Bezier(EagerModeScene):
         self.hold_on()
 
 
-CONFIG.preview = False
-CONFIG.gif = True
+CONFIG.preview = True
+CONFIG.full_screen = True
+# CONFIG.use_online_tex=True
+# CONFIG.gif = True
 # CONFIG.color = WHITE
 bezier = Bezier()
-bezier.clip1()
+# bezier.clip1()
 # bezier.render()
-# bezier.clip2()
+bezier.clip2()
