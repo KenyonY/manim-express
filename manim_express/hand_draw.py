@@ -3,7 +3,7 @@ import time
 import random
 import math
 from scipy.signal import savgol_filter, spline_filter, order_filter, qspline1d, qspline1d_eval, medfilt
-import cv2
+# import cv2
 
 
 def random_trigonometric(x, n=5, w_min=3, w_max=20, intensity=0.003):
