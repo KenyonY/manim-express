@@ -29,3 +29,17 @@ def calc_number_step(number):
         else:
             break
     return n, digit
+
+
+def get_num_digit(number):
+    int_part, frac_part = str(float(number)).split(".")
+    int_digit, frac_digit = len(int_part), len(frac_part)
+    if frac_part == '0':
+        frac_digit = 0
+    if int_part == '0':
+        int_digit = 0
+    return int_digit, frac_digit
+
+
+# print(calc_number_digit(0.0123))
+print(get_num_digit(0.023))
