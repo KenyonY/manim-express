@@ -2,7 +2,7 @@ from examples.example_imports import *
 
 # SceneArgs.color = "#222222"
 
-scene = EagerModeScene(screen_size=Size.biggest)
+scene = EagerModeScene()
 theta = np.linspace(-10, 2*PI, 500)
 x = np.cos(theta)
 y = np.sin(theta)

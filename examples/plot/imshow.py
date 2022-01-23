@@ -4,7 +4,7 @@ import imageio
 
 class Animations(EagerModeScene):
     def __init__(self):
-        super(Animations, self).__init__(screen_size=Size.big)
+        super(Animations, self).__init__()
 
     # def clip7(self):
     #     pass

@@ -1,7 +1,7 @@
 from examples.example_imports import *
 CONFIG.use_online_tex = True
 
-scene = EagerModeScene(screen_size=Size.bigger)
+scene = EagerModeScene()
 theta = np.linspace(0, TAU, 100)
 
 x = np.cos(theta)
