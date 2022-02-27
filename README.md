@@ -52,7 +52,7 @@ pip install manim_express
   * scroll the middle mouse button to move the screen up and down
   * reset camera view by pressing `r`
   * close the window and exit the program by pressing `q` or `tab`
-  * pause the animation by pressing `space` or `ctrl`
+  * pause the animation by pressing `space` or `ctrl` or `alt`
   * previews animation clip by pressing `LEFT`
   * next animation clip: `RIGHT`
   * replay current animation clip: `DOWN`

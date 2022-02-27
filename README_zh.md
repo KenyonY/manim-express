@@ -54,7 +54,7 @@ pip install manim_express
   * 按住 `z` 键 或 **ctrl键** 同时滚动鼠标滚轮以缩放画面. 
   * 通过 `r` 重制相机视角.
   * 离开/退出当前动画: `q` or `tab`
-  * 暂停动画:  `space` or `ctrl`
+  * 暂停动画:  `space` or `ctrl` or `alt`
   * 前一段动画: `LEFT`
   * 后一段动画: `RIGHT`
   * 重新播放当前动画: `DOWN`
