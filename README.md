@@ -100,7 +100,10 @@ pip install manim_express
 * 3B1B videos:  
   https://github.com/3b1b/videos
 
-
+* export pptx
+  * https://github.com/yoshiask/manim-pptx
+  * https://github.com/RythenGlyth/manim-pptx
+  * https://manimcommunity.github.io/manim_editor/Tutorial/index.html
 
 
 # Examples
