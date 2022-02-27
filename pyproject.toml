@@ -1,0 +1,9 @@
+[build-system]
+requires = [
+    "wheel",
+    "pbr>=5.7.0",
+    "setuptools>=50.3.2",
+    "setuptools-declarative-requirements"
+]
+
+build-backend = "pbr.build"
