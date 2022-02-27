@@ -1,19 +1,9 @@
 # manim_express
-[![image](https://img.shields.io/badge/Pypi-0.6.3-green.svg)](https://pypi.org/project/manim_express)
+[![image](https://img.shields.io/badge/Pypi-0.6.4-green.svg)](https://pypi.org/project/manim_express)
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
 [![image](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![image](https://img.shields.io/badge/author-kunyuan-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
 
-## Requirements
-```python
-manimgl>=1.3.0
-manim>=0.13.1
-sparrow_tool>=0.3.13
-fake_headers
-requests
-# helium
-# pyperclip
-```
 
 ------------------------
 [**English**](https://github.com/beidongjiedeguang/manim-express/blob/dev/README.md) |
