@@ -6,7 +6,6 @@ from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
 from manimlib.utils.color import rgb_to_hex
-from sparrow import ppath
 import manimlib.mobject.svg.tex_mobject
 from pathlib import Path
 from manimlib.event_handler.event_type import EventType

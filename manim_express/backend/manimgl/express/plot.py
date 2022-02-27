@@ -1,5 +1,7 @@
 from manimlib import *
 from ....utils.tools import calc_number_step
+from ...tick import Ticker
+from .coordinate_sys import NewAxes
 
 
 def m_line(x,
@@ -66,6 +68,8 @@ class Plot:
 
         x_length = x_label_max - x_label_min
         y_length = y_label_max - y_label_min
+        x_ticker = Ticker(x_label_max, x_label_min, steps_range=(5, 9))
+        y_ticker = Ticker(y_label_max, y_label_min, steps_range=(5, 8))
 
         """
          * 确定x, y轴比例
@@ -122,7 +126,7 @@ class Plot:
             x_num_decimal_place = min(max(get_exponent_num(x_label_min), get_exponent_num(x_step)), 2)
             y_num_decimal_place = min(max(get_exponent_num(y_label_min), get_exponent_num(y_step)), 2)
 
-        axes = Axes(
+        axes = NewAxes(
             x_range=(xmin, xmax, x_step),
             y_range=(y_label_min, ymax, y_step),
             height=self._axes_height,
@@ -273,7 +277,7 @@ def xyz_to_points(x, y, z=None, axes=None):
     if z is None:
         z = np.zeros(len(x))
     if axes is not None:
-        if type(axes) is Axes:
+        if type(axes) is NewAxes:
             # axes: Axes
             points = np.array([axes.c2p(i, j) for i, j in zip(x, y)])
         else:

@@ -12,8 +12,8 @@ from manimlib import ShowCreation, Write, VGroup
 from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
-from sparrow import ppath
-
+import os
+from sparrow.path import rel_to_abs
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "CONFIG"]
 
@@ -174,7 +174,7 @@ class EagerModeScene(SceneGL):
 
     def save_default_config(self):
         """Save the default config file to current directory."""
-        shutil.copy(ppath("custom_config.yml", __file__), 'custom_config.yml')
+        shutil.copy(rel_to_abs("custom_config.yml"), rel_to_abs('custom_config.yml'))
 
     def get_scene_config(self):
         return self.scene_config
