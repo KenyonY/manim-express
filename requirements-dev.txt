@@ -1,3 +1,4 @@
 pyperclip
 manim-rubikscube
 manim-physics>=0.2.3
+manim-editor
