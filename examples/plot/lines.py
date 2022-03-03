@@ -1,5 +1,5 @@
+from manim_express.eager import PlotObj, Size
 from examples.example_imports import *
-from manim_express.eager import PlotObj
 
 scene = EagerModeScene(screen_size=Size.bigger)
 

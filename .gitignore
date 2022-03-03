@@ -2,6 +2,8 @@ manimlib/
 manimlib
 .idea/
 LOGO/
+tests/
+js/
 #workflow.py
 test.ipynb
 
