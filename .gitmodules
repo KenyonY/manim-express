@@ -1,6 +1,0 @@
-[submodule "manimlib"]
-	path = manimlib
-	url = https://github.com/beidongjiedeguang/manimlib.git
-[submodule "videos"]
-	path = videos
-	url = https://github.com/3b1b/videos.git
