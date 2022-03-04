@@ -88,6 +88,7 @@ def get_new_configuration(args):
         "start_at_animation_number": args.start_at_animation_number,
         "end_at_animation_number": None,
         "preview": not write_file,
+        "presenter_mode": args.presenter_mode,
         "leave_progress_bars": args.leave_progress_bars,
     }
 
@@ -100,9 +101,7 @@ def get_new_configuration(args):
     mon_index = custom_config["window_monitor"]
     monitor = monitors[min(mon_index, len(monitors) - 1)]
     window_width = monitor.width
-    if args.full_screen:
-        pass
-    else:
+    if not (args.full_screen or custom_config["full_screen"]):
         try:
             if args.screen_size == Size.biggest:
                 pass
