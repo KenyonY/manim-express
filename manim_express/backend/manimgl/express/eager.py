@@ -86,7 +86,6 @@ class EagerModeScene(SceneGL):
         self.is_axes_line_gen_ed = False
 
         self.clips = []
-        self.current_clip = 1
         self.current_clip = 0
         self.saved_states = []
         self.animation_list = []
