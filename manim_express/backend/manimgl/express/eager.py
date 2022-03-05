@@ -4,11 +4,21 @@ from ....utils.onlinetex import tex_to_svg_file_online
 from ....utils.jupyter import video
 from .plot import Plot
 
+import re
 from pathlib import Path
 import random
 import time
 import shutil
-from manimlib import ShowCreation, Write, VGroup
+from manimlib import (
+    ShowCreation,
+    Write,
+    VGroup,
+    Transform,
+    ReplacementTransform,
+    FadeIn,
+    FadeOut,
+)
+
 from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
@@ -99,17 +109,46 @@ class EagerModeScene(SceneGL):
                      rate_func=rate_func,
                      **kwargs)
 
-    # def clip1(self):
+    def _play_method(self, mobj, Method, loc):
+        loc.pop('self')
+        args = loc.pop('args')
+        kwargs = loc.pop('kwargs')
+        self.play(Method(mobj), *args, **loc, **kwargs)
+
+    def write(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
+        self._play_method(mobject, Write, locals())
+
+    def show_creation(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
+        self._play_method(mobject, ShowCreation, locals())
+
+    def fade_in(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
+        self._play_method(mobject, FadeIn, locals())
+
+    def fade_out(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
+        self._play_method(mobject, FadeOut, locals())
+
+    # def clip_1(self):
     #     pass
 
     def get_animate_name_func(self, n=10):
+
+        def get_clip_names():
+            names = []
+            # Fixme: use other method to replace `dir()`
+            for name in dir(self):
+                if re.search(r'clip_*[0-9]+', name):
+                    names.append(name)
+            # sort
+            if names:
+                names = sorted(names, key=lambda x: int(re.search(r"[0-9]+", x).group()))
+            return names
+
+        clip_names = get_clip_names()
         animation_func_dict = {}
-        for i in range(n):
-            try:
-                func_name = f"clip{i}"
+        if clip_names:
+            for func_name in clip_names:
                 animation_func_dict.setdefault(func_name, getattr(self, func_name))
-            except:
-                continue
+
         self.animation_func_dict = animation_func_dict
 
     def render(self):
