@@ -99,11 +99,15 @@ pip install manim_express
 
 
 # Examples
+
 - Bezier curve  
-  <img src="data/pic/bezier.gif">  
  
-- GOA model  
-  <img src="data/pic/GOA.gif" width = "600"/>
+  https://user-images.githubusercontent.com/32060638/159116579-083692a2-f12c-48c0-8abd-1ee147e63714.mp4
+
+ 
+- GOA model
+
+  https://user-images.githubusercontent.com/32060638/159116901-eafa5842-135c-47f5-85a8-c946099a160f.mp4
 
 - GOA  
   <img src="data/pic/GOA.PNG" width = "600"/>
