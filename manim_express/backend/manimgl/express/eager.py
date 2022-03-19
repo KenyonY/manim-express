@@ -257,7 +257,7 @@ class EagerModeScene(SceneGL):
         self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip, num_decimal_places,
                       x_label, y_label)
 
-    def scatter(self, x, y, color=BLUE, size=0.05):
+    def scatter2d(self, x, y, color=BLUE, size=0.05):
         ax, mobj = scatter_by_dotcloud(x, y, size=size, color=color)
         self.write(ax)
         self.add(mobj)

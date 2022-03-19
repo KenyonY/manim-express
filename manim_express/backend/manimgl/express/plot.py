@@ -129,6 +129,12 @@ class Plot:
         self._xmax = max(self._xmax, max(x))
         self._ymin = min(self._ymin, min(y))
         self._ymax = max(self._ymax, max(y))
+        x_shift = (self._xmax - self._xmin) / 10
+        y_shift = (self._ymax - self._ymin) / 10
+        self._xmin -= x_shift
+        self._xmax += x_shift
+        self._ymin -= y_shift
+        self._ymax += y_shift
 
         self._xdata.append(x)
         self._ydata.append(y)
