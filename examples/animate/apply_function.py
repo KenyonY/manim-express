@@ -7,12 +7,13 @@ from examples.example_imports import *
 scene = EagerModeScene()
 
 grid = NumberPlane((-10, 10), (-5, 5))
-matrix = [[1, 1], [0, 1]]
-
-c_grid = ComplexPlane()
+# matrix = [[1, 1], [0, 1]]
+#
+# c_grid = ComplexPlane()
 # moving_c_grid = c_grid.copy()
 # moving_c_grid.prepare_for_nonlinear_transform()
 # scene.play(ShowCreation(c_grid))
+#
 # c_grid.prepare_for_nonlinear_transform()
 # c_grid.set_stroke(BLUE_E, 1)
 # c_grid.add_coordinate_labels(font_size=24)
@@ -22,19 +23,19 @@ be_applyed_arrow = Arrow(buff=0).scale(3).move_to(UP).set_color(RED)
 grid.add(be_applyed_arrow)
 grid.prepare_for_nonlinear_transform()
 
-# scene.play(ShowCreation(grid))
-# scene.wait(1)
+scene.play(ShowCreation(grid))
+scene.wait(1)
 
-# scene.play(
-#     grid.animate.apply_function(
-#         lambda p: [
-#             p[0] + 0.5 * math.cos(p[1]),
-#             p[1] + 0.5 * math.sin(p[0]),
-#             p[2]
-#         ]
-#     ),
-#     run_time=2,
-# )
+scene.play(
+    grid.animate.apply_function(
+        lambda p: [
+            p[0] + 0.5 * math.cos(p[1]),
+            p[1] + 0.5 * math.sin(p[0]),
+            p[2]
+        ]
+    ),
+    run_time=2,
+)
 
 
 def complex2real_image(complex_xy):

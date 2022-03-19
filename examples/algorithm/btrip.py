@@ -77,7 +77,7 @@ class Clips(EagerModeScene):
 
 
 clips = Clips()
-# clips.render()
+clips.render()
 
-clips.clip1()
+# clips.clip1()
 clips.hold_on()

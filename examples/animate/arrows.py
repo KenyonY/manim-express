@@ -53,25 +53,28 @@ grid = NumberPlane((-10, 10), (-5, 5))
 # c_grid.add_coordinate_labels(font_size=24)
 
 
-be_applyed_arrow = Arrow(buff=0).scale(3).move_to(UP).set_color(RED)
+# be_applyed_arrow = Arrow(buff=0).scale(3).move_to(UP).set_color(RED)
 # grid.add(be_applyed_arrow)
-grid.prepare_for_nonlinear_transform()
+
 
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-1 * x))
 
 
+circle = Circle().set_color(RED).scale(2).move_to(DR)
+triangle = Triangle().set_color(GREEN).scale(2).move_to(UL)
+line1 = Line(ORIGIN, [5, 0, 0]).set_color(RED)
+grid.add(circle)
+grid.add(triangle)
+grid.add(line1)
 scene.play(ShowCreation(grid), run_time=1)
-grid.add(Circle().set_color(RED).scale(2).move_to(DR))
-grid.add(Triangle().set_color(GREEN).scale(2).move_to(UL))
 scene.wait(1)
 # scene.wait(1)
 # scene.play(
 #     grid.animate.apply_complex_function(sigmoid),
 #     run_time=6,
 # )
-print(":::::::::::::::::::::::::::")
 # scene.play(
 #     grid.animate.apply_function(
 #         lambda p: [
@@ -82,13 +85,27 @@ print(":::::::::::::::::::::::::::")
 #     ),
 #     run_time=5,
 # )
+
+grid.prepare_for_nonlinear_transform()
+
+theta = 90 *DEGREES
+def apply_func(point):
+    x, y, z = point[0], point[1], point[2]
+    newx = x * np.cos(theta) - y * np.sin(theta)
+    newy = y * np.sin(theta) + y * np.cos(theta)
+    newz = z
+    return [newx, newy, newz]
 scene.play(
     grid.animate.apply_function(
-        lambda p: [
-            p[0] + 0.5 * math.cos(p[1]),
-            p[1] + 0.5 * math.sin(p[0]),
-            p[2]
-        ]
+        apply_func
+        # lambda p: [
+            # p[0] + 0.5 * math.cos(p[1]),
+            # p[1] + 0.5 * math.sin(p[0]),
+            # p[2]
+            # p[0] * np.cos(theta) - p[1] * np.sin(theta),
+            # p[0] * np.sin(theta) + p[1] * np.cos(theta),
+            # p[2] ,
+        # ]
     ),
     run_time=3,
 )

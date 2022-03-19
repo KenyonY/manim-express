@@ -4,10 +4,7 @@ from examples.example_imports import *
 scene = EagerModeScene(screen_size=Size.bigger)
 
 surface_text = Text("For 3d scenes, try using surfaces")
-texText = TexText("\\LaTeX kasdflkalsdkfj "
-                  " $\\sum_{n=1}^\\infty$")
 
-scene.add(texText)
 
 surface_text.fix_in_frame()
 surface_text.to_edge(UP)

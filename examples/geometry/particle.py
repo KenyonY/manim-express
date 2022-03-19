@@ -1,6 +1,7 @@
 from examples.geometry.utils import *
 from examples.example_imports import *
 
+
 CONFIG.use_online_tex=1
 class ParticleMultiRay(EagerModeScene):
 

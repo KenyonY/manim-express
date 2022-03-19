@@ -1,8 +1,9 @@
 from manim_express import *
+from manim_express.eager import EagerModeScene, Size
 from manimlib import *
-from manim_express.scatter import *
-from manim_express.plot import m_line, m_scatter
-from manim_express.surface import CustomSurface
+from manim_express.backend.manimgl.express.scatter import *
+from manim_express.backend.manimgl.express.plot import m_line, m_scatter
+from manim_express.backend.manimgl.express.surface import CustomSurface
 from manimlib.utils.rate_functions import linear, smooth, double_smooth, exponential_decay
 from manim_express.math import *
 from manim_express.nn import *

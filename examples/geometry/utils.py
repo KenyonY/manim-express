@@ -1,4 +1,4 @@
-from manim_imports_ext import *
+from examples.example_imports import *
 
 
 def createRay(start, end):

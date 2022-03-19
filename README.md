@@ -107,7 +107,8 @@ pip install manim_express
   https://user-images.githubusercontent.com/32060638/159116579-083692a2-f12c-48c0-8abd-1ee147e63714.mp4
 
  
-- GOA model  
+- GOA model
+
   https://user-images.githubusercontent.com/32060638/159116901-eafa5842-135c-47f5-85a8-c946099a160f.mp4
 
 

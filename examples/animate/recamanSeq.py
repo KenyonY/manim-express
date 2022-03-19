@@ -60,7 +60,5 @@ class RecamanSequence(EagerModeScene):
             )
 
 
-if __name__ == "__main__":
-    import os
-
-    RecamanSequence().render()
+CONFIG.preview = True
+RecamanSequence().render()

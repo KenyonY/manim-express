@@ -146,10 +146,10 @@ def episode6():
 
 
 #
-# episode1()
-# episode2()
+episode1()
+episode2()
 episode3()
-# episode4()
+episode4()
 #
 scene.hold_on()
 

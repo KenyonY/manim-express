@@ -13,5 +13,6 @@ plt.show()
 code_obj = Code(code, )
 
 scene.play(ShowCreation(code_obj))
-scene.play(Transform(code_obj, code_obj.copy().scale(3)))
+scene.play(ReplacementTransform(code_obj, code_obj.copy().scale(3)))
+scene.play(Transform(code_obj, code_obj.copy().scale(1/3)))
 scene.hold_on()

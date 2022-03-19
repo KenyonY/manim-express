@@ -85,23 +85,13 @@ class Bezier(EagerModeScene):
         self.wait(0.5)
         self.file_writer.finish()
 
-    def clip2(self):
-        x = np.linspace(0, 1, 100)
-        # self.plot(x, [smooth(i) for i in x])
-        # self.plot(x, [double_smooth(i) for i in x])
-        # self.plot(x, [lingering(i) for i in x])
-        self.plot(x, [exponential_decay(i) for i in x])
-        self.plot(x, [wiggle(i) for i in x])
-        self.show_plot()
-        self.hold_on()
 
 
-CONFIG.preview = True
-CONFIG.full_screen = True
+CONFIG.preview = False
+# CONFIG.full_screen = True
 # CONFIG.use_online_tex=True
 # CONFIG.gif = True
 # CONFIG.color = WHITE
 bezier = Bezier()
 # bezier.clip1()
-# bezier.render()
-bezier.clip2()
+bezier.render()

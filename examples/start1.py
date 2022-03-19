@@ -1,6 +1,6 @@
-from manim_express import EagerModeScene, Size, CONFIG
+from example_imports import *
 from manimlib import *
-from manim_express.plot import m_line, m_scatter
+from manim_express.backend.manimgl.express.plot import m_line, m_scatter
 
 # SceneArgs.color = rgb_to_hex([0., 0, 0])
 CONFIG.color = "#222222"

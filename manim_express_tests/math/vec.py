@@ -40,7 +40,7 @@ class A(EagerModeScene):
         self.play(vec_arrow.animate.rotate_about_origin(angle, axis))
         self.play(plane.animate.rotate_about_origin(angle, axis))
 
-
+CONFIG.preview=True
 A().render()
 
 if __name__ == "__main__":

@@ -127,10 +127,7 @@ class EagerModeScene(SceneGL):
     def fade_out(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
         self._play_method(mobject, FadeOut, locals())
 
-    # def clip_1(self):
-    #     pass
-
-    def get_animate_name_func(self, n=10):
+    def get_animate_name_func(self):
 
         def get_clip_names():
             names = []
