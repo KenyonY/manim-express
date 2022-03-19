@@ -15,6 +15,10 @@
 pip install manim_express
 ```
 
+## Run in pycharm
+> https://stackoverflow.com/questions/44851652/how-to-allocate-a-pseudo-tty-in-which-to-run-scripts-from-ide
+> 
+> (Find action 'Registry' in PyCharm) named 'run.processes.with.pty' that allows to run Python processes with tty
 # Quick start
 
 * Render an animation: [3b1b:SquareToCircle](https://3b1b.github.io/manim/getting_started/quickstart.html#add-animations)
@@ -97,11 +101,15 @@ pip install manim_express
 
 
 # Examples
+
 - Bezier curve  
-  <img src="data/pic/bezier.gif">  
+ 
+  https://user-images.githubusercontent.com/32060638/159116579-083692a2-f12c-48c0-8abd-1ee147e63714.mp4
+
  
 - GOA model  
-  <img src="data/pic/GOA.gif" width = "600"/>
+  https://user-images.githubusercontent.com/32060638/159116901-eafa5842-135c-47f5-85a8-c946099a160f.mp4
+
 
 - GOA  
   <img src="data/pic/GOA.PNG" width = "600"/>
