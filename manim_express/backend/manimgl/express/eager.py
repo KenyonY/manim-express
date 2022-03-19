@@ -22,7 +22,7 @@ from manimlib import (
 from manimlib.utils.rate_functions import linear, smooth
 from manimlib.extract_scene import get_scene_config
 import manimlib.config
-import os
+from manimlib.camera.camera import Camera
 from sparrow.path import rel_to_abs
 
 __all__ = ["EagerModeScene", "JupyterModeScene", "CONFIG"]
@@ -115,7 +115,7 @@ class EagerModeScene(SceneGL):
         kwargs = loc.pop('kwargs')
         self.play(Method(mobj), *args, **loc, **kwargs)
 
-    def write(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
+    def write(self, mobject, *args, run_time=1., rate_func=linear, **kwargs):
         self._play_method(mobject, Write, locals())
 
     def show_creation(self, mobject, *args, run_time=1, rate_func=linear, **kwargs):
@@ -147,6 +147,12 @@ class EagerModeScene(SceneGL):
                 animation_func_dict.setdefault(func_name, getattr(self, func_name))
 
         self.animation_func_dict = animation_func_dict
+
+    def save_image(self, filename):
+        """This method works only when CONFIG.preview=False. """
+        assert (CONFIG.preview == False, "`self.save_image` works only when CONFIG.preview=False.")
+        self.camera: Camera
+        self.camera.get_image().save(filename)
 
     def render(self):
         self.get_animate_name_func()
@@ -216,11 +222,10 @@ class EagerModeScene(SceneGL):
 
     def save_start(self, file_name):
         """TODO"""
-        pass
 
     def save_end(self):
+        """TODO"""
         # self.file_writer.finish()
-        pass
 
     def embed(self):
         super().embed()
@@ -251,7 +256,6 @@ class EagerModeScene(SceneGL):
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
-        pass
 
     def get_plot_mobj(self):
         if self.is_axes_line_gen_ed is False:
@@ -271,24 +275,16 @@ class EagerModeScene(SceneGL):
 
     def show_plot(self, play=True, reset=True):
         axes_mobj, lines_mobj = self.get_plot_mobj()
-        random.seed(time.time())
+        pltvgroup = VGroup(axes_mobj, lines_mobj)
         if play:
-            def play_func(Func):
-                if len(axes_mobj):
-                    self.play(ShowCreation(axes_mobj),
-                              run_time=1, rate_func=smooth)
-                self.play(Func(lines_mobj), run_time=1, rate_func=smooth)
+            self.write(axes_mobj, run_time=1.5, rate_func=smooth)
+            self.show_creation(lines_mobj, run_time=1.5, rate_func=smooth)
 
-            if random.random() > 0.5:
-                play_func(Write)
-            else:
-                play_func(ShowCreation)
         else:
-            self.add(VGroup(axes_mobj,
-                            lines_mobj))
-
+            self.add(pltvgroup)
         if reset:
             self.plt = Plot()
+        return pltvgroup
 
 
 class JupyterModeScene(EagerModeScene):
@@ -301,7 +297,6 @@ class JupyterModeScene(EagerModeScene):
 
     def embed(self):
         """We don't need it in jupyter lab/notebook."""
-        pass
 
     @property
     def video_path(self):

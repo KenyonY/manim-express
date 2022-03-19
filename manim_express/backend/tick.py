@@ -45,7 +45,7 @@ class Ticker:
 
     def _get_start_tick(self, step):
         _, mod = np.divmod(self.x_min, step)
-        return self.x_min + (step - mod)
+        return self.x_min #+ (step - mod)
 
     def get_start_and_step(self):
         return self._start_tick, self._step
@@ -62,3 +62,10 @@ class Ticker:
         for idx in range(n_step):
             tick_list.append(round(start_tick + idx * step, 7))
         return tick_list
+
+
+if __name__ == "__main__":
+    ticker = Ticker(-22, -1.2,)
+    print(ticker.ticks())
+    print(ticker.x_min)
+    print(ticker.x_max)

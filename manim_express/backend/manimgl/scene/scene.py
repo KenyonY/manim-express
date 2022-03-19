@@ -76,6 +76,14 @@ class SceneGL(Scene):
         if symbol == key.R:
             self.camera.frame.to_default_state()
 
+        if symbol == key.GREATER:
+            # FIXME: make it work
+            self.window.clear()
+            self.camera.clear()
+            self.camera.capture(*self.mobjects)
+            # self.window.swap_buffers()
+            self.camera.get_image().show()
+
         elif symbol in (key.Q, key.TAB, key.ENTER):  # key.APOSTROPHE,
             self.quit_interaction = True
 
