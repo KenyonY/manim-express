@@ -1,5 +1,27 @@
+import numpy as np
 from manimlib import *
+from .plot import SciAxes
 from itertools import product
+
+
+def scatter_by_dotcloud(x: np.ndarray, y: np.ndarray, size=0.05, color=BLUE):
+    assert len(x) == len(y)
+    x, y = np.array(x), np.array(y)
+    xmin, xmax = x.min(), x.max()
+    ymin, ymax = y.min(), y.max()
+    x_shift = (xmax - xmin) / 7
+    y_shift = (ymax - ymin) / 7
+    xmin -= x_shift
+    xmax += x_shift
+    ymin -= y_shift
+    ymax += y_shift
+    ax = SciAxes(x_range=(xmin, xmax), y_range=(ymin, ymax))
+
+    points = [ax.c2p(i, j) for i, j in zip(x, y)]
+
+    image_obj = DotCloud(points, radius=size).set_color(color)  # .set_color_by_rgba_func(rgba_func)
+    image_obj.flip(RIGHT).move_to(ORIGIN)
+    return ax, image_obj
 
 
 def image_arr_obj(arr, style=0, scale_factor=None):

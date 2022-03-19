@@ -152,11 +152,12 @@ class SciAxes(Axes):
 
     def get_parametric_curve(self, function, t_range=None, **kwargs):
         if t_range is None or len(t_range) < 3:
-            t_range = self.x_range
+            t_range = copy.copy(self.x_range)
+            t_range[2] = (self.x_range[1] - self.x_range[0]) / 100
         dim = self.dimension
         graph = ParametricCurve(
             lambda t: self.coords_to_point(*function(t)[:dim]),
-            t_range=t_range,
+            t_range=np.array(t_range),
             **kwargs
         )
         graph.underlying_function = function

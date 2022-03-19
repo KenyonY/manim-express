@@ -3,6 +3,7 @@ from ..config import Size
 from ....utils.onlinetex import tex_to_svg_file_online
 from ....utils.jupyter import video
 from .plot import Plot
+from .scatter import scatter_by_dotcloud
 
 import re
 from pathlib import Path
@@ -10,6 +11,8 @@ import random
 import time
 import shutil
 from manimlib import (
+    BLUE,
+    GREEN,
     ShowCreation,
     Write,
     VGroup,
@@ -253,6 +256,12 @@ class EagerModeScene(SceneGL):
         """
         self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip, num_decimal_places,
                       x_label, y_label)
+
+    def scatter(self, x, y, color=BLUE, size=0.05):
+        ax, mobj = scatter_by_dotcloud(x, y, size=size, color=color)
+        self.write(ax)
+        self.add(mobj)
+        return ax, mobj
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
