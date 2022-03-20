@@ -25,15 +25,15 @@ pip install manim_express
 
   ```python
   from manimlib import *
-  from manim_express import EagerModeScene
+  from manim_express import GlEagerScene
   
-  scene = EagerModeScene()
+  scene = GlEagerScene()
   circle = Circle()
   circle.set_fill(BLUE, opacity=0.5)
   circle.set_stroke(BLUE_E, width=4)
   
   square = Square()
-  scene.play(ShowCreation(square))
+  scene.show_creation(square)
   scene.play(ReplacementTransform(square, circle))
   
   scene.hold_on()
@@ -52,32 +52,37 @@ pip install manim_express
   * replay current animation clip: `DOWN`
 
 * `manim_express` vs `Matplotlib`:  
-  In some cases, you may need to install [LaTeX](https://www.latex-project.org/get/#tex-distributions) to render `tex` fonts.  
-  Fortunately, online latex compilation option is available. Just set `CONFIG.use_online_tex=True`
-
+  **Eager mode usage**:
   ```python
   from manimlib import *
-  from manim_express import *
-  import numpy as np
-  CONFIG.use_online_tex = True # Use online latex compiler
-  
+  from manim_express import GlEagerScene
+  CONFIG.use_online_tex = True # If you don't have installed latex locally.
   theta = np.linspace(0, 2*np.pi, 200)
   x = np.cos(theta)
   y = np.sin(theta)
   
-  # matplotlib
-  # import matplotlib.pyplot as plt
-  # plt.plot(x, y, color='green', linewidth=2)
-  # plt.axis("equal")
-  # plt.show()
-  
-  # manim_express
-  scene = EagerModeScene()
+  scene = GlEagerScene()
   scene.plot(x, y, color=GREEN, width=2, scale_ratio=1)
   scene.show_plot()
-  
   scene.hold_on()
   ```
+  **Object oriented usage**:
+
+  ```python
+  from manimlib import *
+  from manim_express import GlEagerScene
+  from sklearn.datasets import make_multilabel_classification 
+  class ScatterExample(GlEagerScene):
+      def clip_1(self):
+          X1, y1 =make_multilabel_classification(n_samples=200, n_classes=4, n_features=2)
+          X2, y2 =make_multilabel_classification(n_samples=200, n_classes=4, n_features=2)
+          self.scatter2d(X1[:, 0], X1[:, 1], size=.05, color=BLUE)
+          self.scatter2d(X2[:, 0], X2[:, 1], size=.05, color=YELLOW)
+  
+  ScatterExample().render()
+  ```
+  <img src="data/pic/scatter.png" width = "600"/>
+  It should be noted that manim is not suitable for drawing patterns that need to be accurately realized!
   
   
 
@@ -121,3 +126,6 @@ pip install manim_express
 
 - Double pendulum  
   <img src="data/pic/pendulum.gif" width = "600"/>
+
+
+

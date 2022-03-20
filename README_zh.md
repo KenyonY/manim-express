@@ -24,9 +24,9 @@ pip install manim_express
 
   ```python
   from manimlib import *
-  from manim_express import EagerModeScene
+  from manim_express import GlEagerScene
   
-  scene = EagerModeScene()
+  scene = GlEagerScene()
   circle = Circle()
   circle.set_fill(BLUE, opacity=0.5)
   circle.set_stroke(BLUE_E, width=4)
@@ -50,32 +50,38 @@ pip install manim_express
   * 重新播放当前动画: `DOWN`
   
 * `manim_express` vs `Matplotlib`:  
-  在某些情况你需要安装[LaTeX](https://www.latex-project.org/get/#tex-distributions) 以渲染 `tex` 字体.  
-  幸运的是`manim_express`中提供了在线的latex 编译选项. 通过设置 `CONFIG.use_online_tex=True` 进行激活.
-
+  **使用Eager mode**:
   ```python
   from manimlib import *
-  from manim_express import *
-  import numpy as np
-  CONFIG.use_online_tex = True # Use online latex compiler
-  
+  from manim_express import GlEagerScene
+  CONFIG.use_online_tex = True # If you don't have installed latex locally.
   theta = np.linspace(0, 2*np.pi, 200)
   x = np.cos(theta)
   y = np.sin(theta)
   
-  # matplotlib
-  # import matplotlib.pyplot as plt
-  # plt.plot(x, y, color='green', linewidth=2)
-  # plt.axis("equal")
-  # plt.show()
-  
-  # manim_express
-  scene = EagerModeScene()
+  scene = GlEagerScene()
   scene.plot(x, y, color=GREEN, width=2, scale_ratio=1)
-  scene.show_plot()
-  
   scene.hold_on()
   ```
+  **使用面向对象的方式**:
+
+  ```python
+  from manimlib import *
+  from manim_express import GlEagerScene
+  from sklearn.datasets import make_multilabel_classification 
+  class ScatterExample(GlEagerScene):
+      def clip_1(self):
+          X1, y1 =make_multilabel_classification(n_samples=200, n_classes=4, n_features=2)
+          X2, y2 =make_multilabel_classification(n_samples=200, n_classes=4, n_features=2)
+          self.scatter2d(X1[:, 0], X1[:, 1], size=.05, color=BLUE)
+          self.scatter2d(X2[:, 0], X2[:, 1], size=.05, color=YELLOW)
+  
+  ScatterExample().render()
+  ```
+  <img src="data/pic/scatter.png" width = "600"/>
+  但是需要注意，manim并不适合绘制需要精确实现的图案！
+  
+  
   
   
 
