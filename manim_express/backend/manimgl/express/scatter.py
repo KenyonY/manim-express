@@ -1,27 +1,82 @@
 import numpy as np
 from manimlib import *
-from .plot import SciAxes
+from .coordinate_sys import SciAxes, SciAxes3D
 from itertools import product
+from sparrow.decorators.core import MetaSingleton
 
 
-def scatter_by_dotcloud(x: np.ndarray, y: np.ndarray, size=0.05, color=BLUE):
-    assert len(x) == len(y)
-    x, y = np.array(x), np.array(y)
-    xmin, xmax = x.min(), x.max()
-    ymin, ymax = y.min(), y.max()
-    x_shift = (xmax - xmin) / 7
-    y_shift = (ymax - ymin) / 7
-    xmin -= x_shift
-    xmax += x_shift
-    ymin -= y_shift
-    ymax += y_shift
-    ax = SciAxes(x_range=(xmin, xmax), y_range=(ymin, ymax))
+class Scatter:
+    def __init__(self):
+        self._color_choice_list = [
+            GREEN_C, BLUE_C, RED_C, YELLOW_C, ORANGE, GOLD_C, MAROON_C, TEAL_C
+        ]
+        self.ax_width = FRAME_WIDTH - 2
+        self.ax_height = FRAME_HEIGHT - 2
 
-    points = [ax.c2p(i, j) for i, j in zip(x, y)]
+    @staticmethod
+    def get_min_max(a: np.ndarray, a_range):
+        if a_range is None:
+            amin, amax = a.min(), a.max()
+        else:
+            amin, amax = a_range
+        a_shift = (amax - amin) / 7
+        amin -= a_shift
+        amax += a_shift
+        return amin, amax
 
-    image_obj = DotCloud(points, radius=size).set_color(color)  # .set_color_by_rgba_func(rgba_func)
-    image_obj.flip(RIGHT).move_to(ORIGIN)
-    return ax, image_obj
+    def from_dotcloud(self, x: np.ndarray, y: np.ndarray, size=0.05, color=BLUE,
+                      x_range=None, y_range=None,
+                      ax=None, ax_width=None, ax_height=None):
+
+        if ax_width is None:
+            ax_width = self.ax_width
+        if ax_height is None:
+            ax_height = self.ax_height
+
+        assert len(x) == len(y)
+        x, y = np.array(x), np.array(y)
+
+        x_range = self.get_min_max(x, x_range)
+        y_range = self.get_min_max(y, y_range)
+        if ax is None:
+            ax = SciAxes(x_range=x_range, y_range=y_range, width=ax_width, height=ax_height)
+        points = [ax.c2p(i, j) for i, j in zip(x, y)]
+        image_obj = DotCloud(points, radius=size, opacity=0.8).set_color(color)  # .set_color_by_rgba_func(rgba_func)
+        image_obj.flip(RIGHT).move_to(ORIGIN)
+        return ax, image_obj
+
+    def from_dot_cloud_3d(self, x: np.ndarray, y: np.ndarray, z: np.ndarray,
+                          size=0.05, color=BLUE,
+                          x_range=None, y_range=None, z_range=None,
+                          ax=None, ax_width=None, ax_height=None):
+        if ax_width is None:
+            ax_width = self.ax_width
+        if ax_height is None:
+            ax_height = self.ax_height
+
+        assert len(x) == len(y)
+        assert len(x) == len(z)
+        x, y, z = np.array(x), np.array(y), np.array(z)
+        x_range = self.get_min_max(x, x_range)
+        y_range = self.get_min_max(y, y_range)
+        z_range = self.get_min_max(z, z_range)
+        if ax is None:
+            ax = ThreeDAxes(x_range=x_range, y_range=y_range, z_range=z_range,
+                            width=ax_width, height=ax_height)
+            labels = VGroup(
+                ax.get_x_axis_label("x"),
+                ax.get_y_axis_label("y"),
+                ax.get_axis_label("z", ax.get_z_axis(),
+                                  edge=OUT,
+                                  direction=DOWN).rotate(90 * DEGREES, RIGHT),
+            )
+            ax.add(labels)
+        points = [ax.c2p(i, j, k) for i, j, k in zip(x, y, z)]
+        scatters = DotCloud(points, radius=size).set_color(color)
+        return ax, scatters
+
+    def from_vobj(self):
+        pass
 
 
 def image_arr_obj(arr, style=0, scale_factor=None):

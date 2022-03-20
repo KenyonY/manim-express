@@ -1,13 +1,12 @@
-from ..scene import SceneGL
-from ..config import Size
 from ....utils.onlinetex import tex_to_svg_file_online
 from ....utils.jupyter import video
+from ..scene import SceneGL
+from ..config import Size
 from .plot import Plot
-from .scatter import scatter_by_dotcloud
+from .scatter import Scatter
 
-import re
 from pathlib import Path
-import random
+import re
 import time
 import shutil
 from manimlib import (
@@ -97,6 +96,7 @@ class EagerModeScene(SceneGL):
         self.setup()
         self.plt = Plot()
         self.is_axes_line_gen_ed = False
+        self._scatter_ax = None
 
         self.clips = []
         self.current_clip = 0
@@ -204,11 +204,7 @@ class EagerModeScene(SceneGL):
             self.replay(self.current_clip)
 
     def hold_on(self):
-        """ Equal to self.tear_down(). """
-        self.stop_skipping()
-        self.file_writer.finish()
-        if self.window and self.linger_after_completion:
-            self.interact()
+        self.tear_down()
 
     def tear_down(self):
         super().tear_down()
@@ -257,11 +253,25 @@ class EagerModeScene(SceneGL):
         self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip, num_decimal_places,
                       x_label, y_label)
 
-    def scatter2d(self, x, y, color=BLUE, size=0.05):
-        ax, mobj = scatter_by_dotcloud(x, y, size=size, color=color)
-        self.write(ax)
+    def scatter2d(self, x, y, color=BLUE, size=0.05, ax=None):
+        self._scatter_nd(x, y, color=color, size=size, ax=ax)
+
+    def scatter3d(self, x, y, z, color=BLUE, size=0.05, ax=None):
+        self._scatter_nd(x, y, z, color=color, size=size, ax=ax)
+
+    def _scatter_nd(self, x, y, z=None, color=BLUE, size=0.05, ax=None):
+        scatter_obj = Scatter()
+        if ax is not None: self._scatter_ax = ax
+        if z is not None:
+            self._scatter_ax, mobj = scatter_obj.from_dot_cloud_3d(
+                x, y, z, size=size, color=color, ax=self._scatter_ax)
+        else:
+            self._scatter_ax, mobj = scatter_obj.from_dotcloud(x, y, size=size, color=color, ax=self._scatter_ax)
+
+        if self._scatter_ax not in self.mobjects:
+            self.write(self._scatter_ax)
         self.add(mobj)
-        return ax, mobj
+        return self._scatter_ax, mobj
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
@@ -279,7 +289,7 @@ class EagerModeScene(SceneGL):
         return self.plt.get_axes()
 
     def reset_plot(self):
-        self.plt = Plot
+        self.plt = Plot()
         self.is_axes_line_gen_ed = False
 
     def show_plot(self, play=True, reset=True):
