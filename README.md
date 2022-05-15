@@ -81,7 +81,7 @@ pip install manim_express
   
   ScatterExample().render()
   ```
-  <img src="data/pic/scatter.png" width = "600"/>
+  <img src="data/pic/scatter.png" width = "600"/>  
   It should be noted that manim is not suitable for drawing patterns that need to be accurately realized!
   
   

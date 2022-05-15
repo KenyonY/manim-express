@@ -78,7 +78,7 @@ pip install manim_express
   
   ScatterExample().render()
   ```
-  <img src="data/pic/scatter.png" width = "600"/>
+  <img src="data/pic/scatter.png" width = "600"/>  
   但是需要注意，manim并不适合绘制需要精确实现的图案！
   
   
