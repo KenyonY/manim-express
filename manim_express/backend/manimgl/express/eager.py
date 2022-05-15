@@ -58,7 +58,6 @@ class EagerModeScene(SceneGL):
             self,
             screen_size=Size.big,
             scene_name='EagerModeScene',
-            # CONFIG=None,
     ):
         # self.CONFIG = CONFIG
         args = manimlib.config.parse_cli()
