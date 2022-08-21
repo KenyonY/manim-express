@@ -1,6 +1,7 @@
 from manimlib import *
 from .quaternion import Quaternion
 from abc import ABCMeta, abstractmethod
+from typing import TypeVar
 
 
 class Vec(metaclass=ABCMeta):

@@ -1,9 +1,9 @@
-from manim_imports_ext import *
+from examples.example_imports import *
 from scatter import ParticleSystem, SimgleRay
 
 
-class ScatteringModel(Scene):
-    def construct(self):
+class ScatteringModel(EagerModeScene):
+    def clip1(self):
         p1 = ParticleSystem()
         self.play(ShowCreation(p1.get_axes()))
         R = 3
@@ -23,6 +23,6 @@ class ScatteringModel(Scene):
 
 
 
-
+ScatteringModel().render()
         
 

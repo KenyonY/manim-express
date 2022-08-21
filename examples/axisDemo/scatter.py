@@ -1,4 +1,4 @@
-from manim_imports_ext import *
+from examples.example_imports import *
 from manimlib.utils.config_ops import digest_config
 from utils.functions import SolveSystem
 

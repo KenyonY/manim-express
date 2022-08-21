@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 from manimlib import *
 from .coordinate_sys import SciAxes, SciAxes3D
@@ -79,7 +80,7 @@ class Scatter:
         pass
 
 
-def image_arr_obj(arr, style=0, scale_factor=None):
+def image_arr_obj(arr: np.ndarray, style=0, scale_factor=None):
     """
     使用DotCloud (shader上直接渲染) 性能较好, 但因为每个像素是点, 所以经常出现摩尔纹
     """
@@ -87,17 +88,18 @@ def image_arr_obj(arr, style=0, scale_factor=None):
     def rgb2gray(R, G, B):
         return 0.2989 * R + 0.5870 * G + 0.1140 * B
 
+    if arr.ndim == 2:
+        arr = cv2.cvtColor(arr, cv2.COLOR_GRAY2RGB)
     row, col = arr.shape[:2]
     if scale_factor is None:
         scale_factor = max(6 / min(row, col), 0.007)
     xy = np.array(list(product(np.arange(col), np.arange(row))))
 
-    if len(arr[0, 0]) >= 3 and style == 0:
+    color_dim = len(arr[0, 0])
+    if color_dim >= 3 and style == 0:
         points = [(*i * scale_factor, 2 * rgb2gray(*arr[i[0], i[1]][:3])) for i in xy]
     else:
         points = [(*i * scale_factor, 0) for i in xy]
-
-    color_dim = len(arr[0, 0])
 
     def rgba_func(point):
         """因为set_color_by_rgba_func传入的必须是point参数, 或者说

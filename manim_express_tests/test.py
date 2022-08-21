@@ -7,6 +7,7 @@ class A(Scene):
         arrow = Arrow(ORIGIN, UR)
         # self.play(ShowCreation(arrow))
         # self.wait(2)
+        self.add(Text("emmmm"))
         test_axis = np.array([1, 1, 1])
 
         vector_arrow = Arrow(ORIGIN, test_axis)

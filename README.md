@@ -94,7 +94,6 @@ pip install manim_express
   https://flyingframes.readthedocs.io/en/latest/index.html  
   https://3b1b.github.io/manim/  
   https://docs.manim.org.cn/  
-  https://docs.manim.org.cn/shaders/
   
 * 3B1B videos:  
   https://github.com/3b1b/videos

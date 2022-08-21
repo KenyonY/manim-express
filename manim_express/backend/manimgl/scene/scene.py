@@ -21,12 +21,11 @@ class SceneGL(Scene):
         super().__init__(**kwargs)
         self.camera: Camera
         self.pause = 0
-        self.show_coord = True
+        self.show_coord = False
         if self.preview:
             global key, Window
             from pyglet.window import key
             from manimlib.window import Window
-            self._init_show_coord()
 
     def _init_show_coord(self):
         self._coord_x = 0

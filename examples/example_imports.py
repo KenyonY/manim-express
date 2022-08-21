@@ -16,8 +16,11 @@ from manim_express.math import Quaternion, Vec3
 from manim_express.backend.manimgl.express import SciNumberLine
 from manim_express.backend.manimgl.utils import *
 
+from sklearn import datasets
+import imageio
+
 CONFIG.preview = True
-CONFIG.color = rgb_to_hex([0.3, 0.4, 0.5])  # this will override the `color` option in custom_config.yml
+# CONFIG.color = rgb_to_hex([0.3, 0.4, 0.5])  # this will override the `color` option in custom_config.yml
 CONFIG.gif = False
 # SceneArgs.frame_rate = 60
 CONFIG.uhd = True
