@@ -3,5 +3,4 @@ manimgl>=1.5.0
 sparrow_tool>=0.3.13
 fake_headers
 requests
-PyOpenGL_accelerate
-# pyperclip
+# PyOpenGL_accelerate
