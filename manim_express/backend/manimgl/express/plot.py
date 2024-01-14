@@ -78,7 +78,9 @@ class Plot:
         xmin, xmax = x_label_min - EPSILON, x_label_max
         ymin, ymax = y_label_min - EPSILON, y_label_max
         adjust_axes_ratio(xmax - xmin, ymax - ymin)
-        self._axes = SciAxes(x_range=(xmin, xmax), y_range=(ymin, ymax), height=self._axes_height,
+        self._axes = SciAxes(x_range=(xmin, xmax),
+                             y_range=(ymin, ymax),
+                             height=self._axes_height,
                              width=self._axes_width)
 
     def get_axes(self):
@@ -92,6 +94,7 @@ class Plot:
                          x_label_max=self._xmax,
                          y_label_min=self._ymin,
                          y_label_max=self._ymax)
+
         for x, y, color, width in zip(self._xdata, self._ydata,
                                       self._color_list, self._width_list):
             line = m_line(x, y, color=color, width=width, axes=self._axes)
@@ -129,12 +132,6 @@ class Plot:
         self._xmax = max(self._xmax, max(x))
         self._ymin = min(self._ymin, min(y))
         self._ymax = max(self._ymax, max(y))
-        x_shift = (self._xmax - self._xmin) / 10
-        y_shift = (self._ymax - self._ymin) / 10
-        self._xmin -= x_shift
-        self._xmax += x_shift
-        self._ymin -= y_shift
-        self._ymax += y_shift
 
         self._xdata.append(x)
         self._ydata.append(y)

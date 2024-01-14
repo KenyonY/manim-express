@@ -1,5 +1,5 @@
 from manimlib import *
-from ...tick import Ticker
+
 from typing import Tuple, Union, List
 
 
@@ -33,17 +33,21 @@ class SciNumberLine(NumberLine):
             "font_size": 36,
         }
         self.numbers_to_exclude = None
-        super().__init__(x_range=x_range, **kwargs)
+
+        from ...ticks import Ticker
+        self.ticker = Ticker([x_range[0], x_range[1]])
+
+        # tick_list = ticker.ticks()
+        # num_decimal = ticker.tick_attr.decimals
+        x_step = self.ticker.tick_attr.tick_interval
+        self.x_range = [*self.ticker.tick_attr.axis_range, x_step]
+
+        super().__init__(x_range=self.x_range, **kwargs)
 
     def get_tick_range(self):
-        ticker = Ticker(self.x_min, self.x_max, steps_range=(5, 10))
-        tick_list = ticker.ticks()
-        tick_digit = ticker.get_tick_digit()
-        self.start, self.step = ticker.get_start_and_step()
-        if tick_digit > 0:
-            num_decimal = 0
-        else:
-            num_decimal = -tick_digit
+        tick_list = self.ticker.ticks()
+        num_decimal = self.ticker.tick_attr.decimals
+
         self.decimal_number_config = {
             "num_decimal_places": num_decimal,
             "font_size": 36,
@@ -136,13 +140,14 @@ class SciAxes(Axes):
 
         x_label_min, y_label_min = self.x_axis.x_min, self.y_axis.x_min
         if self.rectangle_style:
-            self.y_axis.shift(-UP * self._unit_y * y_label_min)
-            self.x_axis.shift(-RIGHT * self._unit_x * x_label_min)
+            self.y_axis.shift(-LEFT * self._unit_x * x_label_min)
+            self.x_axis.shift(-DOWN * self._unit_y * y_label_min)
 
         self.axes = VGroup(self.x_axis, self.y_axis)
+        self.axes.center()
+
         self.add(*self.axes)
         self.add_coordinate_labels()
-        self.shift(-self.get_center())
 
     def create_axis(self, range_terms, axis_config, length):
         new_config = merge_dicts_recursively(self.axis_config, axis_config)

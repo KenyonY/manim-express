@@ -95,7 +95,7 @@ class EagerModeScene(SceneGL):
         self.setup()
         self.plt = Plot()
         self.is_axes_line_gen_ed = False
-        self._scatter_ax = None
+        self._scatter_obj = None
 
         self.clips = []
         self.current_clip = 0
@@ -211,9 +211,12 @@ class EagerModeScene(SceneGL):
     def get_config(self):
         return self.config
 
-    def save_default_config(self):
-        """Save the default config file to current directory."""
-        shutil.copy(rel_to_abs("custom_config.yml"), rel_to_abs('custom_config.yml'))
+    def save_default_config(self, config_path=None):
+        """Save the default config file to custom directory."""
+        if config_path is None:
+            shutil.copy(rel_to_abs("custom_config.yml"), 'custom_config.yml')
+        else:
+            shutil.copy(rel_to_abs("custom_config.yml"), config_path)
 
     def get_scene_config(self):
         return self.scene_config
@@ -252,25 +255,29 @@ class EagerModeScene(SceneGL):
         self.plt.plot(x, y, color, width, axes_ratio, scale_ratio, show_axes, include_tip, num_decimal_places,
                       x_label, y_label)
 
-    def scatter2d(self, x, y, color=BLUE, size=0.05, ax=None):
-        self._scatter_nd(x, y, color=color, size=size, ax=ax)
+    def scatter2d(self, x, y, color=BLUE, size=0.05, ax=None, x_range=None, y_range=None, ratio=0.618):
+        return self._scatter_nd(x, y, color=color, size=size, ax=ax, x_range=x_range, y_range=y_range, ratio=ratio)
 
-    def scatter3d(self, x, y, z, color=BLUE, size=0.05, ax=None):
-        self._scatter_nd(x, y, z, color=color, size=size, ax=ax)
+    def scatter3d(self, x, y, z, color=BLUE, size=0.05, ax=None, **kwargs):
+        return self._scatter_nd(x, y, z, color=color, size=size, ax=ax, **kwargs)
 
-    def _scatter_nd(self, x, y, z=None, color=BLUE, size=0.05, ax=None):
-        scatter_obj = Scatter()
-        if ax is not None: self._scatter_ax = ax
+    def _scatter_nd(self, x, y, z=None, color=BLUE, size=0.05, ax=None, x_range=None, y_range=None, ratio=0.618):
+        if self._scatter_obj is None:
+            self._scatter_obj = Scatter()
+
+        if ax is not None:
+            self._scatter_obj.ax = ax
+
         if z is not None:
-            self._scatter_ax, mobj = scatter_obj.from_dot_cloud_3d(
-                x, y, z, size=size, color=color, ax=self._scatter_ax)
+            mobj = self._scatter_obj.from_dot_cloud_3d(
+                x, y, z, size=size, color=color, x_range=x_range, y_range=y_range)
         else:
-            self._scatter_ax, mobj = scatter_obj.from_dotcloud(x, y, size=size, color=color, ax=self._scatter_ax)
+            mobj = self._scatter_obj.from_dotcloud(x, y, size=size, color=color, x_range=x_range, y_range=y_range, ratio=ratio)
 
-        if self._scatter_ax not in self.mobjects:
-            self.write(self._scatter_ax)
+        if self._scatter_obj.ax not in self.mobjects:
+            self.write(self._scatter_obj.ax)
         self.add(mobj)
-        return self._scatter_ax, mobj
+        return self._scatter_obj, mobj
 
     def plot3d(self, x, y, z, width=2, axes_ratio=0.62, show_axes=True):
         """TODO"""
@@ -282,6 +289,8 @@ class EagerModeScene(SceneGL):
         axes_lines_dict = self.plt.get_axes_lines()
         axes_mobj = VGroup(*axes_lines_dict["axes"])
         lines_mobj = VGroup(*axes_lines_dict["line"])
+        img = VGroup(axes_mobj, lines_mobj)
+        # img.shift(-img.get_center())
         return axes_mobj, lines_mobj
 
     def get_plot_axes(self):
