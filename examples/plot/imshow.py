@@ -17,21 +17,16 @@ class Animations(EagerModeScene):
         self.add(dc)
         import cv2
         # image = imageio.imread("../../data/pic/code0.png")
-
-        image = imageio.imread("../../data/pic/USST_logo.svg.png")
+        image = imageio.v2.imread("../../data/pic/USST_logo.svg.png")
         # image = cv2.resize(image, (128, 128))
-
         arr = np.array(image) / 255
         image_obj = image_arr_obj(arr, style=0)
-
         self.add(image_obj)
-
         # self.camera.frame.
 
     def clip9(self):
         arr = np.random.rand(10, 10, 3) * 255
-
-        image = imageio.imread("../../data/pic/code0.png")
+        image = imageio.v2.imread("../../data/pic/code0.png")
         # pixel_array = imobj(image[200:250, :250, :])
         pixel_array = imobj_square(arr)
 
@@ -50,4 +45,4 @@ class Animations(EagerModeScene):
         self.hold_on()
 
 
-Animations().clip9()
+Animations().render()
