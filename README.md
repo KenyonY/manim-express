@@ -71,17 +71,20 @@ pip install manim_express
   ```python
   from manimlib import *
   from manim_express import GlEagerScene
-  from sklearn.datasets import make_multilabel_classification 
+  import numpy as np
   class ScatterExample(GlEagerScene):
       def clip_1(self):
-          X1, y1 =make_multilabel_classification(n_samples=200, n_classes=4, n_features=2)
-          X2, y2 =make_multilabel_classification(n_samples=200, n_classes=4, n_features=2)
-          self.scatter2d(X1[:, 0], X1[:, 1], size=.05, color=BLUE)
-          self.scatter2d(X2[:, 0], X2[:, 1], size=.05, color=YELLOW)
+        n_features = 2
+        X = np.random.normal(0, 20, (2000, n_features))
+        theta = np.linspace(0, np.pi*2, 150)
+        r = 50
+        x, y = r*np.cos(theta), r*np.sin(theta)
+        self.scatter2d(X[:, 0], X[:, 1], size=.03, color=YELLOW, ratio=0.618)
+        self.scatter2d(x, y, size=.03, color=BLUE)
   
   ScatterExample().render()
   ```
-  <img src="data/pic/scatter.png" width = "600"/>  
+  <img src="data/pic/scatter.png" width = "700"/>  
   It should be noted that manim is not suitable for drawing patterns that need to be accurately realized!
   
   

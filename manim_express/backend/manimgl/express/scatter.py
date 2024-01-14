@@ -1,9 +1,8 @@
 import cv2
-import numpy as np
 from manimlib import *
-from .coordinate_sys import SciAxes, SciAxes3D
 from itertools import product
-from sparrow.decorators.core import MetaSingleton
+import numpy as np
+from .coordinate_sys import SciAxes, SciAxes3D
 
 
 class Scatter:
@@ -13,6 +12,7 @@ class Scatter:
         ]
         self.ax_width = FRAME_WIDTH - 2
         self.ax_height = FRAME_HEIGHT - 2
+        self.ax = None
 
     @staticmethod
     def get_min_max(a: np.ndarray, a_range):
@@ -20,36 +20,37 @@ class Scatter:
             amin, amax = a.min(), a.max()
         else:
             amin, amax = a_range
-        a_shift = (amax - amin) / 7
-        amin -= a_shift
-        amax += a_shift
+        # a_shift = (amax - amin) / 7
+        # amin -= a_shift
+        # amax += a_shift
         return amin, amax
 
     def from_dotcloud(self, x: np.ndarray, y: np.ndarray, size=0.05, color=BLUE,
+                      ratio=0.618,
                       x_range=None, y_range=None,
-                      ax=None, ax_width=None, ax_height=None):
+                      ax_width=None, ax_height=None):
 
-        if ax_width is None:
-            ax_width = self.ax_width
         if ax_height is None:
             ax_height = self.ax_height
+        if ax_width is None:
+            ax_width = ax_height * (1/ratio)
 
         assert len(x) == len(y)
         x, y = np.array(x), np.array(y)
 
         x_range = self.get_min_max(x, x_range)
         y_range = self.get_min_max(y, y_range)
-        if ax is None:
-            ax = SciAxes(x_range=x_range, y_range=y_range, width=ax_width, height=ax_height)
-        points = [ax.c2p(i, j) for i, j in zip(x, y)]
+
+        if self.ax is None:
+            self.ax = SciAxes(x_range=x_range, y_range=y_range, width=ax_width, height=ax_height)
+        points = [self.ax.c2p(i, j) for i, j in zip(x, y)]
         image_obj = DotCloud(points, radius=size, opacity=0.8).set_color(color)  # .set_color_by_rgba_func(rgba_func)
-        image_obj.flip(RIGHT).move_to(ORIGIN)
-        return ax, image_obj
+        return image_obj
 
     def from_dot_cloud_3d(self, x: np.ndarray, y: np.ndarray, z: np.ndarray,
                           size=0.05, color=BLUE,
                           x_range=None, y_range=None, z_range=None,
-                          ax=None, ax_width=None, ax_height=None):
+                          ax_width=None, ax_height=None):
         if ax_width is None:
             ax_width = self.ax_width
         if ax_height is None:
@@ -61,20 +62,20 @@ class Scatter:
         x_range = self.get_min_max(x, x_range)
         y_range = self.get_min_max(y, y_range)
         z_range = self.get_min_max(z, z_range)
-        if ax is None:
-            ax = ThreeDAxes(x_range=x_range, y_range=y_range, z_range=z_range,
-                            width=ax_width, height=ax_height)
+        if self.ax is None:
+            self.ax = ThreeDAxes(x_range=x_range, y_range=y_range, z_range=z_range,
+                                 width=ax_width, height=ax_height)
             labels = VGroup(
-                ax.get_x_axis_label("x"),
-                ax.get_y_axis_label("y"),
-                ax.get_axis_label("z", ax.get_z_axis(),
-                                  edge=OUT,
-                                  direction=DOWN).rotate(90 * DEGREES, RIGHT),
+                self.ax.get_x_axis_label("x"),
+                self.ax.get_y_axis_label("y"),
+                self.ax.get_axis_label("z", self.ax.get_z_axis(),
+                                       edge=OUT,
+                                       direction=DOWN).rotate(90 * DEGREES, RIGHT),
             )
-            ax.add(labels)
-        points = [ax.c2p(i, j, k) for i, j, k in zip(x, y, z)]
+            self.ax.add(labels)
+        points = [self.ax.c2p(i, j, k) for i, j, k in zip(x, y, z)]
         scatters = DotCloud(points, radius=size).set_color(color)
-        return ax, scatters
+        return scatters
 
     def from_vobj(self):
         pass

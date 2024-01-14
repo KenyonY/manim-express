@@ -1,31 +1,20 @@
-import numpy as np
-
 from examples.example_imports import *
 
-
 class ScatterExample(EagerModeScene):
-    def get_X(self, n_features=2):
-        X, y = datasets.make_multilabel_classification(
-            n_samples=200, n_classes=4, n_features=n_features,
-        )
-        return X, y
 
     def clip1(self):
-        X1, y1 = self.get_X()
-        X2, y2 = self.get_X()
-        self.scatter2d(X2[:, 0], X2[:, 1], size=.03, color=YELLOW)
-        self.scatter2d(X1[:, 0], X1[:, 1], size=.03)
+        n_features = 2
+        X = np.random.normal(0, 20, (2000, n_features))
+        theta = np.linspace(0, np.pi*2, 150)
+        r = 50
+        x, y = r*np.cos(theta), r*np.sin(theta)
+        self.scatter2d(X[:, 0], X[:, 1], size=.03, color=YELLOW)
+        self.scatter2d(x, y, size=.03, color=BLUE)
 
-    def clip2(self):
-        size = 0.05
-        color = BLUE
-
-        X, y = self.get_X(n_features=3)
-        X: np.ndarray
-        print(X.shape)
-        x, y, z = X[:, 0], X[:, 1], X[:, 2]
-        self.scatter3d(x, y, z, color=YELLOW)
-
-
+    def clip_2(self):
+        x1, y1 = np.random.randn(2, 200)
+        x2, y2 = np.random.randn(2, 200)
+        self.scatter2d(x1, y1, size=.05, color=BLUE, x_range=(-3, 3), y_range=(-3, 3))
+        self.scatter2d(x2, y2, size=.05, color=YELLOW)
 
 ScatterExample().render()

@@ -1,6 +1,7 @@
 manimlib/
 manimlib
 .idea/
+.vscode/
 LOGO/
 tests/
 js/

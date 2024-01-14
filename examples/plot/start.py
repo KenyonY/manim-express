@@ -15,11 +15,14 @@ class PlotScene(EagerModeScene):
 
         x = np.cos(theta)
         y = np.sin(theta)
+        y += 10
 
-        self.plot(X1[:,0], X1[:,1],
-                  x_label='t', y_label='f(t)',
-                  # scale_ratio=1,
-                  )
+        self.plot(
+            # X1[:, 0], X1[:, 1],
+            x, y,
+            x_label='t', y_label='f(t)',
+            # scale_ratio=1,
+        )
 
         self.show_plot()
         self.hold_on()

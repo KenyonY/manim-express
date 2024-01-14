@@ -11,7 +11,7 @@ test1 = 1
 if test1:
     # scene.plot(theta, x, width=1)
     scene.plot(theta, x)
-    scene.plot(theta, x+0.25)
+    scene.plot(theta+10, x+10.25)
     scene.plot(theta, x+0.5)
     scene.plot(theta, x+0.75)
     scene.plot(theta, x+1)
@@ -24,7 +24,7 @@ if test1:
     # scene.add(mob)
     scene.show_plot()
 
-test2 = 1
+test2 = 0
 if test2:
     COL_COLORS = [MAROON_B, MAROON_C]
     EIGEN_COLORS = [TEAL_A, TEAL_D]
